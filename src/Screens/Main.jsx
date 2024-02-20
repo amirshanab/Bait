@@ -41,7 +41,7 @@ export class Main extends Component {
         );
     }
 
-    render() {
+    render() { //hh
         return (
             <View style={styles.container}>
                 <Carousel
