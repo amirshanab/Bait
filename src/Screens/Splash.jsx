@@ -27,7 +27,7 @@ const Splash = () => {
             <View style={{flexDirection: 'row', alignContent: 'center', justifyContent: 'center'}}>
                 <Image
                     style={{height: 300, width: 450, borderColor: 'black', borderWidth: 2}}
-                    source={require('../assets/logo.jpg')}/>
+                    source={require('../assets/logo.png')}/>
             </View>
         </View>
     );

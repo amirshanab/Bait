@@ -39,7 +39,7 @@ const ForgotPassword = () => {
                     {/* Logo */}
                     <Image
                         style={{ height: 200, width: 350, borderColor: 'black', borderWidth: 2, alignSelf: 'center' }}
-                        source={require('../assets/logo.jpg')} />
+                        source={require('../assets/logo.png')} />
 
                     {/* Forgot Password Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
