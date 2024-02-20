@@ -9,8 +9,8 @@ const Splash = () => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            nav.navigate('Signup');
-        }, 2000);//todo: 3 seconds
+            nav.navigate('Login');
+        }, 2000);
 
 
 

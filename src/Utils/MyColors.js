@@ -1,6 +1,6 @@
 export const myColors = {
-    primary: '#A7D397',
-    clickable: '#EC8F5E',
+    primary: '#FFF7F1',
+    clickable: '#19A7CE',
     tertiary: '#D0D4CA',
     grey:'#5A5A5A'
 }

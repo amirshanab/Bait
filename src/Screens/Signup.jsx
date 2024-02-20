@@ -30,6 +30,7 @@ const Signup = () => {
         createUserWithEmailAndPassword(authentication, email, password)
             .then(() => {
                 Alert.alert('User account created & signed in!');
+                nav.navigate('Login');
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
@@ -54,25 +55,6 @@ const Signup = () => {
                         style={{ height: 200, width: 350, borderColor: 'black', borderWidth: 2, alignSelf: 'center' }}
                         source={require('../assets/logo.jpg')} />
 
-                    {/* Already have an account */}
-                    <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
-                        <Text style={{ color: 'black', fontSize: 16, fontWeight: '400', textAlign: 'center' }}>Already have an account?</Text>
-                    </View>
-
-                    {/* Login Button */}
-                    <TouchableOpacity onPress={() => nav.navigate('Login')}>
-                        <View style={{
-                            backgroundColor: myColors.clickable,
-                            height: 50,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginTop: 10,
-                            marginHorizontal: 20,
-                            borderRadius: 10
-                        }}>
-                            <Text style={{ color: 'white', fontSize: 18, fontWeight: '700' }}>Login</Text>
-                        </View>
-                    </TouchableOpacity>
 
                     {/* Sign Up Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
@@ -157,6 +139,20 @@ const Signup = () => {
                                 <Text style={{ color: 'white', fontSize: 18, fontWeight: '700' }}>Sign Up</Text>
                             </View>
                         </TouchableOpacity>
+
+                        {/* Already have an account and Login */}
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
+                            <View style={{ paddingHorizontal: 10 }}>
+                                <Text style={{ color: 'black', fontSize: 16, fontWeight: '400', textAlign: 'center' }}>Already have an account?</Text>
+                            </View>
+                            <TouchableOpacity onPress={() => nav.navigate('Login')}>
+                                <Text style={{ color: myColors.clickable, fontSize: 16, fontWeight: '700', textAlign: 'center'}}>
+                                    Login
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+
+
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
