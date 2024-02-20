@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import { View, Text, Dimensions } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
-
-const sliderWidth = 300; // Example value, adjust as needed
-const itemWidth = 200; // Example value, adjust as needed
+const { width: screenWidth } = Dimensions.get('window');
+const itemWidth = screenWidth * 0.7;
+const itemHeight = 150;
 
 export class Main extends Component {
     state = {
@@ -14,7 +14,8 @@ export class Main extends Component {
             { title: 'Item 2' },
             { title: 'Item 3' },
             // Add more mock data as needed
-        ]
+        ],
+        activeSlide: 0,
     };
 
     _renderItem = ({ item, index }) => {
@@ -25,22 +26,47 @@ export class Main extends Component {
         );
     }
 
+    get pagination() {
+        const { entries, activeSlide } = this.state;
+        return (
+            <Pagination
+                dotsLength={entries.length}
+                activeDotIndex={activeSlide}
+                containerStyle={styles.paginationContainer}
+                dotStyle={styles.paginationDot}
+                inactiveDotStyle={styles.paginationInactiveDot}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.6}
+            />
+        );
+    }
+
     render() {
         return (
-            <Carousel
-                ref={(c) => { this._carousel = c; }}
-                data={this.state.entries}
-                renderItem={this._renderItem}
-                sliderWidth={sliderWidth}
-                itemWidth={itemWidth}
-            />
+            <View style={styles.container}>
+                <Carousel
+                    ref={(c) => { this._carousel = c; }}
+                    data={this.state.entries}
+                    renderItem={this._renderItem}
+                    sliderWidth={screenWidth}
+                    itemWidth={itemWidth}
+                    layout={'default'}
+                    onSnapToItem={(index) => this.setState({ activeSlide: index })}
+                />
+                {this.pagination}
+            </View>
         );
     }
 }
 
 const styles = {
+    container: {
+        marginTop: 20,
+        alignItems: 'center',
+    },
     slide: {
-        flex: 1,
+        width: itemWidth,
+        height: itemHeight,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'lightblue', // Example background color
@@ -52,5 +78,25 @@ const styles = {
         fontSize: 18,
         fontWeight: 'bold',
     },
+    paginationContainer: {
+        marginTop: 10,
+    },
+    paginationDot: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: 'blue',
+    },
+    paginationInactiveDot: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: 'lightgray',
+    },
 };
+
+Main.propTypes = {
+    style: ViewPropTypes.style,
+};
+
 export default Main;
