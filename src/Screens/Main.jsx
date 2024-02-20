@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions,SafeAreaView } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
@@ -41,9 +41,9 @@ export class Main extends Component {
         );
     }
 
-    render() { //hh
+    render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <Carousel
                     ref={(c) => { this._carousel = c; }}
                     data={this.state.entries}
@@ -54,7 +54,7 @@ export class Main extends Component {
                     onSnapToItem={(index) => this.setState({ activeSlide: index })}
                 />
                 {this.pagination}
-            </View>
+            </SafeAreaView>
         );
     }
 }
