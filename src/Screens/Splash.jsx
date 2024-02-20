@@ -26,8 +26,8 @@ const Splash = () => {
             <StatusBar style={'light'}/>
             <View style={{flexDirection: 'row', alignContent: 'center', justifyContent: 'center'}}>
                 <Image
-                    style={{height: 300, width: 450, borderColor: 'black', borderWidth: 2}}
-                    source={require('../assets/logo.png')}/>
+                    style={{ height: 120, width: 220, alignSelf: 'center' }}
+                    source={require('../assets/logo.png')} />
             </View>
         </View>
     );

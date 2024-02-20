@@ -1,58 +1,108 @@
-import React from "react";
-import { Image, ScrollView, StatusBar, Text, View } from "react-native";
+import React, { useRef, useState } from "react";
+import { ScrollView, StatusBar, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { myColors } from "../Utils/MyColors";
 
 const Main = () => {
+    const scrollViewRef = useRef(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    // Dummy data for carousel
+    const carouselData = [
+        { title: 'Item 1', text: 'Text 1' },
+        { title: 'Item 2', text: 'Text 2' },
+        { title: 'Item 3', text: 'Text 3' },
+        // Add more items as needed
+    ];
+
+    // Scroll to the next item in the carousel
+    const scrollToNextItem = () => {
+        if (currentIndex < carouselData.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+            scrollViewRef.current.scrollTo({ x: currentIndex * 300, animated: true });
+        }
+    };
+
+    // Scroll to the previous item in the carousel
+    const scrollToPrevItem = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+            scrollViewRef.current.scrollTo({ x: currentIndex * 300, animated: true });
+        }
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <StatusBar style={'light'} />
-            <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 30, paddingBottom: 100 }}>
-
-                {/* Logo */}
-                <Image
-                    style={{ height: 200, width: 350, borderColor: 'black', borderWidth: 2, alignSelf: 'center' }}
-                    source={require('../assets/logo.png')} />
-
-                {/* Title */}
-                <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                    <Text style={{ color: 'black', fontSize: 26, fontWeight: '700', textAlign: 'center' }}>Welcome to Main</Text>
-                    <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5, textAlign: 'center' }}>Explore our amazing features</Text>
-                </View>
-
-                {/* Feature 1 */}
-                <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                    <Text style={{ color: 'black', fontSize: 20, fontWeight: '700' }}>Feature 1</Text>
-                    <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Description of Feature 1</Text>
-                </View>
-
-                {/* Feature 2 */}
-                <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                    <Text style={{ color: 'black', fontSize: 20, fontWeight: '700' }}>Feature 2</Text>
-                    <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Description of Feature 2</Text>
-                </View>
-
-                {/* Feature 3 */}
-                <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                    <Text style={{ color: 'black', fontSize: 20, fontWeight: '700' }}>Feature 3</Text>
-                    <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Description of Feature 3</Text>
-                </View>
-
-                {/* Feature 4 */}
-                <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                    <Text style={{ color: 'black', fontSize: 20, fontWeight: '700' }}>Feature 4</Text>
-                    <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Description of Feature 4</Text>
-                </View>
-
-                {/* Feature 5 */}
-                <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                    <Text style={{ color: 'black', fontSize: 20, fontWeight: '700' }}>Feature 5</Text>
-                    <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Description of Feature 5</Text>
-                </View>
-
-            </ScrollView>
+            <View style={styles.carouselContainer}>
+                <ScrollView
+                    ref={scrollViewRef}
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={(event) => {
+                        const contentOffsetX = event.nativeEvent.contentOffset.x;
+                        const newIndex = Math.round(contentOffsetX / 300);
+                        setCurrentIndex(newIndex);
+                    }}
+                    scrollEventThrottle={16}
+                >
+                    {carouselData.map((item, index) => (
+                        <View key={index} style={styles.carouselItem}>
+                            <Text style={styles.carouselTitle}>{item.title}</Text>
+                            <Text style={styles.carouselText}>{item.text}</Text>
+                        </View>
+                    ))}
+                </ScrollView>
+                <TouchableOpacity onPress={scrollToPrevItem} style={styles.arrowButton}>
+                    <Text style={styles.arrowButtonText}>{'<'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={scrollToNextItem} style={[styles.arrowButton, styles.arrowButtonRight]}>
+                    <Text style={styles.arrowButtonText}>{'>'}</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    carouselContainer: {
+        flex: 1,
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    carouselItem: {
+        width: 300,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        padding: 20,
+        alignItems: 'center',
+        marginHorizontal: 10,
+    },
+    carouselTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    carouselText: {
+        fontSize: 16,
+        marginTop: 10,
+    },
+    arrowButton: {
+        position: 'absolute',
+        top: '50%',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        borderRadius: 20,
+        zIndex: 2,
+    },
+    arrowButtonRight: {
+        right: 0,
+    },
+    arrowButtonText: {
+        color: 'white',
+        fontSize: 24,
+    },
+});
 
 export default Main;

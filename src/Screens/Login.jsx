@@ -42,9 +42,8 @@ const Login = () => {
             <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 30, paddingBottom: 100 }}>
 
-                    {/* Logo */}
                     <Image
-                        style={{ height: 200, width: 350, borderColor: 'black', borderWidth: 2, alignSelf: 'center' }}
+                        style={{ height: 120, width: 220, alignSelf: 'center' }}
                         source={require('../assets/logo.png')} />
 
                     {/* Login Section */}
