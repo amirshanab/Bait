@@ -22,8 +22,8 @@ const Login = () => {
         signInWithEmailAndPassword(authentication, email, password)
             .then(() => {
                 // Navigate to the main screen upon successful login
-                // Replace 'Main' with the name of your main screen component
-                nav.navigate('Main');
+                // Replace 'Home' with the name of your main screen component
+                nav.navigate('Home');
             })
             .catch(error => {
                 if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
