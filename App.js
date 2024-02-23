@@ -7,7 +7,7 @@ import Signup from "./src/Screens/Signup";
 import ForgotPassword from "./src/Screens/ForgotPassword";
 import Home from "./src/Screens/Home";
 import ProductDetailsPopup from "./src/Screens/ProductDetailsPopup";
-
+import Cart from "./src/Screens/Cart";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,14 +15,17 @@ const App = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName="Home"
+                initialRouteName="Cart"
                 screenOptions={{ headerShown: false, gestureEnabled: false }}>
+
                 <Stack.Screen name="Splash" component={Splash} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Signup" component={Signup} />
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="ProductDetailsPopup" component={ProductDetailsPopup} />
+                <Stack.Screen name="Cart" component={Cart} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );

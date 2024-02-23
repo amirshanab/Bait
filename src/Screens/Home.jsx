@@ -23,6 +23,7 @@ const Home = () => {
                     <ProductsTitle title='Vegatables' />
                     <IndividualProductCarousel data={fruits} />
                     <ProductsTitle title='Meat and fish' />
+                    <IndividualProductCarousel data={fruits} />
 
 
                 </View>
