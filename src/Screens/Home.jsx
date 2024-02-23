@@ -7,8 +7,10 @@ import ProductsTitle from "../Components/ProductsTitle";
 import PromotionsCarousel from "../Components/PromotionsCarousel";
 import AllProductsCarousel from "../Components/AllProductsCarousel";
 import IndividualProductCarousel from "../Components/IndividualProductCarousel";
+import {fruits, products} from "../Utils/Data";
 
 const Home = () => {
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <ScrollView>
@@ -19,9 +21,9 @@ const Home = () => {
                     <PromotionsCarousel />
                     <AllProductsCarousel />
                     <ProductsTitle title='Vegatables' />
-                    <IndividualProductCarousel />
+                    <IndividualProductCarousel data={fruits} />
                     <ProductsTitle title='Meat and fish' />
-                    <IndividualProductCarousel />
+
 
                 </View>
             </ScrollView>

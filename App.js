@@ -6,6 +6,8 @@ import Login from "./src/Screens/Login";
 import Signup from "./src/Screens/Signup";
 import ForgotPassword from "./src/Screens/ForgotPassword";
 import Home from "./src/Screens/Home";
+import ProductDetailsPopup from "./src/Screens/ProductDetailsPopup";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -13,13 +15,14 @@ const App = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName="Splash"
+                initialRouteName="Home"
                 screenOptions={{ headerShown: false, gestureEnabled: false }}>
                 <Stack.Screen name="Splash" component={Splash} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Signup" component={Signup} />
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                 <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="ProductDetailsPopup" component={ProductDetailsPopup} />
             </Stack.Navigator>
         </NavigationContainer>
     );

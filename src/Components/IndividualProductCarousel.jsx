@@ -1,31 +1,35 @@
-import {FlatList, Image, Text, View} from "react-native";
+import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
-import {fruits} from "../Utils/Data";
 import {responsiveHeight, responsiveWidth} from "react-native-responsive-dimensions";
 import {Entypo} from '@expo/vector-icons';
-import {myColors} from "../Utils/MyColors";
+import {useNavigation} from "@react-navigation/native";
 
 
-const IndividualProductCarousel = () => {
+const IndividualProductCarousel = ({data}) => {
+    const nav = useNavigation();
     return (
         <View>
             <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                data={fruits}
+                data={data}
                 renderItem={({item, index}) => (
-
-
                     // product card
-                    <View style={{
-                        height: responsiveHeight(22),
-                        borderWidth: 2,
-                        borderColor: "#E3E3E3",
-                        width: responsiveWidth(30),
-                        marginRight: 15,
-                        borderRadius: 10,
+                    <TouchableOpacity
+                        onPress={() => nav.navigate('ProductDetailsPopup', {
+                            main: item
+                        })
+                        }
+                        activeOpacity={0.7}
+                        style={{
+                            height: responsiveHeight(22),
+                            borderWidth: 2,
+                            borderColor: "#E3E3E3",
+                            width: responsiveWidth(30),
+                            marginRight: 15,
+                            borderRadius: 10,
 
-                    }}
+                        }}
                     >
                         <Image style={{height: 125, resizeMode: "contain"}} source={{uri: item.img}}/>
                         <View style={{paddingHorizontal: 10}}>
@@ -48,7 +52,7 @@ const IndividualProductCarousel = () => {
 
                         </View>
 
-                    </View>
+                    </TouchableOpacity>
                 )}/>
         </View>
     )
