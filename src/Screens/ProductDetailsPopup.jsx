@@ -4,16 +4,16 @@ import {Ionicons} from '@expo/vector-icons';
 import {MaterialIcons} from '@expo/vector-icons';
 import {myColors} from "../Utils/MyColors";
 import {useNavigation} from "@react-navigation/native";
+import {addToCart} from "../../Redux/CartSlice";
+import { useDispatch } from "react-redux";
 
 const ProductDetailsPopup = ({route}) => {
-    const {name, price, img} = route.params.main; // Get the product details from the route params
+    const dispatch = useDispatch();
+    const productData = route.params.main;
+    const {name, price, img} = productData // Get the product details from the route params
 
     const nav = useNavigation(); // Access the navigation object
     // Function to handle adding the product to the cart
-    const handleAddToCart = () => {
-        // Logic to add the product to the cart goes here
-        console.log("Product added to cart");
-    };
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: myColors.primary, gap: 20}}>
@@ -74,11 +74,15 @@ const ProductDetailsPopup = ({route}) => {
                 </View>
 
                 {/* Product price */}
-                <Text style={{marginTop: 15, color: "grey"}}>Price: {price}₪</Text>
+                <Text style={{marginTop: 15, color: "grey"}}>Price: ₪{price}</Text>
 
                 {/* Add to cart button */}
                 <TouchableOpacity
-                    onPress={handleAddToCart}
+                    onPress={() => {
+                        dispatch(addToCart(productData));
+                        nav.navigate('Cart');
+                    }}
+
                     style={{
                         backgroundColor: myColors.clickable,
                         paddingVertical: 10,
