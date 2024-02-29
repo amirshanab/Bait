@@ -1,91 +1,160 @@
-import {Image, Text, FlatList, View} from "react-native";
 import React from "react";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {myColors} from "../Utils/MyColors";
-import {responsiveHeight} from "react-native-responsive-dimensions";
-import {AntDesign, Ionicons} from '@expo/vector-icons';
-import {useDispatch, useSelector} from "react-redux";
-import CartReducer from "../../Redux/CartSlice";
-import {useNavigation} from "@react-navigation/native";
-
+import { SafeAreaView, Text, TouchableOpacity, FlatList, View, Image, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { removeFromCart, decrementQuantity, incrementQuantity } from "../../Redux/CartSlice";
+import { myColors } from "../Utils/MyColors";
+import { responsiveHeight } from "react-native-responsive-dimensions";
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 const Cart = () => {
     const nav = useNavigation(); // Access the navigation object
     const dispatch = useDispatch();
     const storeData = useSelector((state) => state.cart); // Get the cart data from the store
-    console.log(storeData);
 
+    // Calculate total amount
+    const totalAmount = storeData.products.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0).toFixed(2);
 
-    return (<SafeAreaView style={{flex: 1, paddingHorizontal: 10, backgroundColor: myColors.primary, gap: 15}}>
+    return (
+        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10, backgroundColor: myColors.primary }}>
+            {/* Back button */}
+            <Ionicons
+                onPress={() => {
+                    nav.goBack(); // Go back to the previous screen
+                }}
+                name="chevron-back"
+                size={28}
+                color="black"
+                style={styles.backButton}
+            />
 
-        {/* go back button */}
-        {/* Back button */}
-        <Ionicons
-            onPress={() => {
-                nav.goBack(); // Go back to the previous screen
-            }}
-            name="chevron-back"
-            size={28}
-            color="black"
-        />
+            <Text style={{ textAlign: 'center', fontSize: 23, fontWeight: "500", marginTop: 10 }}>My Cart</Text>
 
-
-        <Text style={{textAlign: 'center', fontSize: 23, fontWeight: "500"}}>My Cart</Text>
-
-
-        <FlatList data={storeData.products} renderItem={({item, index})=>(
-            <View style={{
-                height: responsiveHeight(15), borderBottomColor: "black", borderBottomWidth: 2, flexDirection: 'row',
-            }}>
-                {/* child 1 the image */}
-                <View style={{flex: 0.35,
-                    alignItems: "center", justifyContent: "center"}}>
-                    <Image
-                        style={{height: 130, width: 130, resizeMode: 'contain'}}
-                        source={{uri: item.img}}/>
-                </View>
-                {/* child 2  */}
-                <View style={{flex: 0.65, paddingHorizontal: 10, paddingVertical: 30, justifyContent: 'center'}}>
-
-                    {/* name and the remove product button  */}
-                    <View style={{
-                        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-                    }}>
-                        {/* Product name */}
-                        <Text style={{fontSize: 20, fontWeight: "500"}}>{item.name}</Text>
-                        {/* Remove product button */}
-                        <AntDesign onPress={() => dis} name="close" size={24} color="black"/>
-                    </View>
-                    {/* price and quantity */}
-                    <View style={{
-                        marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-                    }}>
-                        {/* quantity container */}
-                        <View style={{
-                            flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center', gap: 15
-                        }}>
-                            <AntDesign name="minuscircleo" size={30} color="green"/>
-                            <Text style={{
-                                fontSize: 20, fontWeight: "500", marginVertical: 2, opacity: 0.6
-                            }}>{item.quantity}</Text>
-                            <AntDesign name="pluscircleo" size={30} color="green"/>
+            <FlatList
+                data={storeData.products}
+                renderItem={({ item, index }) => (
+                    <View style={styles.productContainer}>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                style={styles.image}
+                                source={{ uri: item.img }} />
                         </View>
-
-                        {/* price */}
-                        <Text style={{fontSize: 22, fontWeight: "500", marginHorizontal: 15}}>₪ {item.price}</Text>
-
+                        <View style={styles.detailsContainer}>
+                            <View style={styles.productDetails}>
+                                <Text style={styles.productName}>{item.name}</Text>
+                                <AntDesign onPress={() => dispatch(removeFromCart(item))} name="close" size={24} color="black" />
+                            </View>
+                            <View style={styles.quantityContainer}>
+                                <View style={styles.quantityButtons}>
+                                    <AntDesign onPress={() => dispatch(decrementQuantity(item))} name="minuscircleo" size={30} color="green" />
+                                    <Text style={styles.quantity}>{item.quantity}</Text>
+                                    <AntDesign onPress={() => dispatch(incrementQuantity(item))} name="pluscircleo" size={30} color="green" />
+                                </View>
+                                <Text style={styles.price}>₪ {(item.quantity * item.price).toFixed(2)}</Text>
+                            </View>
+                        </View>
                     </View>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />
 
-                </View>
+            <View style={styles.footer}>
+                <Text style={styles.totalAmount}>Total Amount: ₪ {totalAmount}</Text>
+                <TouchableOpacity
+                    onPress={() => {
 
+                    }}
+                    style={styles.checkoutButton}>
+                    <Text style={styles.checkoutButtonText}>Go to Checkout</Text>
+                </TouchableOpacity>
             </View>
-
-        )
-    }
-        />
-
-
-    </SafeAreaView>);
+        </SafeAreaView>
+    );
 }
+
+const styles = StyleSheet.create({
+    backButton: {
+        position: 'absolute',
+        paddingHorizontal: 20,
+        paddingVertical:55,
+    },
+    productContainer: {
+        height: responsiveHeight(15),
+        borderBottomColor: "black",
+        borderBottomWidth: 2,
+        flexDirection: 'row',
+    },
+    imageContainer: {
+        flex: 0.35,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    image: {
+        height: 130,
+        width: 130,
+        resizeMode: 'contain'
+    },
+    detailsContainer: {
+        flex: 0.65,
+        paddingHorizontal: 10,
+        paddingVertical: 30,
+        justifyContent: 'center'
+    },
+    productDetails: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    productName: {
+        fontSize: 20,
+        fontWeight: "500"
+    },
+    quantityContainer: {
+        marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    quantityButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        gap: 15
+    },
+    quantity: {
+        fontSize: 20,
+        fontWeight: "500",
+        marginVertical: 2,
+        opacity: 0.6
+    },
+    price: {
+        fontSize: 22,
+        fontWeight: "500",
+        marginHorizontal: 15
+    },
+    footer: {
+        position: 'absolute',
+        bottom: 40,
+        left: 10,
+        right: 10,
+        alignItems: 'center'
+    },
+    totalAmount: {
+        fontSize: 20,
+        fontWeight: '600',
+        marginBottom: 20
+    },
+    checkoutButton: {
+        backgroundColor: myColors.clickable,
+        paddingVertical: 20,
+        paddingHorizontal: 100,
+        borderRadius: 20,
+        alignItems: 'center'
+    },
+    checkoutButtonText: {
+        color: 'white',
+        fontSize: 24
+    }
+});
 
 export default Cart;
