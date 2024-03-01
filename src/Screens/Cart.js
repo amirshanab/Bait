@@ -1,5 +1,15 @@
 import React from "react";
-import { SafeAreaView, Text, TouchableOpacity, FlatList, View, Image, StyleSheet } from "react-native";
+import {
+    SafeAreaView,
+    Text,
+    TouchableOpacity,
+    FlatList,
+    View,
+    Image,
+    StyleSheet,
+    Platform,
+    StatusBar
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { removeFromCart, decrementQuantity, incrementQuantity } from "../../Redux/CartSlice";
@@ -16,17 +26,7 @@ const Cart = () => {
     const totalAmount = storeData.products.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0).toFixed(2);
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingHorizontal: 10, backgroundColor: myColors.primary }}>
-            {/* Back button */}
-            <Ionicons
-                onPress={() => {
-                    nav.goBack(); // Go back to the previous screen
-                }}
-                name="chevron-back"
-                size={28}
-                color="black"
-                style={styles.backButton}
-            />
+        <SafeAreaView style={styles.safe}>
 
             <Text style={{ textAlign: 'center', fontSize: 23, fontWeight: "500", marginTop: 10 }}>My Cart</Text>
 
@@ -62,7 +62,7 @@ const Cart = () => {
                 <Text style={styles.totalAmount}>Total Amount: ₪ {totalAmount}</Text>
                 <TouchableOpacity
                     onPress={() => {
-
+                        nav.navigate("Home");
                     }}
                     style={styles.checkoutButton}>
                     <Text style={styles.checkoutButtonText}>Go to Checkout</Text>
@@ -73,11 +73,12 @@ const Cart = () => {
 }
 
 const styles = StyleSheet.create({
-    backButton: {
-        position: 'absolute',
-        paddingHorizontal: 20,
-        paddingVertical:55,
+    safe:{
+        flex: 1, paddingHorizontal: 10,
+        backgroundColor: myColors.primary,
+        paddingTop:Platform.OS === 'android' ? StatusBar.currentHeight -10 : 0
     },
+
     productContainer: {
         height: responsiveHeight(15),
         borderBottomColor: "black",
@@ -90,8 +91,8 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     image: {
-        height: 130,
-        width: 130,
+        height: 120,
+        width: 120,
         resizeMode: 'contain'
     },
     detailsContainer: {
@@ -100,15 +101,18 @@ const styles = StyleSheet.create({
         paddingVertical: 30,
         justifyContent: 'center'
     },
+
     productDetails: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
     },
+
     productName: {
         fontSize: 20,
         fontWeight: "500"
     },
+
     quantityContainer: {
         marginTop: 10,
         flexDirection: 'row',
