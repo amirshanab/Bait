@@ -9,6 +9,7 @@ import ProductDetailsPopup from './src/Screens/ProductDetailsPopup';
 import { Provider } from 'react-redux';
 import Store from './Redux/Store';
 import BottomTabBar from './Navigations/BottomTabBar';
+import CategoryProducts from "./src/Screens/CategoryProducts";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ const App = () => {
         <Provider store={Store}>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName="Splash"
+                    initialRouteName="Home"
                     screenOptions={{ headerShown: false, gestureEnabled: false }}>
                     <Stack.Screen name="Splash" component={Splash} />
                     <Stack.Screen name="Login" component={Login} />
@@ -25,6 +26,8 @@ const App = () => {
                     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen name="Home" component={BottomTabBar} />
                     <Stack.Screen name="ProductDetailsPopup" component={ProductDetailsPopup} />
+                    <Stack.Screen name="CategoryProducts" component={CategoryProducts} />
+
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

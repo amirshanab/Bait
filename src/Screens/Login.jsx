@@ -26,7 +26,7 @@ const Login = () => {
                 nav.navigate('Home');
             })
             .catch(error => {
-                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                if (error.code === 'authentication/user-not-found' || error.code === 'authentication/wrong-password') {
                     Alert.alert('Invalid email or password. Please try again.');
                 } else {
                     Alert.alert('An error occurred. Please try again later.');

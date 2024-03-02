@@ -33,11 +33,11 @@ const Signup = () => {
                 nav.navigate('Login');
             })
             .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
+                if (error.code === 'authentication/email-already-in-use') {
                     Alert.alert('That email address is already in use!');
                 }
 
-                if (error.code === 'auth/invalid-email') {
+                if (error.code === 'authentication/invalid-email') {
                     Alert.alert('That email address is invalid!');
                 }
                 console.error(error);
