@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Categories from "../../Services/CategoryServices";
 import { useNavigation } from "@react-navigation/native";
+import {myColors} from "../Utils/MyColors";
 
 const AllProductsCarousel = () => {
     const [categories, setCategories] = useState([]);
@@ -51,16 +52,16 @@ const AllProductsCarousel = () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        backgroundColor: "#fff",
+        padding: 15,
+        backgroundColor: myColors.back,
     },
     productItem: {
         marginRight: 10,
         alignItems: "center",
     },
     image: {
-        width: 66,
-        height: 66,
+        width: 70,
+        height: 70,
         borderRadius: 25,
         marginBottom: 5,
     },

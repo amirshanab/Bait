@@ -3,6 +3,7 @@ import React from "react";
 import {responsiveHeight, responsiveWidth} from "react-native-responsive-dimensions";
 import {Entypo} from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
+import {myColors} from "../Utils/MyColors";
 
 
 const IndividualProductCarousel = ({data}) => {
@@ -22,7 +23,8 @@ const IndividualProductCarousel = ({data}) => {
                         }
                         activeOpacity={0.7}
                         style={{
-                            height: responsiveHeight(22),
+                            backgroundColor:myColors.back,
+                            height: responsiveHeight(23),
                             borderWidth: 2,
                             borderColor: "#E3E3E3",
                             width: responsiveWidth(30),

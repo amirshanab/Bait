@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
+import {myColors} from "../Utils/MyColors";
 
 const mockPromotions = [
     { id: 1, title: "Promotion 1", description: "Description for Promotion 1" },
@@ -34,7 +35,7 @@ const PromotionsCarousel = () => {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        backgroundColor: "#fff",
+        backgroundColor: myColors.back,
     },
     carouselTitle: {
         fontSize: 20,

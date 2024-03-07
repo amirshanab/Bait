@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, SafeAreaView } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import React, {useEffect, useState} from "react";
+import {View, Text, FlatList, StyleSheet, TouchableOpacity, Image, SafeAreaView} from "react-native";
+import {useRoute, useNavigation} from "@react-navigation/native"; // Import useNavigation
 import ProductServices from "../../Services/ProductServices";
-import { myColors } from "../Utils/MyColors";
-
+import {myColors} from "../Utils/MyColors";
+import {Ionicons} from "@expo/vector-icons";
 
 const CategoryProducts = () => {
     const route = useRoute();
-    const { categoryName } = route.params;
+    const navigation = useNavigation(); // Use the useNavigation hook
+    const {categoryName} = route.params;
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -23,16 +24,16 @@ const CategoryProducts = () => {
         fetchData();
     }, []);
 
-    const renderProductItem = ({ item }) => (
+    const renderProductItem = ({item}) => (
         <TouchableOpacity onPress={() => console.log("Product clicked:", item)}>
             <View style={styles.productItem}>
-                <Image source={{ uri: item.Image }} style={styles.image} />
+                <Image source={{uri: item.Image}} style={styles.image}/>
                 <View style={styles.productDetails}>
                     <Text style={styles.productName}>{item.Name}</Text>
                     <View style={styles.quantityContainer}>
                         <Text style={styles.price}>₪ {(item.price)}</Text>
-                        {/* Add to Cart Button */}
-                        <TouchableOpacity style={styles.addToCartButton} onPress={() => console.log("Add to cart:", item)}>
+                        <TouchableOpacity style={styles.addToCartButton}
+                                          onPress={() => console.log("Add to cart:", item)}>
                             <Text style={styles.addToCartText}>Add to Cart</Text>
                         </TouchableOpacity>
                     </View>
@@ -46,7 +47,19 @@ const CategoryProducts = () => {
             <View style={styles.contentContainer}>
                 {/* Header */}
                 <View style={styles.headerContainer}>
+                    {/* Back Button */}
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Ionicons
+                            name="chevron-back"
+                            size={28}
+                            color="black"
+                        />
+                    </TouchableOpacity>
+
                     <Text style={styles.header}>{categoryName}</Text>
+
+                    {/* Invisible View to balance the header and center the text */}
+                    <View style={styles.invisibleView} />
                 </View>
                 {/* Products */}
                 <FlatList
@@ -57,7 +70,6 @@ const CategoryProducts = () => {
                 />
             </View>
         </SafeAreaView>
-
     );
 };
 
@@ -68,17 +80,30 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        padding: 15,
+        padding: 20,
+        paddingVertical: 20,
     },
     headerContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between', // Updated for balancing
+        marginBottom: 40,
     },
     header: {
         fontSize: 20,
         fontWeight: "bold",
         color: myColors.text,
-        marginBottom: 10,
+        textAlign: 'center', // Ensure the text aligns center
+        flex: 1, // Take available space to enforce centering
     },
+    backButton: {
+        // Your back button styles, if any
+    },
+    invisibleView: {
+        width: 28, // Match the back button's width
+        height: 28, // Match the back button's height
+    },
+
     productItem: {
         flexDirection: "row",
         alignItems: "center",

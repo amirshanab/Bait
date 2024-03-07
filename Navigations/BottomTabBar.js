@@ -1,8 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStack } from './HomeStack';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import Cart from '../src/Screens/Cart';
+import UserProfile from '../src/Screens/UserProfile'; // Import the UserProfile component
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { myColors } from "../src/Utils/MyColors";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,13 +18,26 @@ const BottomTabBar = () => {
                         iconName = 'home';
                     } else if (route.name === 'Cart') {
                         iconName = 'opencart';
+                    } else if (route.name === 'Profile') { // Add condition for UserProfile
+                        iconName = 'user'; // FontAwesome icon for user/profile
                     }
+                    // Return the appropriate icon based on the route
                     if (iconName) {
-                        return route.name === 'Home' ? <AntDesign name={iconName} size={size} color={color} /> : <FontAwesome name={iconName} size={size} color={color} />;
+                        if (route.name === 'Home') {
+                            return <AntDesign name={iconName} size={size} color={color} />;
+                        } else {
+                            return <FontAwesome name={iconName} size={size} color={color} />;
+                        }
                     }
                 },
                 tabBarActiveTintColor: 'black',
                 tabBarInactiveTintColor: 'gray',
+                tabBarStyle: {
+                    backgroundColor: myColors.back,
+                    paddingBottom: 20,
+                    paddingTop: 10,
+                    height: 80,
+                },
             })}
         >
             <Tab.Screen
@@ -33,12 +48,13 @@ const BottomTabBar = () => {
                     tabPress: e => {
                         e.preventDefault();
                         navigation.navigate('Home', {
-                            screen: 'HomeMain', // Make sure this matches the name of your initial Home screen within the HomeStack
+                            screen: 'HomeMain',
                         });
                     },
                 })}
             />
             <Tab.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
+            <Tab.Screen name="Profile" component={UserProfile} options={{ headerShown: false }} />
         </Tab.Navigator>
     );
 };
