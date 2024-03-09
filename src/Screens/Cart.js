@@ -14,8 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { removeFromCart, decrementQuantity, incrementQuantity } from "../../Redux/CartSlice";
 import { myColors } from "../Utils/MyColors";
-import { responsiveHeight } from "react-native-responsive-dimensions";
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const Cart = () => {
     const nav = useNavigation(); // Access the navigation object
@@ -27,44 +26,36 @@ const Cart = () => {
 
     return (
         <SafeAreaView style={styles.safe}>
-
-            <Text style={{ textAlign: 'center', fontSize: 23, fontWeight: "500", marginTop: 10 }}>My Cart</Text>
-
+            <Text style={styles.title}>My Cart</Text>
             <FlatList
                 data={storeData.products}
-                renderItem={({ item, index }) => (
+                bounces={true} // Enable elastic scrolling
+                renderItem={({ item }) => (
                     <View style={styles.productContainer}>
-                        <View style={styles.imageContainer}>
-                            <Image
-                                style={styles.image}
-                                source={{ uri: item.img }} />
-                        </View>
-                        <View style={styles.detailsContainer}>
-                            <View style={styles.productDetails}>
-                                <Text style={styles.productName}>{item.name}</Text>
-                                <AntDesign onPress={() => dispatch(removeFromCart(item))} name="close" size={24} color="black" />
-                            </View>
+                        <Image style={styles.image} source={{ uri: item.img }} />
+                        <View style={styles.productInfo}>
+                            <Text style={styles.productName}>{item.name}</Text>
                             <View style={styles.quantityContainer}>
-                                <View style={styles.quantityButtons}>
-                                    <AntDesign onPress={() => dispatch(decrementQuantity(item))} name="minuscircleo" size={30} color="green" />
-                                    <Text style={styles.quantity}>{item.quantity}</Text>
-                                    <AntDesign onPress={() => dispatch(incrementQuantity(item))} name="pluscircleo" size={30} color="green" />
-                                </View>
+                                <TouchableOpacity onPress={() => dispatch(decrementQuantity(item))}>
+                                    <AntDesign name="minus" size={24} color={myColors.text} />
+                                </TouchableOpacity>
+                                <Text style={styles.quantity}>{item.quantity}</Text>
+                                <TouchableOpacity onPress={() => dispatch(incrementQuantity(item))}>
+                                    <AntDesign name="plus" size={24} color={myColors.text} />
+                                </TouchableOpacity>
                                 <Text style={styles.price}>₪ {(item.quantity * item.price).toFixed(2)}</Text>
+                                <TouchableOpacity onPress={() => dispatch(removeFromCart(item))}>
+                                    <AntDesign name="delete" size={24} color={myColors.text} />
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
             />
-
             <View style={styles.footer}>
                 <Text style={styles.totalAmount}>Total Amount: ₪ {totalAmount}</Text>
-                <TouchableOpacity
-                    onPress={() => {
-                        nav.navigate("Home");
-                    }}
-                    style={styles.checkoutButton}>
+                <TouchableOpacity onPress={() => nav.navigate("Home")} style={styles.checkoutButton}>
                     <Text style={styles.checkoutButtonText}>Go to Checkout</Text>
                 </TouchableOpacity>
             </View>
@@ -73,91 +64,78 @@ const Cart = () => {
 }
 
 const styles = StyleSheet.create({
-    safe:{
-        flex: 1, paddingHorizontal: 10,
-        backgroundColor: myColors.primary,
-        paddingTop:Platform.OS === 'android' ? StatusBar.currentHeight -10 : 0
+    safe: {
+        flex: 1,
+        backgroundColor: myColors.background,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
-
+    title: {
+        textAlign: 'center',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginVertical: 10,
+        color: myColors.text
+    },
     productContainer: {
-        height: responsiveHeight(15),
-        borderBottomColor: "black",
-        borderBottomWidth: 2,
         flexDirection: 'row',
-    },
-    imageContainer: {
-        flex: 0.35,
-        alignItems: "center",
-        justifyContent: "center"
+        alignItems: 'center',
+        marginVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: myColors.cardBackground,
+        borderRadius: 10
     },
     image: {
-        height: 120,
-        width: 120,
-        resizeMode: 'contain'
+        resizeMode : 'contain',
+        width: 100,
+        height: 100,
+        borderRadius: 10
     },
-    detailsContainer: {
-        flex: 0.65,
-        paddingHorizontal: 10,
-        paddingVertical: 30,
-        justifyContent: 'center'
+    productInfo: {
+        flex: 1,
+        marginLeft: 10
     },
-
-    productDetails: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-
     productName: {
-        fontSize: 20,
-        fontWeight: "500"
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: myColors.text
     },
-
     quantityContainer: {
-        marginTop: 10,
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    quantityButtons: {
-        flexDirection: 'row',
         justifyContent: 'space-between',
-        alignContent: 'center',
-        gap: 15
+        marginTop: 5
     },
     quantity: {
-        fontSize: 20,
-        fontWeight: "500",
-        marginVertical: 2,
-        opacity: 0.6
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: myColors.text
     },
     price: {
-        fontSize: 22,
-        fontWeight: "500",
-        marginHorizontal: 15
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: myColors.text
     },
     footer: {
-        position: 'absolute',
-        bottom: 40,
-        left: 10,
-        right: 10,
-        alignItems: 'center'
+        paddingHorizontal: 20,
+        paddingBottom: 20,
+        backgroundColor: myColors.background
     },
     totalAmount: {
-        fontSize: 20,
-        fontWeight: '600',
-        marginBottom: 20
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: myColors.text
     },
     checkoutButton: {
         backgroundColor: myColors.clickable,
-        paddingVertical: 20,
-        paddingHorizontal: 100,
-        borderRadius: 20,
-        alignItems: 'center'
+        paddingVertical: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 10
     },
     checkoutButtonText: {
-        color: 'white',
-        fontSize: 24
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white'
     }
 });
 

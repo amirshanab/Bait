@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStack } from './HomeStack';
 import Cart from '../src/Screens/Cart';
-import UserProfile from '../src/Screens/UserProfile'; // Import the UserProfile component
+import UserProfile from '../src/Screens/UserProfile';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { myColors } from "../src/Utils/MyColors";
 

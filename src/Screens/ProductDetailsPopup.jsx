@@ -1,4 +1,4 @@
-import {Image, SafeAreaView, Text, TouchableOpacity, View} from "react-native";
+import {Image, SafeAreaView, Text, TouchableOpacity, View, StyleSheet, Platform, StatusBar} from "react-native";
 import React from "react";
 import {Ionicons} from '@expo/vector-icons';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -10,13 +10,14 @@ import { useDispatch } from "react-redux";
 const ProductDetailsPopup = ({route}) => {
     const dispatch = useDispatch();
     const productData = route.params.main;
+    console.log(productData)
     const {name, price, img} = productData // Get the product details from the route params
 
     const nav = useNavigation(); // Access the navigation object
     // Function to handle adding the product to the cart
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: myColors.primary, gap: 20}}>
+        <SafeAreaView style={styles.Main}>
             {/* Product image */}
             <View>
                 <Image
@@ -97,5 +98,12 @@ const ProductDetailsPopup = ({route}) => {
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    Main : {
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        flex: 1, backgroundColor: myColors.primary, gap: 20
+    }
+})
 
 export default ProductDetailsPopup;

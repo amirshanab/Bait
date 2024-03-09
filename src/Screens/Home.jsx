@@ -5,7 +5,7 @@ import HomeIcon from "../Components/HomeIcon";
 import HomeSearch from "../Components/HomeSearch";
 import ProductsTitle from "../Components/ProductsTitle";
 import PromotionsCarousel from "../Components/PromotionsCarousel";
-import AllProductsCarousel from "../Components/AllProductsCarousel";
+import AllCategoriesCarousel from "../Components/AllCategoriesCarousel";
 import IndividualProductCarousel from "../Components/IndividualProductCarousel";
 import {fruits} from "../Utils/Data";
 
@@ -20,7 +20,7 @@ const Home = () => {
                     <HomeIcon/>
                     <HomeSearch/>
                     <PromotionsCarousel/>
-                    <AllProductsCarousel/>
+                    <AllCategoriesCarousel/>
                     <ProductsTitle title='Vegatables'/>
                     <IndividualProductCarousel data={fruits}/>
                     <ProductsTitle title='Meat and fish'/>

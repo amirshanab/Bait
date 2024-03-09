@@ -1,15 +1,21 @@
-import React, {useEffect, useState} from "react";
-import {View, Text, FlatList, StyleSheet, TouchableOpacity, Image, SafeAreaView} from "react-native";
-import {useRoute, useNavigation} from "@react-navigation/native"; // Import useNavigation
-import ProductServices from "../../Services/ProductServices";
-import {myColors} from "../Utils/MyColors";
-import {Ionicons} from "@expo/vector-icons";
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../Redux/CartSlice';
+import ProductServices from '../../Services/ProductServices';
+import { myColors } from '../Utils/MyColors';
+import AddToCartAnimation from '../Components/AddToCartAnimation';
 
 const CategoryProducts = () => {
     const route = useRoute();
-    const navigation = useNavigation(); // Use the useNavigation hook
-    const {categoryName} = route.params;
+    const navigation = useNavigation();
+    const { categoryName } = route.params;
     const [products, setProducts] = useState([]);
+    const [showAnimation, setShowAnimation] = useState(false);
+    const [itemNameForAnimation, setItemNameForAnimation] = useState('');
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,23 +23,29 @@ const CategoryProducts = () => {
                 const productData = await ProductServices(categoryName);
                 setProducts(productData);
             } catch (error) {
-                console.error("Error fetching products:", error);
+                console.error('Error fetching products:', error);
             }
         };
 
         fetchData();
     }, []);
 
-    const renderProductItem = ({item}) => (
-        <TouchableOpacity onPress={() => console.log("Product clicked:", item)}>
+    const renderProductItem = ({ item }) => (
+        <TouchableOpacity onPress={() => console.log('Product clicked:', item)}>
             <View style={styles.productItem}>
-                <Image source={{uri: item.Image}} style={styles.image}/>
+                <Image source={{ uri: item.Image }} style={styles.image} />
                 <View style={styles.productDetails}>
                     <Text style={styles.productName}>{item.Name}</Text>
                     <View style={styles.quantityContainer}>
-                        <Text style={styles.price}>₪ {(item.price)}</Text>
-                        <TouchableOpacity style={styles.addToCartButton}
-                                          onPress={() => console.log("Add to cart:", item)}>
+                        <Text style={styles.price}>{`₪ ${item.Price}`}</Text>
+                        <TouchableOpacity
+                            style={styles.addToCartButton}
+                            onPress={() => {
+                                dispatch(addToCart({ img: item.Image, name: item.Name, price: item.Price }));
+                                setItemNameForAnimation(item.Name);
+                                setShowAnimation(true);
+                                setTimeout(() => setShowAnimation(false), 2500); // Adjust timing as needed
+                            }}>
                             <Text style={styles.addToCartText}>Add to Cart</Text>
                         </TouchableOpacity>
                     </View>
@@ -45,33 +57,25 @@ const CategoryProducts = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.contentContainer}>
-                {/* Header */}
                 <View style={styles.headerContainer}>
-                    {/* Back Button */}
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons
-                            name="chevron-back"
-                            size={28}
-                            color="black"
-                        />
+                        <Ionicons name="chevron-back" size={28} color="black" />
                     </TouchableOpacity>
-
                     <Text style={styles.header}>{categoryName}</Text>
-
-                    {/* Invisible View to balance the header and center the text */}
                     <View style={styles.invisibleView} />
                 </View>
-                {/* Products */}
                 <FlatList
                     data={products}
                     renderItem={renderProductItem}
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={styles.flatListContent}
                 />
+                {showAnimation && <AddToCartAnimation itemName={itemNameForAnimation} />}
             </View>
         </SafeAreaView>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

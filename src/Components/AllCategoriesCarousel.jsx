@@ -4,7 +4,7 @@ import Categories from "../../Services/CategoryServices";
 import { useNavigation } from "@react-navigation/native";
 import {myColors} from "../Utils/MyColors";
 
-const AllProductsCarousel = () => {
+const AllCategoriesCarousel = () => {
     const [categories, setCategories] = useState([]);
     const navigation = useNavigation();
 
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
+        resizeMode:'cover',
         width: 70,
         height: 70,
         borderRadius: 25,
@@ -73,4 +74,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AllProductsCarousel;
+export default AllCategoriesCarousel;

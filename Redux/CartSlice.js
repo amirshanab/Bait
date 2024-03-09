@@ -35,12 +35,15 @@ const CartSlice = createSlice({
         },
         decrementQuantity: (state, action) => {
             const { payload } = action;
-            const product = state.products.find(product => product.name === payload.name);
+            const productIndex = state.products.findIndex(product => product.name === payload.name);
 
-            if (product) {
+            if (productIndex !== -1) {
                 // If product exists in cart and quantity is greater than 1, decrement its quantity
-                if (product.quantity > 1) {
-                    product.quantity -= 1;
+                if (state.products[productIndex].quantity > 1) {
+                    state.products[productIndex].quantity -= 1;
+                } else {
+                    // If quantity is 1, remove the product from the cart
+                    state.products.splice(productIndex, 1);
                 }
             } else {
                 console.log("Product not found in cart");
