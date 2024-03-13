@@ -15,7 +15,6 @@ const ProductServices = async (CategoryID) => {
         // Extract the data from the query snapshot
         // Log the data to the console
         // Return the data
-        console.log("I am getting used");
         return querySnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()

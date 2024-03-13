@@ -1,18 +1,19 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeStack } from './HomeStack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {HomeStack} from './HomeStack';
 import Cart from '../src/Screens/Cart';
 import UserProfile from '../src/Screens/UserProfile';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import { myColors } from "../src/Utils/MyColors";
+import {AntDesign, FontAwesome} from '@expo/vector-icons';
+import {myColors} from "../src/Utils/MyColors";
+import DishesScreen from "../src/Screens/DishesScreen";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabBar = () => {
     return (
         <Tab.Navigator
-            screenOptions={({ route }) => ({
-                tabBarIcon: ({ color, size }) => {
+            screenOptions={({route}) => ({
+                tabBarIcon: ({color, size}) => {
                     let iconName;
                     if (route.name === 'Home') {
                         iconName = 'home';
@@ -21,12 +22,15 @@ const BottomTabBar = () => {
                     } else if (route.name === 'Profile') { // Add condition for UserProfile
                         iconName = 'user'; // FontAwesome icon for user/profile
                     }
+                    else if (route.name === 'Dishes') { // Add condition for DishesScreen
+                        iconName = 'list'; // FontAwesome icon for list
+                    }
                     // Return the appropriate icon based on the route
                     if (iconName) {
                         if (route.name === 'Home') {
-                            return <AntDesign name={iconName} size={size} color={color} />;
+                            return <AntDesign name={iconName} size={size} color={color}/>;
                         } else {
-                            return <FontAwesome name={iconName} size={size} color={color} />;
+                            return <FontAwesome name={iconName} size={size} color={color}/>;
                         }
                     }
                 },
@@ -43,8 +47,8 @@ const BottomTabBar = () => {
             <Tab.Screen
                 name="Home"
                 component={HomeStack}
-                options={{ headerShown: false }}
-                listeners={({ navigation }) => ({
+                options={{headerShown: false}}
+                listeners={({navigation}) => ({
                     tabPress: e => {
                         e.preventDefault();
                         navigation.navigate('Home', {
@@ -53,8 +57,9 @@ const BottomTabBar = () => {
                     },
                 })}
             />
-            <Tab.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
-            <Tab.Screen name="Profile" component={UserProfile} options={{ headerShown: false }} />
+            <Tab.Screen name="Cart" component={Cart} options={{headerShown: false}}/>
+            <Tab.Screen name="Dishes" component={DishesScreen} options={{headerShown: false}}/>
+            <Tab.Screen name="Profile" component={UserProfile} options={{headerShown: false}}/>
         </Tab.Navigator>
     );
 };

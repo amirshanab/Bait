@@ -66,7 +66,7 @@ const Cart = () => {
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-        backgroundColor: myColors.background,
+        backgroundColor: myColors.primary,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
     title: {
@@ -74,20 +74,22 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginVertical: 10,
+        paddingBottom: 15,
         color: myColors.text
     },
     productContainer: {
+        borderBlockColor:'black',
+        borderBottomWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 10,
+        marginVertical: 5,
         paddingHorizontal: 10,
-        backgroundColor: myColors.cardBackground,
         borderRadius: 10
     },
     image: {
         resizeMode : 'contain',
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
         borderRadius: 10
     },
     productInfo: {

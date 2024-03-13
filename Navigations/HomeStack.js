@@ -6,6 +6,9 @@ import ProductDetailsPopup from "../src/Screens/ProductDetailsPopup"; // Example
 import UserProfile from "../src/Screens/UserProfile"; // Example additional screen
 import MyOrdersScreen from "../src/Screens/MyOrdersScreen"; // Example additional screen
 import PaymentMethodsScreen from "../src/Screens/PaymentMethodsScreen"; // Example additional screen
+import IngredientsScreen from "../src/Screens/IngredientsScreen";
+import DishesScreen from "../src/Screens/DishesScreen";
+
 const Stack = createStackNavigator();
 
 export const HomeStack = () => {
@@ -17,6 +20,8 @@ export const HomeStack = () => {
             <Stack.Screen name="UserProfile" component={UserProfile} />
             <Stack.Screen name="MyOrders" component={MyOrdersScreen} />
             <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+            <Stack.Screen name="Ingredients" component={IngredientsScreen} />
+            <Stack.Screen name="Dishes" component={DishesScreen} />
         </Stack.Navigator>
     );
 };

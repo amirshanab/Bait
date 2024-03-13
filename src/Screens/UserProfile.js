@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     signOutButton: {
-        backgroundColor: '#ff4444',
+        backgroundColor: 'rgba(255,68,68,0.85)',
         padding: 15,
         marginHorizontal: 20,
         marginTop: 50,
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     signOutButtonText: {
+        fontWeight: '600',
         fontSize: 18,
         color: '#fff',
     },

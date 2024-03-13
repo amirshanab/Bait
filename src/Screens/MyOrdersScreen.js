@@ -21,7 +21,7 @@ function MyOrdersScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={28} color="black" />
                 </TouchableOpacity>
 
