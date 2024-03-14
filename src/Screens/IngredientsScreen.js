@@ -32,7 +32,7 @@ export default function IngredientsScreen({ route }) {
                         <Image style={styles.ingredientImage} source={{uri: item.img}}/>
                         <View style={styles.ingredientDetails}>
                         <Text style={styles.title}>{item.ingredient}: {item.quantity}</Text>
-                        <Text style={styles.price}>Price: ${item.price}</Text>
+                        <Text style={styles.price}>Price: ₪{item.price}</Text>
                         </View>
                         <TouchableOpacity style={styles.addToCartButton} onPress={() => handleAddToCart(item)}>
                             <Text style={styles.addToCartButtonText}>Add to Cart</Text>

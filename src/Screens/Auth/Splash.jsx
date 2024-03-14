@@ -1,6 +1,6 @@
 import {Image, StatusBar, View} from "react-native";
 import React, {useEffect} from "react";
-import {myColors} from "../Utils/MyColors";
+import {myColors} from "../../Utils/MyColors";
 import {useNavigation} from "@react-navigation/native";
 
 
@@ -27,7 +27,7 @@ const Splash = () => {
             <View style={{flexDirection: 'row', alignContent: 'center', justifyContent: 'center'}}>
                 <Image
                     style={{ height: 120, width: 220, alignSelf: 'center' }}
-                    source={require('../assets/logo.png')} />
+                    source={require('../../assets/logo.png')} />
             </View>
         </View>
     );

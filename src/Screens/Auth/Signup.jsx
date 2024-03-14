@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { myColors } from "../Utils/MyColors";
+import { myColors } from "../../Utils/MyColors";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "../../Firebaseconfig";
+import { authentication } from "../../../Firebaseconfig";
 
 const Signup = () => {
     const nav = useNavigation(); // Get navigation object
@@ -53,7 +53,7 @@ const Signup = () => {
                     {/* Logo */}
                     <Image
                         style={{ height: 120, width: 220, alignSelf: 'center' }}
-                        source={require('../assets/logo.png')} />
+                        source={require('../../assets/logo.png')} />
 
 
                     {/* Sign Up Section */}

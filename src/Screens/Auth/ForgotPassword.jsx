@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { myColors } from "../Utils/MyColors";
+import { myColors } from "../../Utils/MyColors";
 import { useNavigation } from "@react-navigation/native";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { authentication } from "../../Firebaseconfig";
+import { authentication } from "../../../Firebaseconfig";
 
 const ForgotPassword = () => {
     const nav = useNavigation(); // Get navigation object
@@ -39,7 +39,7 @@ const ForgotPassword = () => {
                     {/* Logo */}
                     <Image
                         style={{ height: 120, width: 220, alignSelf: 'center' }}
-                        source={require('../assets/logo.png')} />
+                        source={require('../../assets/logo.png')} />
 
                     {/* Forgot Password Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 50 }}>

@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
 import {myColors} from "../Utils/MyColors";
 import {useNavigation} from "@react-navigation/native";
-import MyOrdersScreen from "./MyOrdersScreen";
 
 const UserProfile = () => {
     const nav = useNavigation();
@@ -15,7 +14,6 @@ const UserProfile = () => {
     // Function to handle sign out - implement your sign-out logic here
     const handleSignOut = () => {
          nav.navigate('Splash');
-        // Typically, you would call your authentication service's sign-out method here
     };
 
     return (
