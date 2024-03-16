@@ -2,17 +2,24 @@ import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Platform, StatusBar } from 'react-native';
 import { ingredientsData } from "../Utils/Data";
 import { myColors } from "../Utils/MyColors";
+import {addToCart} from "../../Redux/CartSlice";
+import {useDispatch} from "react-redux";
 // Import your method for adding items to the cart
 // import { addToCart } from '../path/to/your/cartManagementSystem';
 
 export default function IngredientsScreen({ route }) {
     const { dishId, dishName } = route.params;
     const ingredients = ingredientsData[dishId] || [];
+    const dispatch = useDispatch();
+
 
     // Function to handle adding an ingredient to the cart
     const handleAddToCart = (item) => {
         // Placeholder functionality - replace with your actual cart handling logic
+        dispatch(addToCart({ img: item.img, name: item.ingredient, price: item.price }));
+
         console.log("Added to cart", item);
+
         // addToCart(item); // Uncomment and use your actual method to add items to the cart
     };
 
