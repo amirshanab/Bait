@@ -4,8 +4,7 @@ import { ingredientsData } from "../Utils/Data";
 import { myColors } from "../Utils/MyColors";
 import {addToCart} from "../../Redux/CartSlice";
 import {useDispatch} from "react-redux";
-// Import your method for adding items to the cart
-// import { addToCart } from '../path/to/your/cartManagementSystem';
+
 
 export default function IngredientsScreen({ route }) {
     const { dishId, dishName } = route.params;

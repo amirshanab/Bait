@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Animated } from "react-native";
 import Categories from "../../Services/CategoryServices";
 import { useNavigation } from "@react-navigation/native";
-import {myColors} from "../Utils/MyColors";
+import { myColors } from "../Utils/MyColors";
 
 const AllCategoriesCarousel = () => {
     const [categories, setCategories] = useState([]);
     const navigation = useNavigation();
+    const scrollX = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,6 +37,12 @@ const AllCategoriesCarousel = () => {
         </TouchableOpacity>
     );
 
+    const indicatorWidth = scrollX.interpolate({
+        inputRange: [0, categories.length * 100],
+        outputRange: ["0%", "147%"],
+        extrapolate: "clamp",
+    });
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -45,7 +52,9 @@ const AllCategoriesCarousel = () => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.flatListContent}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
             />
+            <Animated.View style={[styles.scrollIndicator, { width: indicatorWidth }]} />
         </View>
     );
 };
@@ -54,13 +63,14 @@ const styles = StyleSheet.create({
     container: {
         padding: 15,
         backgroundColor: myColors.back,
+        borderRadius: 23,
     },
     productItem: {
         marginRight: 10,
         alignItems: "center",
     },
     image: {
-        resizeMode:'cover',
+        resizeMode: 'cover',
         width: 70,
         height: 70,
         borderRadius: 25,
@@ -71,6 +81,13 @@ const styles = StyleSheet.create({
     },
     flatListContent: {
         alignItems: "flex-start",
+    },
+    scrollIndicator: {
+        height: 4,
+        backgroundColor: "#0097B2", // Change color as needed
+        position: "absolute",
+        bottom: 0,
+        left: 0,
     },
 });
 

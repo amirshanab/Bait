@@ -1,8 +1,10 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import {myColors} from "../Utils/MyColors";
+import React from 'react';
+import { View, Dimensions, Text, StyleSheet } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
-const mockPromotions = [
+const { width: windowWidth } = Dimensions.get('window');
+
+const data = [
     { id: 1, title: "Promotion 1", description: "Description for Promotion 1" },
     { id: 2, title: "Promotion 2", description: "Description for Promotion 2" },
     { id: 3, title: "Promotion 3", description: "Description for Promotion 3" },
@@ -10,23 +12,32 @@ const mockPromotions = [
     { id: 5, title: "Promotion 5", description: "Description for Promotion 5" },
 ];
 
+const renderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.description}>{item.description}</Text>
+    </View>
+);
+
 const PromotionsCarousel = () => {
-    const renderPromotionItem = ({ item }) => (
-        <View style={styles.promotionItem}>
-            <Text style={styles.promotionTitle}>{item.title}</Text>
-            <Text style={styles.promotionDescription}>{item.description}</Text>
-        </View>
-    );
+    const [activeIndex, setActiveIndex] = React.useState(0);
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={mockPromotions}
-                renderItem={renderPromotionItem}
-                keyExtractor={(item) => item.id.toString()}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.flatListContent}
+            <Carousel
+                data={data}
+                renderItem={renderItem}
+                sliderWidth={windowWidth}
+                itemWidth={windowWidth }
+                onSnapToItem={(index) => setActiveIndex(index)}
+            />
+            <Pagination
+                dotsLength={data.length}
+                activeDotIndex={activeIndex}
+                containerStyle={styles.paginationContainer}
+                dotStyle={styles.paginationDot}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.6}
             />
         </View>
     );
@@ -34,31 +45,38 @@ const PromotionsCarousel = () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        backgroundColor: myColors.back,
+        flex: 1,
+
     },
-    carouselTitle: {
-        fontSize: 20,
-        fontWeight: "bold",
-        marginBottom: 10,
-    },
-    promotionItem: {
-        marginRight: 20,
-        padding: 20,
+    itemContainer: {
+        width: windowWidth - 30,
+        height: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: '#f0f0f0',
         borderRadius: 10,
-        backgroundColor: "#f0f0f0",
-        width: 300, // Adjust width to make items bigger
-        height: 200, // Adjust height to make items bigger
     },
-    promotionTitle: {
-        fontSize: 20, // Increase font size for title
-        fontWeight: "bold",
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        textAlign: 'center',
     },
-    promotionDescription: {
-        fontSize: 16, // Increase font size for description
+    description: {
+        fontSize: 16,
+        textAlign: 'center',
     },
-    flatListContent: {
-        alignItems: "flex-start",
+    paginationContainer: {
+        paddingVertical: 10,
+    },
+    paginationDot: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        marginHorizontal: 8,
+        backgroundColor: '#0097B2',
     },
 });
 

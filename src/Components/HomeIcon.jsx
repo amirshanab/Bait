@@ -4,7 +4,7 @@ import React from "react";
 const HomeIcon = () => {
     return (
         <View style={{justifyContent:'center',alignItems:'center' }}>
-            <Image style={{width:60,height:60}} source={require('../assets/logo.png')} />
+            <Image style={{width:100,height:100}} source={require('../assets/logo.png')} />
         </View>
     );
 }

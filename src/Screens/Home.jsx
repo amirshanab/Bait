@@ -2,7 +2,6 @@ import React from "react";
 import {ScrollView, View, SafeAreaView} from "react-native";
 import {myColors} from "../Utils/MyColors";
 import HomeIcon from "../Components/HomeIcon";
-import HomeSearch from "../Components/HomeSearch";
 import ProductsTitle from "../Components/ProductsTitle";
 import PromotionsCarousel from "../Components/PromotionsCarousel";
 import AllCategoriesCarousel from "../Components/AllCategoriesCarousel";
@@ -15,15 +14,15 @@ const Home = () => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: myColors.primary}}>
             <ScrollView>
-                <View style={{paddingHorizontal: 15, paddingBottom: 20, paddingTop: 10, gap: 10}}>
+                <View style={{paddingHorizontal: 15, paddingBottom: 20, paddingTop: 20, gap: 10}}>
 
                     <HomeIcon/>
-                    <HomeSearch/>
                     <PromotionsCarousel/>
                     <AllCategoriesCarousel/>
                     <ProductsTitle title='Vegatables'/>
                     <IndividualProductCarousel data={fruits}/>
                     <ProductsTitle title='Meat and fish'/>
+
                     <IndividualProductCarousel data={fruits}/>
 
 
