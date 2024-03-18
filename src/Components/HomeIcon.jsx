@@ -1,12 +1,34 @@
-import {View, Image} from "react-native";
-import React from "react";
+// Assuming HomeIcon.js needs adjustment for dynamic styling
 
-const HomeIcon = () => {
+import React from "react";
+import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Assuming you're using MaterialIcons
+
+const HomeIcon = ({style}) => {
     return (
-        <View style={{justifyContent:'center',alignItems:'center' }}>
-            <Image style={{width:100,height:100}} source={require('../assets/logo.png')} />
+        <View style={[styles.container, style]}>
+            <TouchableOpacity onPress={() => alert('Menu')}>
+                <Icon name="menu" size={30} color="#000" />
+            </TouchableOpacity>
+            <Image style={[styles.logo, style]} source={require('../assets/logo.png')} />
+            <TouchableOpacity onPress={() => alert('Search')}>
+                <Icon name="search" size={30} color="#000" />
+            </TouchableOpacity>
         </View>
     );
-}
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    logo: {
+        width: 80, // Default size, will be overridden by dynamic style
+        height: 80, // Default size, will be overridden by dynamic style
+    },
+});
 
 export default HomeIcon;

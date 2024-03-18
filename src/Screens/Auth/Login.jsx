@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
+import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { myColors } from "../../Utils/MyColors";
 import { Ionicons } from '@expo/vector-icons';
