@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     checkoutButtonText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'white'
+        color: myColors.white
     }
 });
 

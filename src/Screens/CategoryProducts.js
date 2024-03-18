@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     },
     addToCartText: {
         fontSize: 12,
-        color: 'white',
+        color: myColors.white,
         fontWeight: "bold",
     },
     flatListContent: {

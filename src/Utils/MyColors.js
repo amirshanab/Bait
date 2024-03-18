@@ -4,5 +4,7 @@ export const myColors = {
     clickable: '#19A7CE',
     tertiary: '#D0D4CA',
     back: '#EEEDEB',
-    grey:'#5A5A5A'
+    grey:'#5A5A5A',
+    white:'#E3E3E3',
+    text:'#222222'
 }

@@ -66,7 +66,7 @@ const ProductDetailsPopup = ({route}) => {
                         fontSize: 20,
                         fontWeight: "bold",
                         marginTop: 10,
-                        color: 'black'
+                        color: myColors.text
                     }}>
                         {name.charAt(0).toUpperCase() + name.slice(1)}
                     </Text>

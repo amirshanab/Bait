@@ -23,10 +23,10 @@ const IndividualProductCarousel = ({data}) => {
                         }
                         activeOpacity={0.7}
                         style={{
-                            backgroundColor:myColors.back,
+                            // backgroundColor:myColors.back,
                             height: responsiveHeight(23),
                             borderWidth: 2,
-                            borderColor: "#E3E3E3",
+                            borderColor: myColors.white,
                             width: responsiveWidth(30),
                             marginRight: 15,
                             borderRadius: 10,

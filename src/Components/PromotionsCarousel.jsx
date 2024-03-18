@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Dimensions, Text, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import {myColors} from "../Utils/MyColors";
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingVertical: 10,
-        backgroundColor: '#f0f0f0',
+        backgroundColor: myColors.white,
         borderRadius: 10,
     },
     title: {

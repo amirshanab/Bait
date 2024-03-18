@@ -7,7 +7,7 @@ import {myColors} from "../Utils/MyColors";
 const HomeSearch = () => {
     return (
         <View style={{
-            backgroundColor: "#E3E3E3",
+            backgroundColor: myColors.white,
             height: responsiveHeight(5),
             borderRadius: 10,
             flexDirection: 'row',

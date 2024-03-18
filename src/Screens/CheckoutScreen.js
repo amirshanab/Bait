@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     input: {
-        backgroundColor: 'white',
+        backgroundColor: myColors.white,
         padding: 15,
         marginBottom: 10,
         borderRadius: 5,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     buttonText: {
-        color: 'white',
+        color: myColors.white,
         fontWeight: 'bold',
     },
 });

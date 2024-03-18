@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     signOutButtonText: {
         fontWeight: '600',
         fontSize: 18,
-        color: '#fff',
+        color: myColors.white,
     },
 });
 

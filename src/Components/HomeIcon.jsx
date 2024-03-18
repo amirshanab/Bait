@@ -1,5 +1,3 @@
-// Assuming HomeIcon.js needs adjustment for dynamic styling
-
 import React from "react";
 import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Assuming you're using MaterialIcons
