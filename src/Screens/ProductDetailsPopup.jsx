@@ -1,13 +1,16 @@
 import {Image, SafeAreaView, Text, TouchableOpacity, View, StyleSheet, Platform, StatusBar} from "react-native";
-import React from "react";
+import React, {useContext} from "react";
 import {Ionicons} from '@expo/vector-icons';
 import {MaterialIcons} from '@expo/vector-icons';
-import {myColors} from "../Utils/MyColors";
+import {myColors as color} from "../Utils/MyColors";
 import {useNavigation} from "@react-navigation/native";
 import {addToCart} from "../../Redux/CartSlice";
 import { useDispatch } from "react-redux";
+import {ThemeContext} from "../../contexts/ThemeContext";
 
 const ProductDetailsPopup = ({route}) => {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
     const dispatch = useDispatch();
     const productData = route.params.main;
     console.log(productData)
@@ -17,7 +20,7 @@ const ProductDetailsPopup = ({route}) => {
     // Function to handle adding the product to the cart
 
     return (
-        <SafeAreaView style={styles.Main}>
+        <SafeAreaView style={[styles.Main,{ backgroundColor: myColors.primary}]}>
             {/* Product image */}
             <View>
                 <Image
@@ -47,10 +50,10 @@ const ProductDetailsPopup = ({route}) => {
                         }}
                         name="chevron-back"
                         size={28}
-                        color="black"
+                        color={myColors.text}
                     />
                     {/* Share button */}
-                    <MaterialIcons name="ios-share" size={28} color="black"/>
+                    <MaterialIcons name="ios-share" size={28} color={myColors.text}/>
                 </View>
             </View>
 
@@ -102,7 +105,7 @@ const ProductDetailsPopup = ({route}) => {
 const styles = StyleSheet.create({
     Main : {
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-        flex: 1, backgroundColor: myColors.primary, gap: 20
+        flex: 1, gap: 20
     }
 })
 

@@ -1,0 +1,44 @@
+{
+  "home": {
+    "title": "בית",
+    "welcome": "ברוכים הבאים לאפליקציית הקניות",
+    "searchPlaceholder": "חפש מוצרים...",
+    "categories": "קטגוריות",
+    "offers": "הצעות",
+    "favorites": "מועדפים",
+    "cart": "עגלת קניות"
+  },
+  "categories": {
+    "fruitsAndVegetables": "פירות וירקות",
+    "dairy": "מוצרי חלב",
+    "meatAndFish": "בשר ודגים",
+    "bakery": "מאפים",
+    "groceries": "מצרכים",
+    "beverages": "משקאות",
+    "snacks": "חטיפים"
+  },
+  "product": {
+    "add_to_cart": "הוסף לעגלה",
+    "buy_now": "קנה עכשיו",
+    "product_details": "פרטי המוצר",
+    "nutrition_facts": "ערכים תזונתיים",
+    "reviews": "ביקורות"
+  },
+  "cart": {
+    "title": "עגלת קניות",
+    "checkout": "לקופה",
+    "total": "סך הכל",
+    "empty": "העגלה שלך ריקה"
+  },
+  "checkout": {
+    "title": "תשלום",
+    "billing_information": "פרטי חיוב",
+    "delivery_address": "כתובת למשלוח",
+    "payment_method": "אמצעי תשלום",
+    "place_order": "בצע הזמנה"
+  },
+  "settings": {
+    "title": "הגדרות",
+    "language": "שפה",
+    "theme": "ערכת נושא",
+    "sign_out": "התנ

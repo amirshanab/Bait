@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; // Ensure you have @expo/vector-icons installed
-import { myColors } from "../Utils/MyColors"; // Assuming this path is correct
+import { myColors as color } from "../Utils/MyColors";
+import {ThemeContext} from "../../contexts/ThemeContext"; // Assuming this path is correct
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -16,13 +17,15 @@ function PreviousOrdersScreen() {
 }
 
 function MyOrdersScreen() {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
     const navigation = useNavigation(); // Use navigation to handle back button press
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
-            <View style={styles.headerContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.backButton}>
-                    <Ionicons name="chevron-back" size={28} color="black" />
+            <View style={[styles.headerContainer, {backgroundColor: myColors.primary}]}>
+                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
+                    <Ionicons name="chevron-back" size={28} color={myColors.text} />
                 </TouchableOpacity>
 
                 <Image style={styles.logo} source={require('../assets/logo.png')} />
@@ -33,7 +36,7 @@ function MyOrdersScreen() {
             <Tab.Navigator
                 initialRouteName="CurrentOrder"
                 screenOptions={{
-                    tabBarActiveTintColor: '#e91e63',
+                    tabBarActiveTintColor: myColors.text,
                     tabBarLabelStyle: { fontSize: 12 },
                     tabBarStyle: { backgroundColor: myColors.tertiary },
                 }}
@@ -60,11 +63,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between', // Adjusts children to space between
         paddingHorizontal: 10,
         paddingTop: 0,
-        backgroundColor: myColors.primary,
+
     },
-    backButton: {
-        // Keep as it is to align the back button to the left
-    },
+
     logo: {
         width: 70,
         height: 70,

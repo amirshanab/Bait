@@ -2,9 +2,15 @@ import React, { useEffect, useState, useRef } from "react";
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Animated } from "react-native";
 import Categories from "../../Services/CategoryServices";
 import { useNavigation } from "@react-navigation/native";
-import { myColors } from "../Utils/MyColors";
+import { myColors as color} from "../Utils/MyColors";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
+
 
 const AllCategoriesCarousel = () => {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
+
     const [categories, setCategories] = useState([]);
     const navigation = useNavigation();
     const scrollX = useRef(new Animated.Value(0)).current;
@@ -32,7 +38,7 @@ const AllCategoriesCarousel = () => {
                 {/* Image */}
                 <Image source={{ uri: item.Image }} style={styles.image} />
                 {/* Product title */}
-                <Text style={styles.productTitle}>{item.Name}</Text>
+                <Text style={[styles.productTitle, {color:myColors.text}]}>{item.Name}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -44,7 +50,7 @@ const AllCategoriesCarousel = () => {
     });
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: myColors.white}]}>
             <FlatList
                 data={categories}
                 renderItem={renderProductItem}
@@ -62,7 +68,6 @@ const AllCategoriesCarousel = () => {
 const styles = StyleSheet.create({
     container: {
         padding: 15,
-        backgroundColor: myColors.back,
         borderRadius: 23,
     },
     productItem: {

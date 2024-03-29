@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
-import {myColors} from "../Utils/MyColors";
+import {myColors as color} from "../Utils/MyColors";
 import {useNavigation} from "@react-navigation/native";
+import {ThemeContext} from "../../contexts/ThemeContext";
+
 
 const UserProfile = () => {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
+
     const nav = useNavigation();
     // Placeholder for user information - replace with actual data retrieval logic
     const userInfo = {
@@ -13,46 +18,54 @@ const UserProfile = () => {
 
     // Function to handle sign out - implement your sign-out logic here
     const handleSignOut = () => {
-         nav.navigate('Splash');
+        nav.navigate('Splash');
     };
+    // console.log(myColors.primary);
 
     return (
-        <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.container}>
-            {/* Header Logo */}
-            <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../assets/logo.png')} />
-            </View>
+        <SafeAreaView style={[styles.container, {backgroundColor: myColors.primary,}]}>
+            <ScrollView style={styles.container}>
+                {/* Header Logo */}
+                <View style={styles.logoContainer}>
+                    <Image style={styles.logo} source={require('../assets/logo.png')}/>
+                </View>
 
-            {/* User Information */}
-            <View style={styles.userInfoSection}>
-                <Text style={styles.userName}>{userInfo.name}</Text>
-                <Text style={styles.userEmail}>{userInfo.email}</Text>
-            </View>
+                {/* User Information */}
+                <View style={styles.userInfoSection}>
+                    <Text style={[styles.userName, {color: myColors.text}]}>{userInfo.name}</Text>
+                    <Text style={[styles.userEmail, {color: myColors.text}]}>{userInfo.email}</Text>
+                </View>
 
-            {/* User Actions */}
-            <View style={styles.userActions}>
-                <TouchableOpacity onPress={() => {nav.navigate('MyOrders')}} style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>My Orders</Text>
-                </TouchableOpacity>
+                {/* User Actions */}
+                <View style={styles.userActions}>
+                    <TouchableOpacity onPress={() => {
+                        nav.navigate('MyOrders')
+                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
+                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>My Orders</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {}} style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>My Addresses</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
+                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>My Addresses</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {nav.navigate('PaymentMethods')}} style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>Payment Methods</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        nav.navigate('PaymentMethods')
+                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
+                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>Payment Methods</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {}} style={styles.actionButton}>
-                    <Text style={styles.actionButtonText}>Settings</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        nav.navigate('Settings')
+                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
+                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>App Settings</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={handleSignOut} style={styles.signOutButton}>
-                    <Text style={styles.signOutButtonText}>Sign Out</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+                    <TouchableOpacity onPress={handleSignOut} style={styles.signOutButton}>
+                        <Text style={[styles.signOutButtonText, {color: myColors.text,}]}>Sign Out</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };
@@ -60,7 +73,7 @@ const UserProfile = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: myColors.primary,
+
     },
     logoContainer: {
         justifyContent: 'center',
@@ -78,17 +91,15 @@ const styles = StyleSheet.create({
     userName: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#333',
     },
     userEmail: {
         fontSize: 18,
-        color: '#666',
     },
     userActions: {
         marginTop: 50,
     },
     actionButton: {
-        backgroundColor: myColors.tertiary,
+
         padding: 15,
         marginHorizontal: 20,
         marginBottom: 15,
@@ -97,7 +108,7 @@ const styles = StyleSheet.create({
     },
     actionButtonText: {
         fontSize: 18,
-        color: '#333',
+
     },
     signOutButton: {
         backgroundColor: 'rgba(255,68,68,0.85)',
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
     signOutButtonText: {
         fontWeight: '600',
         fontSize: 18,
-        color: myColors.white,
+
     },
 });
 

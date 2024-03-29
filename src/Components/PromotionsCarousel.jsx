@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from "react";
 import { View, Dimensions, Text, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import {myColors} from "../Utils/MyColors";
+import {myColors, myColors as color} from "../Utils/MyColors";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const { width: windowWidth } = Dimensions.get('window');
 
@@ -13,23 +14,26 @@ const data = [
     { id: 5, title: "Promotion 5", description: "Description for Promotion 5" },
 ];
 
-const renderItem = ({ item }) => (
-    <View style={styles.itemContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+const renderItem = ({ item, myColors }) => (
+    <View style={[styles.itemContainer, {backgroundColor: myColors.white}]}>
+        <Text style={[styles.title,{color:myColors.text}]}>{item.title}</Text>
+        <Text style={[styles.description,{color:myColors.text}]}>{item.description}</Text>
     </View>
 );
 
 const PromotionsCarousel = () => {
+    const [theme] = useContext(ThemeContext); // Use theme from context
+    let myColors = color[theme.mode]; // Access colors based on theme
+
     const [activeIndex, setActiveIndex] = React.useState(0);
 
     return (
         <View style={styles.container}>
             <Carousel
                 data={data}
-                renderItem={renderItem}
+                renderItem={({item}) => renderItem({item, myColors})}
                 sliderWidth={windowWidth}
-                itemWidth={windowWidth }
+                itemWidth={windowWidth}
                 onSnapToItem={(index) => setActiveIndex(index)}
             />
             <Pagination
@@ -47,7 +51,6 @@ const PromotionsCarousel = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     itemContainer: {
         width: windowWidth - 30,
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingVertical: 10,
-        backgroundColor: myColors.white,
+        // backgroundColor set dynamically now
         borderRadius: 10,
     },
     title: {

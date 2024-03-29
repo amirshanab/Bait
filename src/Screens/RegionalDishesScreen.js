@@ -1,28 +1,42 @@
 import React from 'react';
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, StyleSheet, StatusBar, Platform, Image } from 'react-native';
-import { regions } from "../Utils/Data";
-import { myColors } from "../Utils/MyColors";
+import {
+    SafeAreaView,
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    StyleSheet,
+    StatusBar,
+    Platform,
+    Image
+} from 'react-native';
+import {regions} from "../Utils/Data";
+import {myColors as color} from "../Utils/MyColors";
+import {ThemeContext} from "../../contexts/ThemeContext";
 
-export default function RegionalDishesScreen({ navigation }) {
+
+export default function RegionalDishesScreen({navigation}) {
+    const [theme] = React.useContext(ThemeContext);
+    let myColors = color[theme.mode];
     return (
-        <SafeAreaView style={styles.safe}>
+        <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
             <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../assets/logo.png')} />
+                <Image style={styles.logo} source={require('../assets/logo.png')}/>
                 <View style={styles.ing}>
-                <Text style={styles.header}>Select a Region</Text>
+                    <Text style={[styles.header, {color: myColors.text,}]}>Select a Region</Text>
                 </View>
             </View>
             <FlatList
                 data={regions}
                 keyExtractor={item => item.id}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                     <TouchableOpacity
-                        style={styles.item}
+                        style={[styles.item, {borderColor: myColors.text,}]}
                         onPress={() => {
-                            navigation.navigate('Dishes', { region: item.name });
+                            navigation.navigate('Dishes', {region: item.name});
                         }}>
-                        <Image style={styles.regionImage} source={{ uri: item.img }} />
-                        <Text style={styles.title}>{item.name}</Text>
+                        <Image style={styles.regionImage} source={{uri: item.img}}/>
+                        <Text style={[styles.title, {color: myColors.text,}]}>{item.name}</Text>
                     </TouchableOpacity>
                 )}
             />
@@ -34,7 +48,6 @@ export default function RegionalDishesScreen({ navigation }) {
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-        backgroundColor: myColors.primary,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     logoContainer: {
@@ -50,7 +63,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: myColors.text,
+
         marginVertical: 10,
     },
     item: {
@@ -61,13 +74,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: myColors.secondary,
+
     },
     title: {
         paddingLeft: 40,
         fontSize: 24,
         fontWeight: 'bold',
-        color: myColors.text,
+
     },
     regionImage: {
         width: 100,

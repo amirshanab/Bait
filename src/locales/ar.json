@@ -1,0 +1,52 @@
+{
+  "home": {
+    "title": "الرئيسية",
+    "welcome": "مرحبا بكم في تطبيق التسوق",
+    "searchPlaceholder": "ابحث عن المنتجات...",
+    "categories": "الفئات",
+    "offers": "العروض",
+    "favorites": "المفضلة",
+    "cart": "عربة التسوق",
+    "seeAll": "عرض الكل"
+  },
+  "categories": {
+    "fruitsAndVegetables": "الفواكه والخضروات",
+    "dairy": "منتجات الألبان",
+    "meatAndFish": "اللحوم والأسماك",
+    "bakery": "المخبوزات",
+    "groceries": "البقالة",
+    "beverages": "المشروبات",
+    "snacks": "الوجبات الخفيفة"
+  },
+  "product": {
+    "add_to_cart": "أضف إلى عربة التسوق",
+    "buy_now": "اشترِ الآن",
+    "product_details": "تفاصيل المنتج",
+    "nutrition_facts": "معلومات غذائية",
+    "reviews": "التقييمات"
+  },
+  "cart": {
+    "title": "عربة التسوق",
+    "checkout": "الدفع",
+    "total": "المجموع",
+    "empty": "عربة التسوق فارغة"
+  },
+  "checkout": {
+    "title": "الدفع",
+    "billing_information": "معلومات الفاتورة",
+    "delivery_address": "عنوان التوصيل",
+    "payment_method": "طريقة الدفع",
+    "place_order": "تأكيد الطلب"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "language": "اللغة",
+    "theme": "الثيم",
+    "sign_out": "تسجيل الخروج"
+  },
+  "messages": {
+    "added_to_cart": "تم إضافة المنتج إلى عربة التسوق",
+    "order_placed": "تم تأكيد طلبك",
+    "fill_in_all_fields": "يرجى تعبئة جميع الحقول"
+  }
+}

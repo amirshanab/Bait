@@ -1,12 +1,15 @@
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Platform, StatusBar } from 'react-native';
 import { ingredientsData } from "../Utils/Data";
-import { myColors } from "../Utils/MyColors";
+import { myColors as color } from "../Utils/MyColors";
 import {addToCart} from "../../Redux/CartSlice";
 import {useDispatch} from "react-redux";
+import {ThemeContext} from "../../contexts/ThemeContext";
 
 
 export default function IngredientsScreen({ route }) {
+    const [theme] = React.useContext(ThemeContext);
+    let myColors = color[theme.mode];
     const { dishId, dishName } = route.params;
     const ingredients = ingredientsData[dishId] || [];
     const dispatch = useDispatch();
@@ -23,24 +26,24 @@ export default function IngredientsScreen({ route }) {
     };
 
     return (
-        <SafeAreaView style={styles.safe}>
+        <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
             <View style={styles.logoContainer}>
                 <Image style={styles.logo} source={require('../assets/logo.png')}/>
             </View>
-            <View style={styles.ing}>
-                <Text style={styles.header}>{dishName} Ingredients</Text>
+            <View style={[styles.ing, {borderColor:myColors.text}]}>
+                <Text style={[styles.header, {color: myColors.text,}]}>{dishName} Ingredients</Text>
             </View>
             <FlatList
                 data={ingredients}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
-                    <View style={styles.item}>
+                    <View style={[styles.item ,{borderColor:myColors.text}]}>
                         <Image style={styles.ingredientImage} source={{uri: item.img}}/>
                         <View style={styles.ingredientDetails}>
-                        <Text style={styles.title}>{item.ingredient}: {item.quantity}</Text>
-                        <Text style={styles.price}>Price: ₪{item.price}</Text>
+                        <Text style={[styles.title, {color: myColors.text,}]}>{item.ingredient}: {item.quantity}</Text>
+                        <Text style={[styles.price,{color: myColors.text,}]}>Price: ₪{item.price}</Text>
                         </View>
-                        <TouchableOpacity style={styles.addToCartButton} onPress={() => handleAddToCart(item)}>
+                        <TouchableOpacity style={[styles.addToCartButton,{backgroundColor: myColors.clickable,}]} onPress={() => handleAddToCart(item)}>
                             <Text style={styles.addToCartButtonText}>Add to Cart</Text>
                         </TouchableOpacity>
                     </View>
@@ -53,7 +56,7 @@ export default function IngredientsScreen({ route }) {
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-        backgroundColor: myColors.primary,
+
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     logoContainer: {
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: myColors.text,
+
         marginVertical: 20,
     },
     ing: {
@@ -78,13 +81,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         borderWidth: 0.5,
-        borderColor:'black',
+
 
     },
     item: {
         flexDirection: 'row',
         alignItems: 'center',
-        // backgroundColor: myColors.tertiary,
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         fontWeight: '600',
-        color: myColors.text,
+
     },
 
     ingredientImage: {
@@ -112,10 +114,10 @@ const styles = StyleSheet.create({
     price: {
         fontSize: 16,
         fontWeight: '600',
-        color: myColors.text,
+
     },
     addToCartButton: {
-        backgroundColor: myColors.clickable,
+
         paddingVertical: 15,
         paddingHorizontal: 15,
         borderRadius: 10,

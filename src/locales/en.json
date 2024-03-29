@@ -1,0 +1,51 @@
+{
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome to the Shopping App",
+    "searchPlaceholder": "Search for products...",
+    "categories": "Categories",
+    "offers": "Offers",
+    "favorites": "Favorites",
+    "cart": "Shopping Cart"
+  },
+  "categories": {
+    "fruitsAndVegetables": "Fruits & Vegetables",
+    "dairy": "Dairy",
+    "meatAndFish": "Meat & Fish",
+    "bakery": "Bakery",
+    "groceries": "Groceries",
+    "beverages": "Beverages",
+    "snacks": "Snacks"
+  },
+  "product": {
+    "add_to_cart": "Add to Cart",
+    "buy_now": "Buy Now",
+    "product_details": "Product Details",
+    "nutrition_facts": "Nutrition Facts",
+    "reviews": "Reviews"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "checkout": "Checkout",
+    "total": "Total",
+    "empty": "Your cart is empty"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "billing_information": "Billing Information",
+    "delivery_address": "Delivery Address",
+    "payment_method": "Payment Method",
+    "place_order": "Place Order"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "sign_out": "Sign Out"
+  },
+  "messages": {
+    "added_to_cart": "Product added to cart",
+    "order_placed": "Your order has been placed",
+    "fill_in_all_fields": "Please fill in all fields"
+  }
+}

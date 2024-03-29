@@ -1,14 +1,18 @@
-import React, { useRef } from "react";
-import { Animated, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { myColors } from "../Utils/MyColors";
+import React, { useRef, useContext } from "react";
+import {Animated, SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from "react-native";
+import { myColors as color } from "../Utils/MyColors";
 import HomeIcon from "../Components/HomeIcon";
 import ProductsTitle from "../Components/ProductsTitle";
 import PromotionsCarousel from "../Components/PromotionsCarousel";
 import AllCategoriesCarousel from "../Components/AllCategoriesCarousel";
 import IndividualProductCarousel from "../Components/IndividualProductCarousel";
 import { fruits } from "../Utils/Data";
+import {ThemeContext} from "../../contexts/ThemeContext";
 
 const Home = () => {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
+
     const scrollY = useRef(new Animated.Value(0)).current; // Use useRef to persist value across re-renders
 
     const headerHeight = scrollY.interpolate({
@@ -26,11 +30,13 @@ const Home = () => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: myColors.primary}}>
             {/* Wrap the header with SafeAreaView to avoid content overlapping the status bar */}
+            <StatusBar style={theme} />
             <SafeAreaView style={{zIndex: 1}}>
                 <Animated.View style={{
                     height: headerHeight,
                     backgroundColor,
                     borderBottomWidth:0.5,//might want to remove
+                    borderColor:myColors.text,
                     justifyContent: 'center',
                     position: 'absolute',
                     top: 0,

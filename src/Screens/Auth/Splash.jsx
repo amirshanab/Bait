@@ -1,7 +1,11 @@
 import {Image, StatusBar, View} from "react-native";
 import React, {useEffect} from "react";
-import {myColors} from "../../Utils/MyColors";
 import {useNavigation} from "@react-navigation/native";
+import {myColors as color } from "../src/Utils/MyColors";
+
+
+const theme = {mode: 'light'};
+let myColors = color[theme.mode];
 
 
 const Splash = () => {

@@ -1,8 +1,11 @@
 import {Text,View} from "react-native";
-import react from "react";
-
+import { myColors as color} from "../Utils/MyColors";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const ProductsTitle = ({title}) => {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
     return (
         <View
             style={{flexDirection:"row",
@@ -12,8 +15,8 @@ const ProductsTitle = ({title}) => {
             marginTop:10}}>
 
 
-            <Text style={{fontSize:20, fontWeight:"bold"}}>{title}</Text>
-            <Text style={{fontSize:15, color:"grey"}}>See All</Text>
+            <Text style={{fontSize:20, fontWeight:"bold", color:myColors.text}}>{title}</Text>
+            <Text style={{fontSize:15, color:myColors.text}}>See All</Text>
 
         </View>
     );

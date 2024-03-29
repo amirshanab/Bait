@@ -11,6 +11,7 @@ import DishesScreen from "../src/Screens/DishesScreen";
 import RegionalDishesScreen from "../src/Screens/RegionalDishesScreen";
 import CheckoutScreen from "../src/Screens/CheckoutScreen";
 import OrderConfirmationScreen from "../src/Screens/OrderConfirmationScreen";
+import SettingsScreen from "../src/Screens/SettingsScreen";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ export const HomeStack = () => {
             <Stack.Screen name="Ingredients" component={IngredientsScreen} />
             <Stack.Screen name="Checkout" component={CheckoutScreen} />
             <Stack.Screen name="OrderConfirmation" component={OrderConfirmationScreen} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
     );
 };

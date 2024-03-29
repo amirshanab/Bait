@@ -5,10 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../Redux/CartSlice';
 import ProductServices from '../../Services/ProductServices';
-import { myColors } from '../Utils/MyColors';
 import AddToCartAnimation from '../Components/AddToCartAnimation';
+import {myColors as color} from '../Utils/MyColors';
+import {ThemeContext} from "../../contexts/ThemeContext";
+
 
 const CategoryProducts = () => {
+    const [theme] = React.useContext(ThemeContext);
+    let myColors = color[theme.mode];
     const route = useRoute();
     const navigation = useNavigation();
     const { categoryName } = route.params;
@@ -32,21 +36,21 @@ const CategoryProducts = () => {
 
     const renderProductItem = ({ item }) => (
         <TouchableOpacity onPress={() => console.log('Product clicked:', item)}>
-            <View style={styles.productItem}>
+            <View style={[styles.productItem, {borderBottomColor: myColors.text,}]}>
                 <Image source={{ uri: item.Image }} style={styles.image} />
                 <View style={styles.productDetails}>
-                    <Text style={styles.productName}>{item.Name}</Text>
+                    <Text style={[styles.productName, {color: myColors.text,}]}>{item.Name}</Text>
                     <View style={styles.quantityContainer}>
-                        <Text style={styles.price}>{`₪ ${item.Price}`}</Text>
+                        <Text style={[styles.price,{color: myColors.text,}]}>{`₪ ${item.Price}`}</Text>
                         <TouchableOpacity
-                            style={styles.addToCartButton}
+                            style={[styles.addToCartButton,{backgroundColor: myColors.clickable,}]}
                             onPress={() => {
                                 dispatch(addToCart({ img: item.Image, name: item.Name, price: item.Price }));
                                 setItemNameForAnimation(item.Name);
                                 setShowAnimation(true);
                                 setTimeout(() => setShowAnimation(false), 2500); // Adjust timing as needed
                             }}>
-                            <Text style={styles.addToCartText}>Add to Cart</Text>
+                            <Text style={[styles.addToCartText,{color: myColors.white,}]}>Add to Cart</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -55,13 +59,13 @@ const CategoryProducts = () => {
     );
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, {backgroundColor: myColors.primary,}]}>
             <View style={styles.contentContainer}>
                 <View style={styles.headerContainer}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="chevron-back" size={28} color="black" />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={28} color={myColors.text} />
                     </TouchableOpacity>
-                    <Text style={styles.header}>{categoryName}</Text>
+                    <Text style={[styles.header,{color: myColors.text,}]}>{categoryName}</Text>
                     <View style={styles.invisibleView} />
                 </View>
                 <FlatList
@@ -80,7 +84,7 @@ const CategoryProducts = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: myColors.primary,
+
     },
     contentContainer: {
         flex: 1,
@@ -96,12 +100,9 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 20,
         fontWeight: "bold",
-        color: myColors.text,
+
         textAlign: 'center', // Ensure the text aligns center
         flex: 1, // Take available space to enforce centering
-    },
-    backButton: {
-        // Your back button styles, if any
     },
     invisibleView: {
         width: 28, // Match the back button's width
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         borderBottomWidth: 1,
-        borderBottomColor: myColors.border,
+
         paddingVertical: 10,
     },
     image: {
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     productName: {
         fontSize: 16,
         fontWeight: "bold",
-        color: myColors.text,
+
     },
     quantityContainer: {
         flexDirection: "row",
@@ -139,18 +140,18 @@ const styles = StyleSheet.create({
     price: {
         fontSize: 14,
         fontWeight: "bold",
-        color: myColors.text,
+
         marginRight: 10,
     },
     addToCartButton: {
-        backgroundColor: myColors.clickable,
+
         paddingVertical: 14,
         paddingHorizontal: 10,
         borderRadius: 10,
     },
     addToCartText: {
         fontSize: 12,
-        color: myColors.white,
+
         fontWeight: "bold",
     },
     flatListContent: {

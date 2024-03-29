@@ -4,12 +4,18 @@ import {HomeStack} from './HomeStack';
 import Cart from '../src/Screens/Cart';
 import UserProfile from '../src/Screens/UserProfile';
 import {AntDesign, FontAwesome} from '@expo/vector-icons';
-import {myColors} from "../src/Utils/MyColors";
 import RegionalDishesScreen from "../src/Screens/RegionalDishesScreen";
+import {myColors as color } from "../src/Utils/MyColors";
+import {useContext} from "react";
+import {ThemeContext} from "../contexts/ThemeContext";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabBar = () => {
+
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
+
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
@@ -28,19 +34,19 @@ const BottomTabBar = () => {
                     // Return the appropriate icon based on the route
                     if (iconName) {
                         if (route.name === 'Home') {
-                            return <AntDesign name={iconName} size={size} color={color}/>;
+                            return <AntDesign name={iconName} size={size} color={myColors.text}/>;
                         } else {
-                            return <FontAwesome name={iconName} size={size} color={color}/>;
+                            return <FontAwesome name={iconName} size={size} color={myColors.text}/>;
                         }
                     }
                 },
                 tabBarActiveTintColor: 'black',
-                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveTintColor: myColors.text,
                 tabBarStyle: {
-                    backgroundColor: myColors.back,
+                    backgroundColor: myColors.buttombar,
                     paddingBottom: 20,
                     paddingTop: 10,
-                    height: 80,
+                    height: 90,
                 },
             })}
         >

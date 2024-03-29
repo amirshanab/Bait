@@ -1,27 +1,34 @@
 import React from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
-import { myColors } from "../Utils/MyColors";
+import {SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image} from 'react-native';
+import {myColors as color} from '../Utils/MyColors';
+import {ThemeContext} from "../../contexts/ThemeContext";
 
-export default function CheckoutScreen({ navigation }) {
+export default function CheckoutScreen({navigation}) {
+    const [theme] = React.useContext(ThemeContext);
+    let myColors = color[theme.mode];
     return (
-        <SafeAreaView style={styles.safe}>
+        <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../assets/logo.png')} />
+                    <Image style={styles.logo} source={require('../assets/logo.png')}/>
                 </View>
-                <Text style={styles.header}>Checkout</Text>
+                <Text style={[styles.header, {color: myColors.text,}]}>Checkout</Text>
                 {/* Shipping Information */}
-                <TextInput style={styles.input} placeholder="Name" />
-                <TextInput style={styles.input} placeholder="Address" />
-                <TextInput style={styles.input} placeholder="City" />
+                <TextInput style={[styles.input, {backgroundColor: myColors.white, color: myColors.text}]}
+                           placeholder="Name" placeholderTextColor={myColors.placeholder}/>
+                <TextInput style={[styles.input, {backgroundColor: myColors.white, color: myColors.text}]}
+                           placeholder="Address" placeholderTextColor={myColors.placeholder}/>
+                <TextInput style={[styles.input, {backgroundColor: myColors.white, color: myColors.text}]}
+                           placeholder="City" placeholderTextColor={myColors.placeholder}/>
                 {/* Delivery Options */}
-                <Text style={styles.subheader}>Delivery Options</Text>
+                <Text style={[styles.subheader, {color: myColors.text,}]}>Delivery Options</Text>
                 {/* Placeholder for delivery options */}
                 {/* Payment Methods */}
-                <Text style={styles.subheader}>Payment Method</Text>
+                <Text style={[styles.subheader, {color: myColors.text,}]}>Payment Method</Text>
                 {/* Placeholder for payment methods */}
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('OrderConfirmation')}>
-                    <Text style={styles.buttonText}>Confirm Order</Text>
+                <TouchableOpacity style={[styles.button, {backgroundColor: myColors.clickable,}]}
+                                  onPress={() => navigation.navigate('OrderConfirmation')}>
+                    <Text style={[styles.buttonText, {color: myColors.text,}]}>Confirm Order</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
@@ -31,7 +38,7 @@ export default function CheckoutScreen({ navigation }) {
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-        backgroundColor: myColors.primary,
+
     },
     container: {
         padding: 20,
@@ -48,30 +55,29 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: myColors.text,
+
         marginBottom: 20,
     },
     input: {
-        backgroundColor: myColors.white,
         padding: 15,
         marginBottom: 10,
         borderRadius: 5,
     },
     subheader: {
         fontSize: 20,
-        color: myColors.text,
+
         marginTop: 20,
         marginBottom: 10,
     },
     button: {
-        backgroundColor: myColors.clickable,
+
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
         marginTop: 20,
     },
     buttonText: {
-        color: myColors.white,
+
         fontWeight: 'bold',
     },
 });

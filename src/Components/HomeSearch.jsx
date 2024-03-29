@@ -2,9 +2,16 @@ import {View, TextInput} from "react-native";
 import React from "react";
 import {responsiveHeight} from "react-native-responsive-dimensions";
 import {Feather} from '@expo/vector-icons';
-import {myColors} from "../Utils/MyColors";
+import {myColors as color } from "../Utils/MyColors";
+import {ThemeContext} from "../../contexts/ThemeContext";
+import {useContext} from "react";
+
+
+
 
 const HomeSearch = () => {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
     return (
         <View style={{
             backgroundColor: myColors.white,

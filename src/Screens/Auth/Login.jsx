@@ -1,11 +1,15 @@
 import React, { useState, useRef } from "react";
 import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { myColors } from "../../Utils/MyColors";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { authentication } from "../../../Firebaseconfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import {myColors as color } from "../src/Utils/MyColors";
+
+
+const theme = {mode: 'light'};
+let myColors = color[theme.mode];
 
 const Login = () => {
     const nav = useNavigation(); // Get navigation object
