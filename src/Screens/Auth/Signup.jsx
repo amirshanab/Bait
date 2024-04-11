@@ -1,17 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, {useState, useRef, useContext} from "react";
 import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "../../../Firebaseconfig";
-import {myColors as color } from "../src/Utils/MyColors";
+import {myColors as color } from "../../Utils/MyColors";
+import {ThemeContext} from "../../../contexts/ThemeContext";
 
 
-const theme = {mode: 'light'};
-let myColors = color[theme.mode];
 
 const Signup = () => {
+    const [theme] = useContext(ThemeContext);
+    let myColors = color[theme.mode];
+
     const nav = useNavigation(); // Get navigation object
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(true);
