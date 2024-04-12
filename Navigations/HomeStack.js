@@ -8,6 +8,7 @@ import MyOrdersScreen from "../src/Screens/MyOrdersScreen";
 import PaymentMethodsScreen from "../src/Screens/PaymentMethodsScreen";
 import IngredientsScreen from "../src/Screens/IngredientsScreen";
 import DishesScreen from "../src/Screens/DishesScreen";
+
 import RegionalDishesScreen from "../src/Screens/RegionalDishesScreen";
 import CheckoutScreen from "../src/Screens/CheckoutScreen";
 import OrderConfirmationScreen from "../src/Screens/OrderConfirmationScreen";
@@ -23,6 +24,7 @@ export const HomeStack = () => {
                 gestureEnabled: false,
                 animationEnabled: false // Disable animations
             }}>
+
             <Stack.Screen name="HomeMain" component={Home} />
             <Stack.Screen name="CategoryProducts" component={CategoryProducts} />
             <Stack.Screen name="ProductDetailsPopup" component={ProductDetailsPopup} />

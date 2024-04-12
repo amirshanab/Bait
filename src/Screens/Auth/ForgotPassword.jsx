@@ -1,17 +1,16 @@
-import React, {useState, useRef, useContext} from "react";
+import React, { useState, useRef } from "react";
 import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../../../Firebaseconfig";
 import {myColors as color } from "../../Utils/MyColors";
-import {ThemeContext} from "../../../contexts/ThemeContext";
 
 
+const theme = {mode: 'light'};
+let myColors = color[theme.mode];
 
 const ForgotPassword = () => {
-    const [theme] = useContext(ThemeContext);
-    let myColors = color[theme.mode];
     const nav = useNavigation(); // Get navigation object
     const emailInputRef = useRef(null);
     const [email, setEmail] = useState("");

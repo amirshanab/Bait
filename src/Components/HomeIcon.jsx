@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
 
     },
     logo: {
-        width: 80, // Default size, will be overridden by dynamic style
-        height: 80, // Default size, will be overridden by dynamic style
+        width: 90, // Default size, will be overridden by dynamic style
+        height: 90, // Default size, will be overridden by dynamic style
     },
 });
 

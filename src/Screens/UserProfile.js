@@ -1,11 +1,24 @@
-import React, {useContext} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
-import {myColors as color} from "../Utils/MyColors";
-import {useNavigation} from "@react-navigation/native";
-import {ThemeContext} from "../../contexts/ThemeContext";
+import React, {useContext, useState} from 'react';
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    TouchableOpacity,
+    ScrollView,
+    SafeAreaView,
+    ActivityIndicator
+} from 'react-native';
+import { myColors as color } from "../Utils/MyColors";
+import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { signOut } from "firebase/auth"; // Import signOut function from Firebase Authentication
+import { authentication } from "../../Firebaseconfig";
 
+import Toast from 'react-native-toast-message';
 
 const UserProfile = () => {
+    const [loading,isLoading] = useState(false);
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
 
@@ -16,9 +29,25 @@ const UserProfile = () => {
         email: 'johndoe@example.com',
     };
 
-    // Function to handle sign out - implement your sign-out logic here
     const handleSignOut = () => {
-        nav.navigate('Splash');
+isLoading(true);
+        signOut(authentication)
+            .then(() => {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Sign Out👋',
+                    text2: 'You have been signed out successfully, Come back later!',
+
+
+                    style: { height: 1250, width: 300, backgroundColor: 'rgba(0, 0, 0, 0.8)' }, // Adjust the style of the toast message container
+
+                });
+                console.log('signed out');
+            })
+            .catch(error => {
+                isLoading(false);
+                console.error("Error signing out: ", error);
+            });
     };
     // console.log(myColors.primary);
 
@@ -61,8 +90,13 @@ const UserProfile = () => {
                         <Text style={[styles.actionButtonText, {color: myColors.text}]}>App Settings</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={handleSignOut} style={styles.signOutButton}>
-                        <Text style={[styles.signOutButtonText, {color: myColors.text,}]}>Sign Out</Text>
+                    <TouchableOpacity onPress={handleSignOut} disabled={loading} style={[styles.signOutButton, {opacity: loading ? 0.5 : 1}]}>
+                        {/* Show loading indicator if loading is true */}
+                        {loading ? (
+                            <ActivityIndicator color={myColors.text} />
+                        ) : (
+                            <Text style={[styles.signOutButtonText, {color: myColors.text,}]}>Sign Out</Text>
+                        )}
                     </TouchableOpacity>
                 </View>
             </ScrollView>

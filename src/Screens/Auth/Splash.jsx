@@ -1,14 +1,14 @@
 import {Image, StatusBar, View} from "react-native";
-import React, {useContext, useEffect} from "react";
+import React, {useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {myColors as color } from "../../Utils/MyColors";
-import {ThemeContext} from "../../../contexts/ThemeContext";
 
+
+const theme = {mode: 'light'};
+let myColors = color[theme.mode];
 
 
 const Splash = () => {
-    const [theme] = useContext(ThemeContext);
-    let myColors = color[theme.mode];
     const nav = useNavigation(); // Get navigation object
 
     useEffect(() => {

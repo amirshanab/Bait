@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useColorScheme} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import Store from './Redux/Store';
-import BottomTabBar from './Navigations/BottomTabBar';
 import {ThemeContext} from './contexts/ThemeContext';
+import AppNavigator from "./Navigations/AppNavigator";
+import Toast from 'react-native-toast-message';
+
 
 const App = () => {
     const systemTheme = useColorScheme(); // Automatically gets 'light' or 'dark'
@@ -28,13 +29,15 @@ const App = () => {
     }, [systemTheme]);
 
     return (
+        <>
         <Provider store={Store}>
             <ThemeContext.Provider value={[theme, updateTheme]}>
-                <NavigationContainer>
-                    <BottomTabBar/>
-                </NavigationContainer>
+                    <AppNavigator/>
             </ThemeContext.Provider>
         </Provider>
+            <Toast />
+
+        </>
     );
 };
 
