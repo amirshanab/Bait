@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const AuthStack = ({ handleLoginSuccess }) => {
     return (
         <Stack.Navigator
-        screenOptions={{headerShown:false}}>
+            screenOptions={{headerShown:false}}>
             <Stack.Screen
                 name="Login"
                 options={{
