@@ -6,12 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { authentication } from "../../../Firebaseconfig";
 import {myColors as color } from "../../Utils/MyColors";
+import {ThemeContext} from "../../../contexts/ThemeContext";
 
 
-const theme = {mode: 'light'};
-let myColors = color[theme.mode];
 
 const Signup = () => {
+    const [theme] = React.useContext(ThemeContext);
+    let myColors = color[theme.mode];
     const nav = useNavigation(); // Get navigation object
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(true);
@@ -62,31 +63,33 @@ const Signup = () => {
 
                     {/* Sign Up Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
-                        <Text style={{ color: 'black', fontSize: 26, fontWeight: '700' }}>Sign Up</Text>
-                        <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Enter your credentials to continue</Text>
+                        <Text style={{ color: myColors.text, fontSize: 26, fontWeight: '700' }}>Sign Up</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '400', color:  myColors.text, marginTop: 5 }}>Enter your credentials to continue</Text>
 
                         {/* Username */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Username</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '500', color:  myColors.text, marginTop: 40 }}>Username</Text>
                         <TextInput maxLength={10} keyboardType={"name-phone-pad"} style={{
                             borderColor: myColors.grey,
                             borderBottomWidth: 2,
                             fontSize: 16,
-                            marginTop: 15
+                            marginTop: 15,
+                            color: myColors.text
                         }} onSubmitEditing={() => emailInputRef.current.focus()} />
 
                         {/* Email */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Email</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '500', color:  myColors.text, marginTop: 40 }}>Email</Text>
                         <TextInput ref={emailInputRef} value={email}
                                    onChangeText={(val) => setUserCredentials({ ...userCredentials, email: val })}
                                    keyboardType={"email-address"} style={{
                             borderColor: myColors.grey,
                             borderBottomWidth: 2,
                             fontSize: 16,
-                            marginTop: 15
+                            marginTop: 15,
+                            color: myColors.text
                         }} onSubmitEditing={() => passwordInputRef.current.focus()} />
 
                         {/* Password */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Password</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '500', color:  myColors.text, marginTop: 40 }}>Password</Text>
                         <View style={{
                             borderColor: myColors.grey,
                             borderBottomWidth: 2,
@@ -97,14 +100,14 @@ const Signup = () => {
                             <TextInput ref={passwordInputRef} value={password}
                                        onChangeText={(val) => setUserCredentials({ ...userCredentials, password: val })}
                                        secureTextEntry={isPasswordVisible} maxLength={20} keyboardType={"ascii-capable"}
-                                       style={{ fontSize: 17, marginTop: 15, flex: 0.9 }} onSubmitEditing={() => confirmPasswordInputRef.current.focus()} />
+                                       style={{ fontSize: 17, marginTop: 15, flex: 0.9 , color: myColors.text}} onSubmitEditing={() => confirmPasswordInputRef.current.focus()} />
                             <Ionicons onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                                       name={isPasswordVisible === true ? "eye-off-outline" : 'eye-outline'} size={24}
-                                      color="black" />
+                                      color= {myColors.text} />
                         </View>
 
                         {/* Confirm Password */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Confirm Password</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '500', color:  myColors.text, marginTop: 40 }}>Confirm Password</Text>
                         <View style={{
                             borderColor: myColors.grey,
                             borderBottomWidth: 2,
@@ -113,17 +116,17 @@ const Signup = () => {
                             alignItems: "center"
                         }}>
                             <TextInput ref={confirmPasswordInputRef} value={confirmPassword} onChangeText={(val) => setUserCredentials({ ...userCredentials, confirmPassword: val })}
-                                       secureTextEntry={isConfirmPasswordVisible} maxLength={20} keyboardType={"ascii-capable"} style={{ fontSize: 17, marginTop: 15, flex: 0.9 }} />
+                                       secureTextEntry={isConfirmPasswordVisible} maxLength={20} keyboardType={"ascii-capable"} style={{ fontSize: 17, marginTop: 15, flex: 0.9, color: myColors.text }} />
                             <Ionicons onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
                                       name={isConfirmPasswordVisible === true ? "eye-off-outline" : 'eye-outline'} size={24}
-                                      color="black" />
+                                      color={ myColors.text} />
                         </View>
 
                         {/* Terms and conditions */}
                         <Text numberOfLines={2} style={{
                             fontSize: 14,
                             fontWeight: "400",
-                            color: "black",
+                            color:  myColors.text,
                             marginTop: 15,
                             letterSpacing: 0.6,
                             lineHeight: 22,
@@ -147,7 +150,7 @@ const Signup = () => {
                         {/* Already have an account and Login */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
                             <View style={{ paddingHorizontal: 10 }}>
-                                <Text style={{ color: 'black', fontSize: 16, fontWeight: '400', textAlign: 'center' }}>Already have an account?</Text>
+                                <Text style={{ color:  myColors.text, fontSize: 16, fontWeight: '400', textAlign: 'center' }}>Already have an account?</Text>
                             </View>
                             <TouchableOpacity onPress={() => nav.navigate('Login')}>
                                 <Text style={{ color: myColors.clickable, fontSize: 16, fontWeight: '700', textAlign: 'center'}}>

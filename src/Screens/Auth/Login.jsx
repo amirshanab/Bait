@@ -7,12 +7,12 @@ import { authentication } from "../../../Firebaseconfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { myColors as color } from "../../Utils/MyColors";
 import Toast from "react-native-toast-message";
+import {ThemeContext} from "../../../contexts/ThemeContext";
 
-
-const theme = {mode: 'light'};
-let myColors = color[theme.mode];
 
 const Login = ({ handleLoginSuccess }) => {
+    const [theme] = React.useContext(ThemeContext);
+    let myColors = color[theme.mode];
     const nav = useNavigation(); // Get navigation object
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [loading, setLoading] = useState(false); // State to track loading
@@ -58,22 +58,23 @@ const Login = ({ handleLoginSuccess }) => {
 
                     {/* Login Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                        <Text style={{ color: 'black', fontSize: 26, fontWeight: '700' }}>Login</Text>
-                        <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Enter your credentials to continue</Text>
+                        <Text style={{ color: myColors.text, fontSize: 26, fontWeight: '700' }}>Login</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '400', color: myColors.text, marginTop: 5 }}>Enter your credentials to continue</Text>
 
                         {/* Email */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Email</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '500', color: myColors.text, marginTop: 40 }}>Email</Text>
                         <TextInput ref={emailInputRef} value={email}
                                    onChangeText={(val) => setUserCredentials({ ...userCredentials, email: val })}
                                    keyboardType={"email-address"} style={{
                             borderColor: myColors.grey,
+                            color: myColors.text,
                             borderBottomWidth: 2,
                             fontSize: 16,
                             marginTop: 15
                         }} onSubmitEditing={() => passwordInputRef.current.focus()} />
 
                         {/* Password */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Password</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '500', color: myColors.text, marginTop: 40 }}>Password</Text>
                         <View style={{
                             borderColor: myColors.grey,
                             borderBottomWidth: 2,
@@ -84,10 +85,10 @@ const Login = ({ handleLoginSuccess }) => {
                             <TextInput ref={passwordInputRef} value={password}
                                        onChangeText={(val) => setUserCredentials({ ...userCredentials, password: val })}
                                        secureTextEntry={isPasswordVisible} maxLength={20} keyboardType={"ascii-capable"}
-                                       style={{ fontSize: 17, marginTop: 15, flex: 0.9 }} onSubmitEditing={loginUser} />
+                                       style={{ fontSize: 17, marginTop: 15, flex: 0.9 , color: myColors.text }} onSubmitEditing={loginUser} />
                             <Ionicons onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                                       name={isPasswordVisible === true ? "eye-off-outline" : 'eye-outline'} size={24}
-                                      color="black" />
+                                      color={myColors.text} />
                         </View>
 
                         {/* Forgot Password */}
@@ -115,7 +116,7 @@ const Login = ({ handleLoginSuccess }) => {
 
                         {/* Don't have an account */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-                            <Text style={{ color: 'black', fontSize: 16, fontWeight: '400' }}>Don't have an account?</Text>
+                            <Text style={{ color: myColors.text, fontSize: 16, fontWeight: '400' }}>Don't have an account?</Text>
                             <TouchableOpacity onPress={() => nav.navigate('Signup')}>
                                 <Text
                                     style={{ color: myColors.clickable, fontSize: 16, fontWeight: '700', marginLeft: 5 }}>Sign Up</Text>
