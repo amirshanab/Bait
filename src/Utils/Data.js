@@ -96,7 +96,30 @@ export const ingredientsData = {
             img: 'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-1/11178-Different_types_of_water_header-1296x728.jpg?w=1155&h=1528',
             price: '0'
         },
-        // Add more ingredients for Pizza Margherita with price
+        {
+            id: '3',
+            ingredient: 'Salt',
+            quantity: '1 teaspoon',
+            img: 'https://assets.clevelandclinic.org/transform/1dbde386-78f5-41ad-8103-f8463950b0ea/spoonful-salt-sitting-tabletop-1051727580',
+            price: '1'
+        },
+        {
+            id: '4',
+            ingredient: 'Yeast',
+            quantity: '1 packet',
+            img: 'https://media.npr.org/assets/img/2018/02/27/yeast_wide-eb654133785982b6ac43f4ee0d2913b4aab254fa-s1400-c100.jpg',
+            price: '2'
+        },
+        {
+            id: '5',
+            ingredient: 'Tomato Sauce',
+            quantity: '1 cup',
+            img: 'https://www.simplyrecipes.com/thmb/q3mBSEUWDYQXQRvlUG3kBJD_yQM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Homemade-Tomato-Sauce-LEAD-SEO-fb1550f16f474d6e90d04a66d0736631.jpg',
+            price: '3'},
+
+    ],
+    '2': [
+        // Ingredients for Sushi with price
     ],
     '3': [
         // Ingredients for Chicken Tikka Masala with price

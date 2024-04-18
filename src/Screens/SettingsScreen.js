@@ -22,7 +22,7 @@ const SettingsScreen = () => {
     const { t } = useTranslation(); // Initialize the useTranslation hook
     const [theme, setTheme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
-    const [selectedTheme, setSelectedTheme] = useState(theme.mode);
+    const [selectedTheme, setSelectedTheme] = useState('automatic');
     const [selectedLanguage, setSelectedLanguage] = useState(i18next.language); // Use i18next's current language
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
 

@@ -5,13 +5,14 @@ import Cart from '../src/Screens/Cart';
 import UserProfile from '../src/Screens/UserProfile';
 import RegionalDishesScreen from "../src/Screens/RegionalDishesScreen";
 import { FontAwesome } from '@expo/vector-icons';
-import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
+import {myColors as color } from "../src/Utils/MyColors";
+import {useContext} from "react";
+import {ThemeContext} from "../contexts/ThemeContext";
 const Tab = createMaterialBottomTabNavigator();
 
 const BottomTabBar = () => {
     const [theme] = useContext(ThemeContext);
-
+    let myColors = color[theme.mode];
     return (
 
         <Tab.Navigator
@@ -33,7 +34,7 @@ const BottomTabBar = () => {
                     }
                 },
             })}
-            barStyle={{ backgroundColor: theme.mode === 'dark' ? '#000' : '#fff' }} // Set background color
+            barStyle={{ backgroundColor: myColors.buttombar }} // Set background color
         >
             <Tab.Screen
                 name="Home"
