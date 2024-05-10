@@ -5,16 +5,16 @@ import { useNavigation } from "@react-navigation/native";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { authentication } from "../../../Firebaseconfig";
 import {myColors as color } from "../../Utils/MyColors";
+import {ThemeContext} from "../../../contexts/ThemeContext";
 
 
-const theme = {mode: 'light'};
-let myColors = color[theme.mode];
 
 const ForgotPassword = () => {
     const nav = useNavigation(); // Get navigation object
     const emailInputRef = useRef(null);
     const [email, setEmail] = useState("");
-
+    const [theme] = React.useContext(ThemeContext);
+    let myColors = color[theme.mode];
     const resetPassword = () => {
         if (!email) {
             Alert.alert("Please enter your email.");
@@ -47,15 +47,16 @@ const ForgotPassword = () => {
 
                     {/* Forgot Password Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 50 }}>
-                        <Text style={{ color: 'black', fontSize: 26, fontWeight: '700' }}>Forgot Password</Text>
-                        <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Enter your email to reset your password</Text>
+                        <Text style={{ color: myColors.text, fontSize: 26, fontWeight: '700' }}>Forgot Password</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '400', color: myColors.text, marginTop: 5 }}>Enter your email to reset your password</Text>
 
                         {/* Email */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Email</Text>
+                        <Text style={{ fontSize: 16, fontWeight: '500', color: myColors.text, marginTop: 40 }}>Email</Text>
                         <TextInput ref={emailInputRef} value={email}
                                    onChangeText={(val) => setEmail(val)}
                                    keyboardType={"email-address"} style={{
                             borderColor: myColors.grey,
+                            color: myColors.text,
                             borderBottomWidth: 2,
                             fontSize: 16,
                             marginTop: 15
@@ -77,7 +78,7 @@ const ForgotPassword = () => {
 
                         {/* Back to Login */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-                            <Text style={{ color: 'black', fontSize: 16, fontWeight: '400' }}>Remembered your password?</Text>
+                            <Text style={{ color: myColors.text, fontSize: 16, fontWeight: '400' }}>Remembered your password?</Text>
                             <TouchableOpacity onPress={() => nav.navigate('Login')}>
                                 <Text
                                     style={{ color: myColors.clickable, fontSize: 16, fontWeight: '700', marginLeft: 5 }}>Login</Text>
