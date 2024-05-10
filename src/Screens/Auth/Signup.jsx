@@ -1,11 +1,14 @@
 import React, { useState, useRef } from "react";
-import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
+import {  ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "../../../Firebaseconfig";
+import {authentication, db} from "../../../Firebaseconfig";
 import {myColors as color } from "../../Utils/MyColors";
+import Logo from "../../Components/Logo";
+import { doc,setDoc } from "firebase/firestore";
+
 
 
 const theme = {mode: 'light'};
@@ -16,38 +19,64 @@ const Signup = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(true);
     const emailInputRef = useRef(null);
+    const phoneNumberInputRef = useRef(null);
     const passwordInputRef = useRef(null);
+    const nameInputRef = useRef(null);
     const confirmPasswordInputRef = useRef(null);
     const [userCredentials, setUserCredentials] = useState({
+        name :"",
         email: "",
+        phoneNumber : "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
     });
-    const { email, password, confirmPassword } = userCredentials;
+    const { name,email,phoneNumber ,password, confirmPassword } = userCredentials;
+    const validateFields = () => {
+        if (!email || !password || !confirmPassword || !phoneNumber||!name) {
+            Alert.alert("All fields are required");
+            return false;
+        }
 
-    const userAccount = () => {
+        // Add additional validation logic for email, password, and phone number if needed
+
         if (password !== confirmPassword) {
             Alert.alert("Passwords don't match");
+            return false;
+        }
+
+        return true;
+    };
+    const userAccount = async () => {
+        if (!validateFields()) {
             return;
         }
 
-        createUserWithEmailAndPassword(authentication, email, password)
-            .then(() => {
-                Alert.alert('User account created & signed in!');
-                nav.navigate('Login');
-            })
-            .catch(error => {
-                if (error.code === 'authentication/email-already-in-use') {
-                    Alert.alert('That email address is already in use!');
-                }
+        try {
+            const userCredential = await createUserWithEmailAndPassword(authentication, email, password);
+            const newUser = userCredential.user;
 
-                if (error.code === 'authentication/invalid-email') {
-                    Alert.alert('That email address is invalid!');
-                }
-                console.error(error);
+            const docRef = doc(db, "Users", newUser.uid);
+
+            // Add user data to the document
+            await setDoc(docRef, {
+                name: name,
+                email: newUser.email,
+                phoneNumber: phoneNumber,
             });
-    }
 
+            Alert.alert('User account created & signed in!');
+            nav.navigate('Login');
+        } catch (error) {
+            if (error.code === 'authentication/email-already-in-use') {
+                Alert.alert('That email address is already in use!');
+            }
+
+            if (error.code === 'authentication/invalid-email') {
+                Alert.alert('That email address is invalid!');
+            }
+            console.error(error);
+        }
+    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <StatusBar style={'light'} />
@@ -55,19 +84,17 @@ const Signup = () => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 30, paddingBottom: 100 }}>
 
                     {/* Logo */}
-                    <Image
-                        style={{ height: 120, width: 220, alignSelf: 'center' }}
-                        source={require('../../assets/logo.png')} />
-
+                    <Logo width={150} height={80} />
 
                     {/* Sign Up Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
                         <Text style={{ color: 'black', fontSize: 26, fontWeight: '700' }}>Sign Up</Text>
                         <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Enter your credentials to continue</Text>
 
-                        {/* Username */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Username</Text>
-                        <TextInput maxLength={10} keyboardType={"name-phone-pad"} style={{
+                        {/* Name */}
+                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Name</Text>
+                        <TextInput ref={nameInputRef} value={name} maxLength={20} onChangeText={(val) => setUserCredentials({ ...userCredentials, name: val })}
+                                   keyboardType={"email-address"} style={{
                             borderColor: myColors.grey,
                             borderBottomWidth: 2,
                             fontSize: 16,
@@ -84,7 +111,21 @@ const Signup = () => {
                             fontSize: 16,
                             marginTop: 15
                         }} onSubmitEditing={() => passwordInputRef.current.focus()} />
-
+                        {/* Phone Number */}
+                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Phone Number</Text>
+                        <TextInput
+                            ref={phoneNumberInputRef}
+                            value={phoneNumber}
+                            onChangeText={(val) => setUserCredentials({ ...userCredentials, phoneNumber: val })}
+                            keyboardType={"phone-pad"}
+                            style={{
+                                borderColor: myColors.grey,
+                                borderBottomWidth: 2,
+                                fontSize: 16,
+                                marginTop: 15
+                            }}
+                            onSubmitEditing={() => userAccount()}
+                        />
                         {/* Password */}
                         <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Password</Text>
                         <View style={{
@@ -155,8 +196,6 @@ const Signup = () => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-
-
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>

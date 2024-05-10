@@ -3,6 +3,8 @@ import { useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 import Store from './Redux/Store';
 import { ThemeContext } from './contexts/ThemeContext';
+import { UserProvider } from './contexts/UserContext';
+
 import AppNavigator from "./Navigations/AppNavigator";
 import Toast from 'react-native-toast-message';
 
@@ -30,9 +32,11 @@ const App = () => {
     return (
         <>
             <Provider store={Store}>
-                <ThemeContext.Provider value={[theme, updateTheme]}>
-                    <AppNavigator />
-                </ThemeContext.Provider>
+                <UserProvider>
+                    <ThemeContext.Provider value={[theme, updateTheme]}>
+                        <AppNavigator />
+                    </ThemeContext.Provider>
+                </UserProvider>
             </Provider>
             <Toast />
         </>

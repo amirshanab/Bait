@@ -1,9 +1,10 @@
 import React from "react";
-import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
+import {View,  TouchableOpacity, StyleSheet} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {myColors as color} from "../Utils/MyColors";
 import { ThemeContext} from "../../contexts/ThemeContext";
 import {useContext} from "react";
+import Logo from "./Logo";
 
 const HomeIcon = ({style}) => {
     const [theme] = useContext(ThemeContext);
@@ -14,7 +15,7 @@ const HomeIcon = ({style}) => {
             <TouchableOpacity onPress={() => alert('Menu')}>
                 <Icon name="menu" size={30} color={myColors.text} />
             </TouchableOpacity>
-            <Image style={[styles.logo, style]} source={require('../assets/logo.png')} />
+            <Logo width={100} height={100} />
             <TouchableOpacity onPress={() => alert('Search')}>
                 <Icon name="search" size={30} color={myColors.text} />
             </TouchableOpacity>

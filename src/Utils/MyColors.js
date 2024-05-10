@@ -8,8 +8,10 @@ export const myColors = {
         grey:'#5A5A5A',
         white:'#E3E3E3',
         text:'#222222',
-        buttombar:'#EEEDEB',
+        buttombar:'#ffffff',
         placeholder:'#7a7a7a',
+        MenuItems : '#000000',
+        logo : 'rgba(0,151,178,0.52)'
     },
     dark: {
         primary: '#000000', // Example dark primary color
@@ -22,5 +24,8 @@ export const myColors = {
         text:'#FFFFFF',
         buttombar:'#444444',
         placeholder:'#c9c7c7',
+        MenuItems : '#ffffff',
+        logo : 'rgba(0,151,178,0.52)'
+
     }
 };

@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,ScrollView, SafeAreaView } from 'react-native';
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { myColors as color } from "../Utils/MyColors";
 import { AntDesign } from '@expo/vector-icons';
 import i18next from 'i18next'
+import Logo from '../Components/Logo'
 import { useTranslation } from 'react-i18next'; // For text translation
 
 const ThemeOptions = [
@@ -38,9 +39,8 @@ const SettingsScreen = () => {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: myColors.primary }]}>
-            <View style={styles.header}>
-                <Image style={styles.logo} source={require('../assets/logo.png')} />
-            </View>
+
+            <Logo/>
             <ScrollView style={styles.container}>
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle , {color: myColors.text}]}>{t('theme')}</Text>
@@ -89,14 +89,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20,
     },
-    header: {
-        alignItems: 'center',
-        marginVertical: 20,
-    },
-    logo: {
-        width: 70,
-        height: 70,
-    },
+
     section: {
         marginBottom: 50,
     },

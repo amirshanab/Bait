@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; // Ensure you have @expo/vector-icons installed
@@ -24,7 +24,7 @@ function MyOrdersScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <View style={[styles.headerContainer, {backgroundColor: myColors.primary}]}>
-                <TouchableOpacity onPress={() => navigation.navigate('UserProfile')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                     <Ionicons name="chevron-back" size={28} color={myColors.text} />
                 </TouchableOpacity>
 

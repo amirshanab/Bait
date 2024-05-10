@@ -1,8 +1,9 @@
 import React from 'react';
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Platform, StatusBar } from 'react-native';
+import { SafeAreaView,Text, FlatList, TouchableOpacity, StyleSheet, Image, Platform, StatusBar } from 'react-native';
 import { dishes } from "../Utils/Data";
 import { myColors as color } from "../Utils/MyColors";
 import {ThemeContext} from "../../contexts/ThemeContext";
+import Logo from "../Components/Logo";
 
 export default function DishesScreen({ navigation, route }) {
     const [theme] = React.useContext(ThemeContext);
@@ -10,9 +11,7 @@ export default function DishesScreen({ navigation, route }) {
     const { region } = route.params;
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
-            <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../assets/logo.png')} />
-            </View>
+            <Logo/>
             <FlatList
                 data={dishes.filter(dish => dish.region === region)}
                 keyExtractor={item => item.id}
@@ -39,8 +38,8 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     logo: {
-        width: 70,
-        height: 70, // Adjust based on your logo's aspect ratio
+        width: 150,
+        height: 150, // Adjust based on your Logo's aspect ratio
         resizeMode: 'contain',
     },
     item: {

@@ -1,18 +1,23 @@
 import React, { useState, useRef } from "react";
-import { Image, ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator } from "react-native";
+import { ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-import { authentication } from "../../../Firebaseconfig";
+import { authentication, db } from "../../../Firebaseconfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import {  getDoc, doc } from "firebase/firestore";
 import { myColors as color } from "../../Utils/MyColors";
 import Toast from "react-native-toast-message";
+import { useUser } from '../../../contexts/UserContext';
 
+import Logo from "../../Components/Logo";
 
 const theme = {mode: 'light'};
 let myColors = color[theme.mode];
 
 const Login = ({ handleLoginSuccess }) => {
+    const { setUser } = useUser();
+
     const nav = useNavigation(); // Get navigation object
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [loading, setLoading] = useState(false); // State to track loading
@@ -24,27 +29,38 @@ const Login = ({ handleLoginSuccess }) => {
     });
     const { email, password } = userCredentials;
 
-    const loginUser = () => {
+
+    const loginUser = async () => {
         setLoading(true); // Set loading to true when login is initiated
-        signInWithEmailAndPassword(authentication, email, password)
-            .then(() => {
-                handleLoginSuccess();
-                Toast.show({
-                    type: 'success',
-                    text1: 'Logged in👋',
-                    text2: 'Login Successful! Welcome Back!',
-                });
-            })
-            .catch(error => {
-                setLoading(false); // Set loading to false if there's an error
-                if (error.code === 'authentication/user-not-found' || error.code === 'authentication/wrong-password') {
-                    alert('Invalid email or password. Please try again.');
-                } else {
-                    alert('An error occurred. Please try again later.');
-                }
-                console.error(error);
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(authentication, email, password);
+            const user = userCredential.user;
+
+            // Retrieve user information from Firestore
+            const userDocRef = doc(db, "Users", user.uid);
+            const userDocSnap = await getDoc(userDocRef);
+            if (userDocSnap.exists()) {
+                const userData = userDocSnap.data();
+                setUser(userData);
+            }
+
+            handleLoginSuccess();
+            Toast.show({
+                type: 'success',
+                text1: 'Logged in👋',
+                text2: 'Login Successful! Welcome Back!',
             });
-    }
+        } catch (error) {
+            setLoading(false); // Set loading to false if there's an error
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                Alert.alert('Invalid email or password. Please try again.');
+            } else {
+                Alert.alert('An error occurred. Please try again later.');
+            }
+            console.error(error);
+        }
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
@@ -52,9 +68,7 @@ const Login = ({ handleLoginSuccess }) => {
             <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 30, paddingBottom: 100 }}>
 
-                    <Image
-                        style={{ height: 120, width: 220, alignSelf: 'center' }}
-                        source={require('../../assets/logo.png')} />
+                    <Logo width={220} height={120} />
 
                     {/* Login Section */}
                     <View style={{ paddingHorizontal: 20, marginTop: 50 }}>

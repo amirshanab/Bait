@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import {
     View,
     Text,
-    Image,
     StyleSheet,
     TouchableOpacity,
     ScrollView,
@@ -14,19 +13,21 @@ import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { signOut } from "firebase/auth"; // Import signOut function from Firebase Authentication
 import { authentication } from "../../Firebaseconfig";
-
+import { useUser } from '../../contexts/UserContext';
 import Toast from 'react-native-toast-message';
+import Logo from "../Components/Logo";
 
 const UserProfile = () => {
     const [loading,isLoading] = useState(false);
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
+    const { user } = useUser();
 
     const nav = useNavigation();
     // Placeholder for user information - replace with actual data retrieval logic
     const userInfo = {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+        name: user.name,
+        email: user.email,
     };
 
     const handleSignOut = () => {
@@ -55,9 +56,7 @@ isLoading(true);
         <SafeAreaView style={[styles.container, {backgroundColor: myColors.primary,}]}>
             <ScrollView style={styles.container}>
                 {/* Header Logo */}
-                <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../assets/logo.png')}/>
-                </View>
+                <Logo/>
 
                 {/* User Information */}
                 <View style={styles.userInfoSection}>
@@ -115,8 +114,8 @@ const styles = StyleSheet.create({
         marginTop: 0,
     },
     logo: {
-        width: 70,
-        height: 70,
+        width: 150,
+        height: 150,
     },
     userInfoSection: {
         alignItems: 'center',

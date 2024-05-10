@@ -1,7 +1,8 @@
 import React from 'react';
-import {SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image} from 'react-native';
+import {SafeAreaView,  Text, TextInput, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import {myColors as color} from '../Utils/MyColors';
 import {ThemeContext} from "../../contexts/ThemeContext";
+import Logo from "../Components/Logo";
 
 export default function CheckoutScreen({navigation}) {
     const [theme] = React.useContext(ThemeContext);
@@ -9,9 +10,7 @@ export default function CheckoutScreen({navigation}) {
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
             <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../assets/logo.png')}/>
-                </View>
+                <Logo/>
                 <Text style={[styles.header, {color: myColors.text,}]}>Checkout</Text>
                 {/* Shipping Information */}
                 <TextInput style={[styles.input, {backgroundColor: myColors.white, color: myColors.text}]}

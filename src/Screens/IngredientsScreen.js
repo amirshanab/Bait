@@ -5,6 +5,7 @@ import { myColors as color } from "../Utils/MyColors";
 import {addToCart} from "../../Redux/CartSlice";
 import {useDispatch} from "react-redux";
 import {ThemeContext} from "../../contexts/ThemeContext";
+import Logo from "../Components/Logo";
 
 
 export default function IngredientsScreen({ route }) {
@@ -27,9 +28,7 @@ export default function IngredientsScreen({ route }) {
 
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
-            <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../assets/logo.png')}/>
-            </View>
+            <Logo/>
             <View style={[styles.ing, {borderColor:myColors.text}]}>
                 <Text style={[styles.header, {color: myColors.text,}]}>{dishName} Ingredients</Text>
             </View>
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 70,
-        height: 70, // Adjust based on your logo's aspect ratio
+        height: 70, // Adjust based on your Logo's aspect ratio
         resizeMode: 'contain',
     },
     header: {

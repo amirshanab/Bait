@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Logo from "../Components/Logo";
 
 const PaymentScreen = ({ navigation }) => {
     return (
@@ -10,9 +11,7 @@ const PaymentScreen = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Ionicons name="chevron-back" size={28} color="black" />
                 </TouchableOpacity>
-                <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../assets/logo.png')} />
-                </View>
+                <Logo/>
             </View>
 
             {/* Credit Card Form */}
@@ -48,8 +47,8 @@ const styles = StyleSheet.create({
         // Style as needed
     },
     logo: {
-        width: 100, // Adjust according to your logo
-        height: 50, // Adjust according to your logo
+        width: 100, // Adjust according to your Logo
+        height: 50, // Adjust according to your Logo
     },
     cardContainer: {
         elevation: 2,

@@ -13,6 +13,7 @@ import {
 import {regions} from "../Utils/Data";
 import {myColors as color} from "../Utils/MyColors";
 import {ThemeContext} from "../../contexts/ThemeContext";
+import Logo from "../Components/Logo";
 
 
 export default function RegionalDishesScreen({navigation}) {
@@ -20,11 +21,9 @@ export default function RegionalDishesScreen({navigation}) {
     let myColors = color[theme.mode];
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
-            <View style={styles.logoContainer}>
-                <Image style={styles.logo} source={require('../assets/logo.png')}/>
-                <View style={styles.ing}>
-                    <Text style={[styles.header, {color: myColors.text,}]}>Select a Region</Text>
-                </View>
+            <Logo/>
+            <View style={styles.ing}>
+                <Text style={[styles.header, {color: myColors.text,}]}>Select a Region</Text>
             </View>
             <FlatList
                 data={regions}
@@ -55,8 +54,8 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     logo: {
-        width: 70,
-        height: 70, // Adjust based on your logo's aspect ratio
+        width: 150,
+        height: 150, // Adjust based on your Logo's aspect ratio
         resizeMode: 'contain',
     },
     header: {
