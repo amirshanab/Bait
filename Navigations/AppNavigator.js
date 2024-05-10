@@ -5,15 +5,16 @@ import AuthStack from './AuthStack'; // Import your authentication stack
 import HomeStack from './BottomTabBar'; // Import your home stack
 import { onAuthStateChanged } from "firebase/auth";
 import { authentication, db } from "../Firebaseconfig";
-import {doc, getDoc} from "firebase/firestore";
-import {useUser} from "../contexts/UserContext";
-
+import { doc, getDoc } from "firebase/firestore";
+import { useUser } from "../contexts/UserContext";
+import LoadingScreen from "../src/Components/LoadingScreen";
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState(null);
     const { setUser } = useUser();
+    const [isLoading, setIsLoading] = useState(true); // State to control loading
 
     // Function to handle successful login
     const handleLoginSuccess = () => {
@@ -25,11 +26,13 @@ const AppNavigator = () => {
         const user = authentication.currentUser;
         if (user) {
             try {
-                const userDocRef = doc(db,"Users",user.uid);
+                const userDocRef = doc(db, "Users", user.uid);
                 const userDocSnap = await getDoc(userDocRef);
                 if (userDocSnap.exists()) {
                     const userData = userDocSnap.data();
                     setUser(userData);
+                    setUserData(userData);
+                    setIsLoading(false); // Set loading to false when data is fetched
                 }
             } catch (error) {
                 console.error("Error fetching user data:", error);
@@ -45,6 +48,7 @@ const AppNavigator = () => {
                 fetchUserData(); // Fetch user data when user is authenticated
             } else {
                 setIsAuthenticated(false); // User is not authenticated
+                setIsLoading(false); // Set loading to false when user is not authenticated
             }
         });
     };
@@ -53,6 +57,11 @@ const AppNavigator = () => {
     useEffect(() => {
         checkAuthentication();
     }, []);
+
+    if (isLoading) {
+        // Show loading indicator or splash screen while data is being fetched
+        return <LoadingScreen />;
+    }
 
     return (
         <NavigationContainer>
