@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, {useRef, useContext, useEffect, useState} from "react";
 import {Animated, SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from "react-native";
 import { myColors as color } from "../Utils/MyColors";
 import HomeIcon from "../Components/HomeIcon";
@@ -8,11 +8,25 @@ import AllCategoriesCarousel from "../Components/AllCategoriesCarousel";
 import IndividualProductCarousel from "../Components/IndividualProductCarousel";
 import { fruits } from "../Utils/Data";
 import {ThemeContext} from "../../contexts/ThemeContext";
+import ProductServices from "../../Services/ProductServices";
 
 const Home = () => {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
+    const [products, setProducts] = useState([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const productData = await ProductServices('Vegetables');
+                setProducts(productData);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
     const scrollY = useRef(new Animated.Value(0)).current; // Use useRef to persist value across re-renders
 
     const headerHeight = scrollY.interpolate({
@@ -58,7 +72,7 @@ const Home = () => {
                     <PromotionsCarousel />
                     <AllCategoriesCarousel />
                     <ProductsTitle title='Vegetables' />
-                    <IndividualProductCarousel data={fruits} />
+                    <IndividualProductCarousel data={products} />
                     <ProductsTitle title='Meat and fish' />
                     <IndividualProductCarousel data={fruits} />
                 </View>

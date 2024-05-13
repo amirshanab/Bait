@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Store from './Redux/Store';
 import { ThemeContext } from './contexts/ThemeContext';
 import { UserProvider } from './contexts/UserContext';
+import { PaperProvider } from 'react-native-paper';
 
 import AppNavigator from "./Navigations/AppNavigator";
 import Toast from 'react-native-toast-message';
@@ -31,14 +32,19 @@ const App = () => {
 
     return (
         <>
-            <Provider store={Store}>
+        <Provider store={Store}>
+            <PaperProvider>
+
+
                 <UserProvider>
                     <ThemeContext.Provider value={[theme, updateTheme]}>
                         <AppNavigator />
                     </ThemeContext.Provider>
                 </UserProvider>
-            </Provider>
             <Toast />
+            </PaperProvider>
+        </Provider>
+
         </>
     );
 };

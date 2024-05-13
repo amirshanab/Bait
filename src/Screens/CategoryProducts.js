@@ -8,7 +8,7 @@ import ProductServices from '../../Services/ProductServices';
 import AddToCartAnimation from '../Components/AddToCartAnimation';
 import {myColors as color} from '../Utils/MyColors';
 import {ThemeContext} from "../../contexts/ThemeContext";
-
+import {useProducts} from "../../contexts/ProductContext";
 
 const CategoryProducts = () => {
     const [theme] = React.useContext(ThemeContext);
@@ -20,6 +20,7 @@ const CategoryProducts = () => {
     const [showAnimation, setShowAnimation] = useState(false);
     const [itemNameForAnimation, setItemNameForAnimation] = useState('');
     const dispatch = useDispatch();
+    const Products = useProducts();
 
     useEffect(() => {
         const fetchData = async () => {

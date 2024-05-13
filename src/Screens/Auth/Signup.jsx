@@ -1,17 +1,16 @@
 import React, { useState, useRef } from "react";
-import {  ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
+import { ScrollView, StatusBar, Text, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import {authentication, db} from "../../../Firebaseconfig";
-import {myColors as color } from "../../Utils/MyColors";
+import { authentication, db } from "../../../Firebaseconfig";
+import { myColors as color } from "../../Utils/MyColors";
 import Logo from "../../Components/Logo";
-import { doc,setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+import { TextInput as PaperTextInput, Button } from 'react-native-paper';
 
-
-
-const theme = {mode: 'light'};
+const theme = { mode: 'light' };
 let myColors = color[theme.mode];
 
 const Signup = () => {
@@ -24,20 +23,19 @@ const Signup = () => {
     const nameInputRef = useRef(null);
     const confirmPasswordInputRef = useRef(null);
     const [userCredentials, setUserCredentials] = useState({
-        name :"",
+        name: "",
         email: "",
-        phoneNumber : "",
+        phoneNumber: "",
         password: "",
         confirmPassword: "",
     });
-    const { name,email,phoneNumber ,password, confirmPassword } = userCredentials;
+    const { name, email, phoneNumber, password, confirmPassword } = userCredentials;
+
     const validateFields = () => {
-        if (!email || !password || !confirmPassword || !phoneNumber||!name) {
+        if (!email || !password || !confirmPassword || !phoneNumber || !name) {
             Alert.alert("All fields are required");
             return false;
         }
-
-        // Add additional validation logic for email, password, and phone number if needed
 
         if (password !== confirmPassword) {
             Alert.alert("Passwords don't match");
@@ -46,6 +44,7 @@ const Signup = () => {
 
         return true;
     };
+
     const userAccount = async () => {
         if (!validateFields()) {
             return;
@@ -57,7 +56,6 @@ const Signup = () => {
 
             const docRef = doc(db, "Users", newUser.uid);
 
-            // Add user data to the document
             await setDoc(docRef, {
                 name: name,
                 email: newUser.email,
@@ -77,6 +75,7 @@ const Signup = () => {
             console.error(error);
         }
     };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <StatusBar style={'light'} />
@@ -92,106 +91,85 @@ const Signup = () => {
                         <Text style={{ fontSize: 16, fontWeight: '400', color: 'grey', marginTop: 5 }}>Enter your credentials to continue</Text>
 
                         {/* Name */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Name</Text>
-                        <TextInput ref={nameInputRef} value={name} maxLength={20} onChangeText={(val) => setUserCredentials({ ...userCredentials, name: val })}
-                                   keyboardType={"email-address"} style={{
-                            borderColor: myColors.grey,
-                            borderBottomWidth: 2,
-                            fontSize: 16,
-                            marginTop: 15
-                        }} onSubmitEditing={() => emailInputRef.current.focus()} />
+                        <PaperTextInput
+                            ref={nameInputRef}
+                            value={name}
+                            mode={"outlined"}
+                            activeOutlineColor = { 'black' }
+                            label={'Name'}
+                            maxLength={20}
+                            onChangeText={(val) => setUserCredentials({ ...userCredentials, name: val })}
+                            style={{ marginTop: 50,backgroundColor:myColors.primary }}
+                        />
 
                         {/* Email */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Email</Text>
-                        <TextInput ref={emailInputRef} value={email}
-                                   onChangeText={(val) => setUserCredentials({ ...userCredentials, email: val })}
-                                   keyboardType={"email-address"} style={{
-                            borderColor: myColors.grey,
-                            borderBottomWidth: 2,
-                            fontSize: 16,
-                            marginTop: 15
-                        }} onSubmitEditing={() => passwordInputRef.current.focus()} />
+                        <PaperTextInput
+                            ref={emailInputRef}
+                            value={email}
+                            mode={"outlined"}
+                            label={'Email'}
+                            onChangeText={(val) => setUserCredentials({ ...userCredentials, email: val })}
+                            keyboardType={"email-address"}
+                            style={{ marginTop: 35 ,backgroundColor:myColors.primary}}
+                        />
+
                         {/* Phone Number */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Phone Number</Text>
-                        <TextInput
+                        <PaperTextInput
                             ref={phoneNumberInputRef}
                             value={phoneNumber}
+                            mode={"outlined"}
+                            label={'Phone Number'}
                             onChangeText={(val) => setUserCredentials({ ...userCredentials, phoneNumber: val })}
                             keyboardType={"phone-pad"}
-                            style={{
-                                borderColor: myColors.grey,
-                                borderBottomWidth: 2,
-                                fontSize: 16,
-                                marginTop: 15
-                            }}
+                            style={{ marginTop: 35 ,backgroundColor:myColors.primary}}
                             onSubmitEditing={() => userAccount()}
                         />
+
                         {/* Password */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Password</Text>
-                        <View style={{
-                            borderColor: myColors.grey,
-                            borderBottomWidth: 2,
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: "center"
-                        }}>
-                            <TextInput ref={passwordInputRef} value={password}
-                                       onChangeText={(val) => setUserCredentials({ ...userCredentials, password: val })}
-                                       secureTextEntry={isPasswordVisible} maxLength={20} keyboardType={"ascii-capable"}
-                                       style={{ fontSize: 17, marginTop: 15, flex: 0.9 }} onSubmitEditing={() => confirmPasswordInputRef.current.focus()} />
-                            <Ionicons onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-                                      name={isPasswordVisible === true ? "eye-off-outline" : 'eye-outline'} size={24}
-                                      color="black" />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 35 }}>
+                            <PaperTextInput
+                                ref={passwordInputRef}
+                                value={password}
+                                mode={"outlined"}
+                                label={'Password'}
+                                onChangeText={(val) => setUserCredentials({ ...userCredentials, password: val })}
+                                secureTextEntry={isPasswordVisible}
+                                maxLength={20}
+                                style={{ flex: 1,backgroundColor:myColors.primary,marginRight: 10 }}
+                            />
+                            <Ionicons onPress={() => setIsPasswordVisible(!isPasswordVisible)} name={isPasswordVisible ? "eye-off-outline" : 'eye-outline'} size={24} color="black" style={{justifyContent:'center',alignItems:'center'}} />
                         </View>
 
                         {/* Confirm Password */}
-                        <Text style={{ fontSize: 16, fontWeight: '500', color: 'grey', marginTop: 40 }}>Confirm Password</Text>
-                        <View style={{
-                            borderColor: myColors.grey,
-                            borderBottomWidth: 2,
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: "center"
-                        }}>
-                            <TextInput ref={confirmPasswordInputRef} value={confirmPassword} onChangeText={(val) => setUserCredentials({ ...userCredentials, confirmPassword: val })}
-                                       secureTextEntry={isConfirmPasswordVisible} maxLength={20} keyboardType={"ascii-capable"} style={{ fontSize: 17, marginTop: 15, flex: 0.9 }} />
-                            <Ionicons onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
-                                      name={isConfirmPasswordVisible === true ? "eye-off-outline" : 'eye-outline'} size={24}
-                                      color="black" />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 35 }}>
+                            <PaperTextInput
+                                ref={confirmPasswordInputRef}
+                                value={confirmPassword}
+                                mode={"outlined"}
+                                label={'Confirm Password'}
+                                onChangeText={(val) => setUserCredentials({ ...userCredentials, confirmPassword: val })}
+                                secureTextEntry={isConfirmPasswordVisible}
+                                maxLength={20}
+                                style={{ flex: 1,backgroundColor:myColors.primary,marginRight: 10 }}
+                            />
+                            <Ionicons onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)} name={isConfirmPasswordVisible ? "eye-off-outline" : 'eye-outline'} size={24} color="black" />
                         </View>
 
                         {/* Terms and conditions */}
-                        <Text numberOfLines={2} style={{
-                            fontSize: 14,
-                            fontWeight: "400",
-                            color: "black",
-                            marginTop: 15,
-                            letterSpacing: 0.6,
-                            lineHeight: 22,
-                            opacity: 0.7
-                        }}>By continuing, you agree to our <Text style={{ color: "blue", fontWeight: "bold", opacity: 0.5 }}>terms of service and privacy policy</Text></Text>
+                        <Text numberOfLines={2} style={{ fontSize: 14, fontWeight: "400", color: "black", marginTop: 15, letterSpacing: 0.6, lineHeight: 22, opacity: 0.7 }}>
+                            By continuing, you agree to our <Text style={{ color: "blue", fontWeight: "bold", opacity: 0.5 }}>terms of service and privacy policy</Text>
+                        </Text>
 
                         {/* Sign Up Button */}
-                        <TouchableOpacity onPress={userAccount}>
-                            <View style={{
-                                backgroundColor: myColors.clickable,
-                                height: 50,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginTop: 30,
-                                borderRadius: 10
-                            }}>
-                                <Text style={{ color: 'white', fontSize: 18, fontWeight: '700' }}>Sign Up</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <Button mode="contained" onPress={userAccount} style={{ marginTop: 30, borderRadius: 10 }}>
+                            Sign Up
+                        </Button>
 
                         {/* Already have an account and Login */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
-                            <View style={{ paddingHorizontal: 10 }}>
-                                <Text style={{ color: 'black', fontSize: 16, fontWeight: '400', textAlign: 'center' }}>Already have an account?</Text>
-                            </View>
+                            <Text style={{ color: 'black', fontSize: 16, fontWeight: '400', textAlign: 'center' }}>Already have an account?</Text>
                             <TouchableOpacity onPress={() => nav.navigate('Login')}>
-                                <Text style={{ color: myColors.clickable, fontSize: 16, fontWeight: '700', textAlign: 'center'}}>
+                                <Text style={{ color: myColors.clickable, fontSize: 16, fontWeight: '700', textAlign: 'center', marginLeft: 5 }}>
                                     Login
                                 </Text>
                             </TouchableOpacity>

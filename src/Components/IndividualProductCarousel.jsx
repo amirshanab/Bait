@@ -17,13 +17,11 @@ const IndividualProductCarousel = ({data}) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={data}
+                initialNumToRender={1}
                 renderItem={({item, index}) => (
                     // product card
                     <TouchableOpacity
-                        onPress={() => nav.navigate('ProductDetailsPopup', {
-                            main: item
-                        })
-                        }
+
                         activeOpacity={0.7}
                         style={{
                             backgroundColor:myColors.white,
@@ -36,14 +34,14 @@ const IndividualProductCarousel = ({data}) => {
 
                         }}
                     >
-                        <Image style={{height: 100,borderRadius:30,resizeMode: "contain", marginVertical:10}} source={{uri: item.img}}/>
+                        <Image style={{height: 100,borderRadius:30,resizeMode: "contain", marginVertical:10}} source={{uri: item.Image}}/>
                         <View style={{paddingHorizontal: 10}}>
                             {/* product name */}
                             <Text style={{
                                 fontSize: 16,
                                 fontWeight: "600",
                                 color:myColors.text
-                            }}>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
+                            }}>{item.Name}</Text>
                             {/* product price */}
                             <View style={{
                                 flexDirection: "row",
@@ -51,8 +49,12 @@ const IndividualProductCarousel = ({data}) => {
                                 justifyContent: "space-between",
                                 marginTop: 18
                             }}>
-                                <Text style={{fontSize: 14, fontWeight: 'bold', color:myColors.text}}>₪ {item.price}</Text>
+                                <Text style={{fontSize: 14, fontWeight: 'bold', color:myColors.text}}>₪ {item.Price}</Text>
+                                <TouchableOpacity onPress={() => {
+                                console.log("Press")}
+                                }>
                                 <Entypo name="squared-plus" size={33} color="#04AA6D"/>
+                                </TouchableOpacity>
                             </View>
 
 
