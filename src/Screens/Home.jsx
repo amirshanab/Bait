@@ -13,20 +13,9 @@ import ProductServices from "../../Services/ProductServices";
 const Home = () => {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
+    // //setProducts(ProductServices('Fruits'))
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const productData = await ProductServices('Vegetables');
-                setProducts(productData);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
     const scrollY = useRef(new Animated.Value(0)).current; // Use useRef to persist value across re-renders
 
     const headerHeight = scrollY.interpolate({
@@ -72,9 +61,9 @@ const Home = () => {
                     <PromotionsCarousel />
                     <AllCategoriesCarousel />
                     <ProductsTitle title='Vegetables' />
-                    <IndividualProductCarousel data={products} />
+                    <IndividualProductCarousel data={ProductServices('Fruits')} />
                     <ProductsTitle title='Meat and fish' />
-                    <IndividualProductCarousel data={fruits} />
+                    <IndividualProductCarousel data={ProductServices('Meats')} />
                 </View>
             </ScrollView>
         </SafeAreaView>

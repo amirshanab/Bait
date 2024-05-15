@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {  Text, StyleSheet, Animated } from 'react-native';
+import {myColors} from "../Utils/MyColors";
 
 const AddToCartAnimation = ({ itemName }) => {
     const [fadeAnim] = useState(new Animated.Value(0)); // Initial value for opacity: 0
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
         bottom: 20,
         left: 20,
         right: 20,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor:myColors.light.logo,
         borderRadius: 10,
         padding: 10,
         alignItems: 'center',

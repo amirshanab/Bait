@@ -5,15 +5,18 @@ import AuthStack from './AuthStack'; // Import your authentication stack
 import HomeStack from './BottomTabBar'; // Import your home stack
 import { onAuthStateChanged } from "firebase/auth";
 import { authentication, db } from "../Firebaseconfig";
-import { doc, getDoc } from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, query} from "firebase/firestore";
 import { useUser } from "../contexts/UserContext";
 import LoadingScreen from "../src/Components/LoadingScreen";
+import {useProducts} from "../contexts/ProductContext";
+
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState(null);
     const { setUser } = useUser();
+    const {setProducts} = useProducts()
     const [isLoading, setIsLoading] = useState(true); // State to control loading
 
     // Function to handle successful login
@@ -39,6 +42,31 @@ const AppNavigator = () => {
             }
         }
     };
+    const fetchProducts = async () => {
+
+            try {
+                const productRef = collection(db, 'Products');
+
+                // Construct a query to filter products based on the 'Category' field
+                const q = query(productRef);
+
+                // Execute the query and retrieve the documents
+                const querySnapshot = await getDocs(q);
+
+
+                setProducts(querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                })))
+
+
+                setIsLoading(false); // Set loading to false when data is fetched
+                }
+             catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
 
     // Function to check authentication status
     const checkAuthentication = () => {
@@ -46,6 +74,8 @@ const AppNavigator = () => {
             if (user) {
                 setIsAuthenticated(true); // User is authenticated
                 fetchUserData(); // Fetch user data when user is authenticated
+                fetchProducts()
+                console.log('User info and products are fetched')
             } else {
                 setIsAuthenticated(false); // User is not authenticated
                 setIsLoading(false); // Set loading to false when user is not authenticated

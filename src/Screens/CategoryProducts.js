@@ -4,36 +4,21 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../Redux/CartSlice';
-import ProductServices from '../../Services/ProductServices';
 import AddToCartAnimation from '../Components/AddToCartAnimation';
 import {myColors as color} from '../Utils/MyColors';
 import {ThemeContext} from "../../contexts/ThemeContext";
-import {useProducts} from "../../contexts/ProductContext";
-
+import ProductServices from "../../Services/ProductServices";
 const CategoryProducts = () => {
     const [theme] = React.useContext(ThemeContext);
     let myColors = color[theme.mode];
     const route = useRoute();
     const navigation = useNavigation();
     const { categoryName } = route.params;
-    const [products, setProducts] = useState([]);
+    //const [products, setProducts] = useState([]);
     const [showAnimation, setShowAnimation] = useState(false);
     const [itemNameForAnimation, setItemNameForAnimation] = useState('');
     const dispatch = useDispatch();
-    const Products = useProducts();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const productData = await ProductServices(categoryName);
-                setProducts(productData);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
+    const filteredProducts = ProductServices(categoryName);
 
     const renderProductItem = ({ item }) => (
         <TouchableOpacity onPress={() => console.log('Product clicked:', item)}>
@@ -70,7 +55,7 @@ const CategoryProducts = () => {
                     <View style={styles.invisibleView} />
                 </View>
                 <FlatList
-                    data={products}
+                    data={filteredProducts}
                     renderItem={renderProductItem}
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={styles.flatListContent}

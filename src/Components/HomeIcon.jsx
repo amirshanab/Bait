@@ -31,10 +31,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
 
     },
-    logo: {
-        width: 90, // Default size, will be overridden by dynamic style
-        height: 90, // Default size, will be overridden by dynamic style
-    },
+
 });
 
 export default HomeIcon;
