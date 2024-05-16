@@ -33,8 +33,11 @@ const PromotionsCarousel = () => {
         <View style={styles.container}>
             <Carousel
                 data={data}
+                autoplay={true}
+                loop={true}
                 renderItem={renderItem}
                 sliderWidth={windowWidth}
+                autoplayInterval={3000}
                 itemWidth={windowWidth}
                 onSnapToItem={(index) => setActiveIndex(index)}
             />

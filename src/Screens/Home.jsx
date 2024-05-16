@@ -6,21 +6,19 @@ import ProductsTitle from "../Components/ProductsTitle";
 import PromotionsCarousel from "../Components/PromotionsCarousel";
 import AllCategoriesCarousel from "../Components/AllCategoriesCarousel";
 import IndividualProductCarousel from "../Components/IndividualProductCarousel";
-import { fruits } from "../Utils/Data";
 import {ThemeContext} from "../../contexts/ThemeContext";
 import ProductServices from "../../Services/ProductServices";
 
 const Home = () => {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
-    // const [products, setProducts] = useState([]);
-    // //setProducts(ProductServices('Fruits'))
+
 
     const scrollY = useRef(new Animated.Value(0)).current; // Use useRef to persist value across re-renders
 
     const headerHeight = scrollY.interpolate({
         inputRange: [0, 100],
-        outputRange: [130, 50], // Original height to minimized height
+        outputRange: [130, 80], // Original height to minimized height
         extrapolate: 'clamp',
     });
 
@@ -60,10 +58,27 @@ const Home = () => {
                 <View style={styles.contentContainer}>
                     <PromotionsCarousel />
                     <AllCategoriesCarousel />
+                    <ProductsTitle title='Fruits' />
+                    <IndividualProductCarousel data={ProductServices('Fruits').slice(0,5)} />
                     <ProductsTitle title='Vegetables' />
-                    <IndividualProductCarousel data={ProductServices('Fruits')} />
-                    <ProductsTitle title='Meat and fish' />
+                    <IndividualProductCarousel data={ProductServices('Vegetables')} />
+                    <ProductsTitle title='Bakery' />
+                    <IndividualProductCarousel data={ProductServices('Bakery')} />
+                    <ProductsTitle title='Meats and Fish' />
                     <IndividualProductCarousel data={ProductServices('Meats')} />
+                    <ProductsTitle title="Beauty and baby" />
+                    <IndividualProductCarousel data={ProductServices("Beauty and baby")} />
+                    <ProductsTitle title='Beverages' />
+                    <IndividualProductCarousel data={ProductServices('Beverages')} />
+                    <ProductsTitle title='Cleaning' />
+                    <IndividualProductCarousel data={ProductServices('Cleaning')} />
+                    <ProductsTitle title='Dairy' />
+                    <IndividualProductCarousel data={ProductServices('Dairy')} />
+                    <ProductsTitle title='Pets' />
+                    <IndividualProductCarousel data={ProductServices('Pets')} />
+                    <ProductsTitle title='Sweets and Snacks' />
+                    <IndividualProductCarousel data={ProductServices('Sweets and snacks')} />
+
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -1,7 +1,6 @@
 import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import React from "react";
 import {responsiveHeight, responsiveWidth} from "react-native-responsive-dimensions";
-import {Entypo} from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
 import {myColors as color} from "../Utils/MyColors";
 import {ThemeContext} from "../../contexts/ThemeContext";
@@ -14,10 +13,9 @@ const IndividualProductCarousel = ({data}) => {
     return (
         <View>
             <FlatList
-                horizontal
+                horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 data={data}
-                initialNumToRender={1}
                 renderItem={({item, index}) => (
                     // product card
                     <TouchableOpacity
@@ -28,9 +26,10 @@ const IndividualProductCarousel = ({data}) => {
                             height: responsiveHeight(23),
                             borderWidth: 2,
                             borderColor: myColors.white,
-                            width: responsiveWidth(30),
-                            marginRight: 15,
+                            width: responsiveWidth(35),
+                            marginRight: 10,
                             borderRadius: 10,
+
 
                         }}
                     >
@@ -40,24 +39,21 @@ const IndividualProductCarousel = ({data}) => {
                             <Text style={{
                                 fontSize: 16,
                                 fontWeight: "600",
+                                height: 40,
                                 color:myColors.text
                             }}>{item.Name}</Text>
                             {/* product price */}
+
+
                             <View style={{
                                 flexDirection: "row",
                                 alignItems: "center",
                                 justifyContent: "space-between",
-                                marginTop: 18
+                                marginTop: 1
                             }}>
-                                <Text style={{fontSize: 14, fontWeight: 'bold', color:myColors.text}}>₪ {item.Price}</Text>
-                                <TouchableOpacity onPress={() => {
-                                console.log("Press")}
-                                }>
-                                <Entypo name="squared-plus" size={33} color="#04AA6D"/>
-                                </TouchableOpacity>
+                                <Text style={{fontSize: 15, fontWeight: 'bold', color:myColors.text}}>₪{item.Price} {item.Scale ? 'per Kg' : ''}</Text>
+
                             </View>
-
-
                         </View>
 
                     </TouchableOpacity>

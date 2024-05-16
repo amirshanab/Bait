@@ -29,7 +29,7 @@ export const regions = [
     {id: '1', name: 'Italian', img: 'https://www.destinavo.com/wp-content/uploads/2020/01/Italian-Food.jpg.webp'},
     {
         id: '2',
-        name: 'Middle Eastern Food',
+        name: 'Middle Eastern\nFood',
         img: 'https://kaleela.com/Content/BlogImages/small/middle-eastern-food-what-are-the-best-arabic-recipes.png'
     },
     {

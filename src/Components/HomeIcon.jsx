@@ -12,9 +12,8 @@ const HomeIcon = ({style}) => {
 
     return (
         <View style={[styles.container, style ]}>
-            <TouchableOpacity onPress={() => alert('Menu')}>
-                <Icon name="menu" size={30} color={myColors.text} />
-            </TouchableOpacity>
+            <View style={{marginRight:10}}>
+            </View>
             <Logo width={100} height={100} />
             <TouchableOpacity onPress={() => alert('Search')}>
                 <Icon name="search" size={30} color={myColors.text} />
