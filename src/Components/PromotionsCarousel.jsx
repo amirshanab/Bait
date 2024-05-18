@@ -20,7 +20,6 @@ const PromotionsCarousel = () => {
         { id: 4, title: "Promotion 4", description: "Description for Promotion 4", image:imageUrls[3]  },
         { id: 5, title: "Promotion 5", description: "Description for Promotion 5", image: imageUrls[4] },
     ];
-
     const renderItem = ({ item }) => (
         <View style={[styles.itemContainer]}>
             <Image source={{ uri: item.image }} style={styles.image} />

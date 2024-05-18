@@ -26,7 +26,6 @@ const Cart = () => {
     const nav = useNavigation(); // Access the navigation object
     const dispatch = useDispatch();
     const storeData = useSelector((state) => state.cart); // Get the cart data from the store
-
     // Calculate total amount
     const totalAmount = storeData.products.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0).toFixed(2);
 
@@ -45,7 +44,7 @@ const Cart = () => {
                                 <TouchableOpacity onPress={() => dispatch(decrementQuantity(item))}>
                                     <AntDesign name="minus" size={24} color={myColors.text} />
                                 </TouchableOpacity>
-                                <Text style={[styles.quantity , {color: myColors.text}]}>{item.quantity}</Text>
+                                <Text style={[styles.quantity , {color: myColors.text}]}>{item.quantity} {item.Scale ? 'Kg' : ''}</Text>
                                 <TouchableOpacity onPress={() => dispatch(incrementQuantity(item))}>
                                     <AntDesign name="plus" size={24} color={myColors.text} />
                                 </TouchableOpacity>

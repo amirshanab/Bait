@@ -14,7 +14,6 @@ const CategoryProducts = () => {
     const route = useRoute();
     const navigation = useNavigation();
     const { categoryName } = route.params;
-    //const [products, setProducts] = useState([]);
     const [showAnimation, setShowAnimation] = useState(false);
     const [itemNameForAnimation, setItemNameForAnimation] = useState('');
     const dispatch = useDispatch();
@@ -31,7 +30,7 @@ const CategoryProducts = () => {
                         <TouchableOpacity
                             style={[styles.addToCartButton,{backgroundColor: myColors.clickable,}]}
                             onPress={() => {
-                                dispatch(addToCart({ img: item.Image, name: item.Name, price: item.Price }));
+                                dispatch(addToCart({ img: item.Image, name: item.Name, price: item.Price,Scale: item.Scale }));
                                 setItemNameForAnimation(item.Name);
                                 setShowAnimation(true);
                                 setTimeout(() => setShowAnimation(false), 2500); // Adjust timing as needed
