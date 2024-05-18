@@ -12,9 +12,8 @@ const HomeIcon = ({style}) => {
 
     return (
         <View style={[styles.container, style ]}>
-            <TouchableOpacity onPress={() => alert('Menu')}>
-                <Icon name="menu" size={30} color={myColors.text} />
-            </TouchableOpacity>
+            <View style={{marginRight:10}}>
+            </View>
             <Logo width={100} height={100} />
             <TouchableOpacity onPress={() => alert('Search')}>
                 <Icon name="search" size={30} color={myColors.text} />
@@ -31,10 +30,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
 
     },
-    logo: {
-        width: 90, // Default size, will be overridden by dynamic style
-        height: 90, // Default size, will be overridden by dynamic style
-    },
+
 });
 
 export default HomeIcon;

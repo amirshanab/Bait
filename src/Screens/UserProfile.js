@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
     View,
     Text,
@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     ScrollView,
     SafeAreaView,
-    ActivityIndicator
+    ActivityIndicator, Dimensions
 } from 'react-native';
 import { myColors as color } from "../Utils/MyColors";
 import { useNavigation } from "@react-navigation/native";
@@ -16,12 +16,15 @@ import { authentication } from "../../Firebaseconfig";
 import { useUser } from '../../contexts/UserContext';
 import Toast from 'react-native-toast-message';
 import Logo from "../Components/Logo";
+import AwesomeButton from "react-native-really-awesome-button";
 
 const UserProfile = () => {
-    const [loading,isLoading] = useState(false);
+    const [loading, isLoading] = useState(false);
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
     const { user } = useUser();
+    const { width: windowWidth } = Dimensions.get('window');
+
 
     const nav = useNavigation();
     // Placeholder for user information - replace with actual data retrieval logic
@@ -31,17 +34,15 @@ const UserProfile = () => {
     };
 
     const handleSignOut = () => {
-isLoading(true);
+        isLoading(true);
+
         signOut(authentication)
             .then(() => {
                 Toast.show({
                     type: 'success',
                     text1: 'Sign Out👋',
                     text2: 'You have been signed out successfully, Come back later!',
-
-
-                    style: { height: 1250, width: 300, backgroundColor: 'rgba(0, 0, 0, 0.8)' }, // Adjust the style of the toast message container
-
+                    style: { height: 125, width: 300, backgroundColor: 'rgba(0, 0, 0, 0.8)' }, // Adjust the style of the toast message container
                 });
                 console.log('signed out');
             })
@@ -50,53 +51,50 @@ isLoading(true);
                 console.error("Error signing out: ", error);
             });
     };
-    // console.log(myColors.primary);
 
     return (
-        <SafeAreaView style={[styles.container, {backgroundColor: myColors.primary,}]}>
+        <SafeAreaView style={[styles.container, { backgroundColor: myColors.primary }]}>
             <ScrollView style={styles.container}>
                 {/* Header Logo */}
-                <Logo/>
+                <Logo />
 
                 {/* User Information */}
                 <View style={styles.userInfoSection}>
-                    <Text style={[styles.userName, {color: myColors.text}]}>{userInfo.name}</Text>
-                    <Text style={[styles.userEmail, {color: myColors.text}]}>{userInfo.email}</Text>
+                    <Text style={[styles.userName, { color: myColors.text }]}>{userInfo.name}</Text>
+                    <Text style={[styles.userEmail, { color: myColors.text }]}>{userInfo.email}</Text>
                 </View>
 
                 {/* User Actions */}
                 <View style={styles.userActions}>
-                    <TouchableOpacity onPress={() => {
-                        nav.navigate('MyOrders')
-                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
-                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>My Orders</Text>
+                    <TouchableOpacity onPress={() => { nav.navigate('MyOrders') }} style={[styles.actionButton, { backgroundColor: myColors.tertiary }]}>
+                        <Text style={[styles.actionButtonText, { color: myColors.text }]}>My Orders</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => {
-                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
-                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>My Addresses</Text>
+                    <TouchableOpacity onPress={() => { }} style={[styles.actionButton, { backgroundColor: myColors.tertiary }]}>
+                        <Text style={[styles.actionButtonText, { color: myColors.text }]}>My Addresses</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => {
-                        nav.navigate('PaymentMethods')
-                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
-                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>Payment Methods</Text>
+                    <TouchableOpacity onPress={() => { nav.navigate('PaymentMethods') }} style={[styles.actionButton, { backgroundColor: myColors.tertiary }]}>
+                        <Text style={[styles.actionButtonText, { color: myColors.text }]}>Payment Methods</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => {
-                        nav.navigate('Settings')
-                    }} style={[styles.actionButton, {backgroundColor: myColors.tertiary,}]}>
-                        <Text style={[styles.actionButtonText, {color: myColors.text}]}>App Settings</Text>
+                    <TouchableOpacity onPress={() => { nav.navigate('Settings') }} style={[styles.actionButton, { backgroundColor: myColors.tertiary }]}>
+                        <Text style={[styles.actionButtonText, { color: myColors.text }]}>App Settings</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={handleSignOut} disabled={loading} style={[styles.signOutButton, {opacity: loading ? 0.5 : 1}]}>
-                        {/* Show loading indicator if loading is true */}
-                        {loading ? (
-                            <ActivityIndicator color={myColors.text} />
-                        ) : (
-                            <Text style={[styles.signOutButtonText, {color: myColors.text,}]}>Sign Out</Text>
-                        )}
-                    </TouchableOpacity>
+                    <View style={styles.signOutButton}>
+                        <AwesomeButton
+                            backgroundColor='red'
+                            backgroundDarker={myColors.tertiary}
+                            width={windowWidth-40}
+                            borderRadius={14}
+                            onPress={() => setTimeout(handleSignOut, 2000)} // Fix here
+                            progress={true}
+                            textSize={18}
+                        >
+                            Sign Out
+                        </AwesomeButton>
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -106,7 +104,6 @@ isLoading(true);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     logoContainer: {
         justifyContent: 'center',
@@ -132,7 +129,6 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     actionButton: {
-
         padding: 15,
         marginHorizontal: 20,
         marginBottom: 15,
@@ -141,20 +137,18 @@ const styles = StyleSheet.create({
     },
     actionButtonText: {
         fontSize: 18,
-
     },
     signOutButton: {
-        backgroundColor: 'rgba(255,68,68,0.85)',
-        padding: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginHorizontal: 20,
         marginTop: 50,
         borderRadius: 5,
-        alignItems: 'center',
     },
     signOutButtonText: {
         fontWeight: '600',
         fontSize: 18,
-
+        color: '#fff',
     },
 });
 

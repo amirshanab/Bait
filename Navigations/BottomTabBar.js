@@ -8,12 +8,15 @@ import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 const Tab = createMaterialBottomTabNavigator();
 import { myColors as color } from "../src/Utils/MyColors";
+import { selectUniqueProductCount  } from '../Redux/CartSlice';
+import {useSelector} from "react-redux"; // Import the cart badge selector
 
 
 
 const BottomTabBar = () => {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
+    const cartItemCount = useSelector(selectUniqueProductCount );
 
     return (
 
@@ -49,12 +52,12 @@ const BottomTabBar = () => {
             <Tab.Screen
                 name="Home"
                 component={HomeStack}
-                options={{ tabBarLabel: 'Home' , tabBarBadge: 3 }}
+                options={{ tabBarLabel: 'Home'}}
             />
             <Tab.Screen
                 name="CartTab"
                 component={CartStack}
-                options={{ tabBarLabel: 'Cart' , color: myColors.text}}
+                options={{ tabBarLabel: 'Cart' , color: myColors.text, tabBarBadge: cartItemCount > 0 ? cartItemCount : null,}}
             />
             <Tab.Screen
                 name="RegionalDishesScreen"

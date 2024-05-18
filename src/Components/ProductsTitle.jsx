@@ -16,7 +16,6 @@ const ProductsTitle = ({title}) => {
 
 
             <Text style={{fontSize:20, fontWeight:"bold", color:myColors.text}}>{title}</Text>
-            <Text style={{fontSize:15, color:myColors.text}}>See All</Text>
 
         </View>
     );

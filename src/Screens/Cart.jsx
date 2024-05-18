@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
     SafeAreaView,
@@ -9,49 +8,52 @@ import {
     Image,
     StyleSheet,
     Platform,
-    StatusBar
+    StatusBar, Dimensions
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-import { removeFromCart, decrementQuantity, incrementQuantity } from "../../Redux/CartSlice";
-import { myColors as color } from "../Utils/MyColors";
-import { AntDesign } from '@expo/vector-icons';
+import {useSelector, useDispatch} from "react-redux";
+import {useNavigation} from "@react-navigation/native";
+import {removeFromCart, decrementQuantity, incrementQuantity} from "../../Redux/CartSlice";
+import {myColors as color} from "../Utils/MyColors";
+import {AntDesign} from '@expo/vector-icons';
 import {ThemeContext} from "../../contexts/ThemeContext";
+import AwesomeButton from "react-native-really-awesome-button";
 
 
 const Cart = () => {
     const [theme] = React.useContext(ThemeContext);
     let myColors = color[theme.mode];
+    const {width: windowWidth} = Dimensions.get('window');
 
     const nav = useNavigation(); // Access the navigation object
     const dispatch = useDispatch();
     const storeData = useSelector((state) => state.cart); // Get the cart data from the store
-
     // Calculate total amount
     const totalAmount = storeData.products.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0).toFixed(2);
 
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
-            <Text style={[styles.title , {color: myColors.text}]}>My Cart</Text>
+            <Text style={[styles.title, {color: myColors.text}]}>My Cart</Text>
             <FlatList
                 data={storeData.products}
                 bounces={true} // Enable elastic scrolling
-                renderItem={({ item }) => (
-                    <View style={[styles.productContainer, {borderBlockColor:myColors.text,}]}>
-                        <Image style={styles.image} source={{ uri: item.img }} />
+                renderItem={({item}) => (
+                    <View style={[styles.productContainer, {borderBlockColor: myColors.text,}]}>
+                        <Image style={styles.image} source={{uri: item.img}}/>
                         <View style={styles.productInfo}>
                             <Text style={[styles.productName, {color: myColors.text}]}>{item.name}</Text>
                             <View style={styles.quantityContainer}>
                                 <TouchableOpacity onPress={() => dispatch(decrementQuantity(item))}>
-                                    <AntDesign name="minus" size={24} color={myColors.text} />
+                                    <AntDesign name="minus" size={24} color={myColors.text}/>
                                 </TouchableOpacity>
-                                <Text style={[styles.quantity , {color: myColors.text}]}>{item.quantity}</Text>
+                                <Text
+                                    style={[styles.quantity, {color: myColors.text}]}>{item.quantity} {item.Scale ? 'Kg' : ''}</Text>
                                 <TouchableOpacity onPress={() => dispatch(incrementQuantity(item))}>
-                                    <AntDesign name="plus" size={24} color={myColors.text} />
+                                    <AntDesign name="plus" size={24} color={myColors.text}/>
                                 </TouchableOpacity>
-                                <Text style={[styles.price, {color: myColors.text}]}>₪ {(item.quantity * item.price).toFixed(2)}</Text>
+                                <Text
+                                    style={[styles.price, {color: myColors.text}]}>₪ {(item.quantity * item.price).toFixed(2)}</Text>
                                 <TouchableOpacity onPress={() => dispatch(removeFromCart(item))}>
-                                    <AntDesign name="delete" size={24} color={myColors.text} />
+                                    <AntDesign name="delete" size={24} color={myColors.text}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -60,10 +62,13 @@ const Cart = () => {
                 keyExtractor={(item, index) => index.toString()}
             />
             <View style={[styles.footer, {backgroundColor: myColors.background}]}>
-                <Text style={[styles.totalAmount , {color: myColors.text}]}>Total Amount: ₪ {totalAmount}</Text>
-                <TouchableOpacity onPress={() => nav.navigate("Checkout")} style={[styles.checkoutButton, {backgroundColor: myColors.clickable}]}>
-                    <Text style={[styles.checkoutButtonText , {color: myColors.white}]}>Go to Checkout</Text>
-                </TouchableOpacity>
+                <Text style={[styles.totalAmount, {color: myColors.text}]}>Total Amount: ₪ {totalAmount}</Text>
+                <AwesomeButton backgroundDarker={myColors.tertiary}
+                               borderRadius={14}
+                               springRelease={false} textSize={18} width={windowWidth - 40}
+                               backgroundColor={myColors.clickable} onPress={() => nav.navigate("Checkout")}>
+                    Go to Checkout
+                </AwesomeButton>
             </View>
         </SafeAreaView>
     );
@@ -92,8 +97,8 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     image: {
-        resizeMode : 'contain',
-        margin:10,
+        resizeMode: 'contain',
+        margin: 10,
         width: 80,
         height: 80,
         borderRadius: 10
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
     totalAmount: {
         fontSize: 18,
         fontWeight: 'bold',
-
+        marginBottom: 15
     },
     checkoutButton: {
         paddingVertical: 15,

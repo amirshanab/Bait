@@ -1,4 +1,6 @@
-const { createSlice } = require('@reduxjs/toolkit');
+// CartSlice.js
+
+import { createSlice } from '@reduxjs/toolkit';
 
 const CartSlice = createSlice({
     name: 'cart',
@@ -53,4 +55,9 @@ const CartSlice = createSlice({
 });
 
 export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity } = CartSlice.actions;
+
+// Selector function to calculate the total number of unique products in the cart
+export const selectUniqueProductCount = (state) =>
+    state.cart.products.length;
+
 export default CartSlice.reducer;
