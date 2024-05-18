@@ -1,5 +1,15 @@
 import React, { useState, useRef } from "react";
-import { ScrollView, StatusBar, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, Alert } from "react-native";
+import {
+    ScrollView,
+    StatusBar,
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    Alert,
+    Dimensions
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -7,14 +17,16 @@ import { authentication } from "../../../Firebaseconfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { myColors as color } from "../../Utils/MyColors";
 import Toast from "react-native-toast-message";
+import AwesomeButton from "react-native-really-awesome-button";
 
 import Logo from "../../Components/Logo";
 import LoadingScreen from "../../Components/LoadingScreen";
 
-const theme = {mode: 'light'};
+const theme = { mode: 'light' };
 let myColors = color[theme.mode];
 
 const Login = ({ handleLoginSuccess }) => {
+    const { width: windowWidth } = Dimensions.get('window');
 
     const nav = useNavigation(); // Get navigation object
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
@@ -26,7 +38,6 @@ const Login = ({ handleLoginSuccess }) => {
         password: ""
     });
     const { email, password } = userCredentials;
-
 
     const loginUser = async () => {
         setLoading(true); // Set loading to true when login is initiated
@@ -97,18 +108,19 @@ const Login = ({ handleLoginSuccess }) => {
                                     <Text style={{ fontSize: 16, fontWeight: '400', color: myColors.clickable, marginTop: 20, textAlign: 'right' }}>Forgot Password?</Text>
                                 </TouchableOpacity>
                                 {/* Login Button */}
-                                <TouchableOpacity onPress={loginUser} disabled={loading}>
-                                    <View style={{
-                                        backgroundColor: myColors.clickable,
-                                        height: 50,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        marginTop: 30,
-                                        borderRadius: 10
-                                    }}>
-                                        <Text style={{ color: 'white', fontSize: 18, fontWeight: '700' }}>Login</Text>
-                                    </View>
-                                </TouchableOpacity>
+                                <View style={{
+                                    height: 50,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: 30,
+                                    borderRadius: 10
+                                }}>
+                                    <AwesomeButton                                          backgroundDarker={myColors.tertiary}
+                                                                                            borderRadius={14}
+                                                                               textSize={18} width={windowWidth - 40} backgroundColor={myColors.clickable} onPress={loginUser}>
+                                        Login
+                                    </AwesomeButton>
+                                </View>
                                 {/* Don't have an account */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
                                     <Text style={{ color: 'black', fontSize: 16, fontWeight: '400' }}>Don't have an account?</Text>

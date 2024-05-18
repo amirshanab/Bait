@@ -1,5 +1,14 @@
 import React, { useState, useRef } from "react";
-import { ScrollView, StatusBar, Text, View, TouchableOpacity, Alert, KeyboardAvoidingView } from "react-native";
+import {
+    ScrollView,
+    StatusBar,
+    Text,
+    View,
+    TouchableOpacity,
+    Alert,
+    KeyboardAvoidingView,
+    Dimensions
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +18,7 @@ import { myColors as color } from "../../Utils/MyColors";
 import Logo from "../../Components/Logo";
 import { doc, setDoc } from "firebase/firestore";
 import { TextInput as PaperTextInput, Button } from 'react-native-paper';
+import AwesomeButton from "react-native-really-awesome-button";
 
 const theme = { mode: 'light' };
 let myColors = color[theme.mode];
@@ -18,6 +28,8 @@ const Signup = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(true);
     const emailInputRef = useRef(null);
+    const { width: windowWidth } = Dimensions.get('window');
+
     const phoneNumberInputRef = useRef(null);
     const passwordInputRef = useRef(null);
     const nameInputRef = useRef(null);
@@ -156,14 +168,16 @@ const Signup = () => {
                         </View>
 
                         {/* Terms and conditions */}
-                        <Text numberOfLines={2} style={{ fontSize: 14, fontWeight: "400", color: "black", marginTop: 15, letterSpacing: 0.6, lineHeight: 22, opacity: 0.7 }}>
+                        <Text numberOfLines={2} style={{marginBottom:10, fontSize: 14, fontWeight: "400", color: "black", marginTop: 15, letterSpacing: 0.6, lineHeight: 22, opacity: 0.7 }}>
                             By continuing, you agree to our <Text style={{ color: "blue", fontWeight: "bold", opacity: 0.5 }}>terms of service and privacy policy</Text>
                         </Text>
 
                         {/* Sign Up Button */}
-                        <Button mode="contained" onPress={userAccount} style={{ marginTop: 30, borderRadius: 10 }}>
+                        <AwesomeButton                                                 backgroundDarker={myColors.tertiary}
+                                                                                       borderRadius={14}
+                                                                   textSize={18} width={windowWidth - 40} backgroundColor={myColors.clickable}>
                             Sign Up
-                        </Button>
+                        </AwesomeButton>
 
                         {/* Already have an account and Login */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
