@@ -56,8 +56,8 @@ export const DishesStack = () => {
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: false,
-                animationEnabled: false // Disable animations
+                gestureEnabled: true,
+                animationEnabled: true // Disable animations
             }}>
             <Stack.Screen name="RegionalDishes" component={RegionalDishesScreen} />
             <Stack.Screen name="Dishes" component={DishesScreen} />
@@ -71,7 +71,7 @@ export const ProfileStack = () => {
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: false,
+                gestureEnabled: true,
                 animationEnabled: false // Disable animations
             }}>
             <Stack.Screen name="Profile" component={UserProfile} />
