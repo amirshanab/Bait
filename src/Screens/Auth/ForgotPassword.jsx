@@ -38,7 +38,8 @@ const ForgotPassword = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <StatusBar style={'light'} />
             <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-                <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 30, paddingBottom: 100 }}>
+                <ScrollView                 showsVerticalScrollIndicator={false}
+                                            contentContainerStyle={{ flexGrow: 1, paddingTop: 30, paddingBottom: 100 }}>
 
                     {/* Logo */}
                     <Image

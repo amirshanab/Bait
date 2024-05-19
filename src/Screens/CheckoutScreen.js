@@ -9,7 +9,8 @@ export default function CheckoutScreen({navigation}) {
     let myColors = color[theme.mode];
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView                 showsVerticalScrollIndicator={false}
+                                        contentContainerStyle={styles.container}>
                 <Logo/>
                 <Text style={[styles.header, {color: myColors.text,}]}>Checkout</Text>
                 {/* Shipping Information */}

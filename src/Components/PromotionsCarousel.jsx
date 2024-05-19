@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     itemContainer: {
-        width: windowWidth - 30,
+        width: windowWidth - 10,
         height: 350, // Increased height to accommodate the image
         justifyContent: 'center',
         alignItems: 'center',

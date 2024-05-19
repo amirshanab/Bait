@@ -58,6 +58,7 @@ const CategoryProducts = () => {
                     renderItem={renderProductItem}
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={styles.flatListContent}
+                    showsVerticalScrollIndicator={false}
                 />
                 {showAnimation && <AddToCartAnimation itemName={itemNameForAnimation} />}
             </View>
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        padding: 20,
+        padding: 10,
         paddingVertical: 20,
     },
     headerContainer: {

@@ -63,7 +63,7 @@ const Cart = () => {
             />
             <View style={[styles.footer, {backgroundColor: myColors.background}]}>
                 <Text style={[styles.totalAmount, {color: myColors.text}]}>Total Amount: ₪ {totalAmount}</Text>
-                <AwesomeButton backgroundDarker={myColors.tertiary}
+                <AwesomeButton backgroundDarker={myColors.clickable}
                                borderRadius={14}
                                springRelease={false} textSize={18} width={windowWidth - 40}
                                backgroundColor={myColors.clickable} onPress={() => nav.navigate("Checkout")}>

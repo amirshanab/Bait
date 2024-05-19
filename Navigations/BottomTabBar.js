@@ -9,8 +9,8 @@ import { ThemeContext } from "../contexts/ThemeContext";
 const Tab = createMaterialBottomTabNavigator();
 import { myColors as color } from "../src/Utils/MyColors";
 import { selectUniqueProductCount  } from '../Redux/CartSlice';
-import {useSelector} from "react-redux"; // Import the cart badge selector
-
+import {useSelector} from "react-redux";
+import {Platform} from "react-native";
 
 
 const BottomTabBar = () => {
@@ -47,7 +47,7 @@ const BottomTabBar = () => {
                     }
                 },
             })}
-            barStyle={{ backgroundColor: myColors.logo }} // Set background color
+            barStyle={{ backgroundColor: myColors.logo,height: Platform.OS === 'ios' ? 90:70}} // Set background color
         >
             <Tab.Screen
                 name="Home"

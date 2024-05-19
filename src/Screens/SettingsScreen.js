@@ -41,7 +41,8 @@ const SettingsScreen = () => {
         <SafeAreaView style={[styles.container, { backgroundColor: myColors.primary }]}>
 
             <Logo/>
-            <ScrollView style={styles.container}>
+            <ScrollView                 showsVerticalScrollIndicator={false}
+                                        style={styles.container}>
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle , {color: myColors.text}]}>{t('theme')}</Text>
                     <View style={styles.buttonsContainer}>

@@ -54,7 +54,8 @@ const UserProfile = () => {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: myColors.primary }]}>
-            <ScrollView style={styles.container}>
+            <ScrollView                 showsVerticalScrollIndicator={false}
+                                        style={styles.container}>
                 {/* Header Logo */}
                 <Logo />
 
@@ -85,7 +86,7 @@ const UserProfile = () => {
                     <View style={styles.signOutButton}>
                         <AwesomeButton
                             backgroundColor='red'
-                            backgroundDarker={myColors.tertiary}
+                            backgroundDarker={myColors.primary}
                             width={windowWidth-40}
                             borderRadius={14}
                             onPress={() => setTimeout(handleSignOut, 2000)} // Fix here
