@@ -50,7 +50,6 @@ export default function CheckoutScreen() {
     };
 
 
-
     return (
         <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} ref={scrollViewRef}>
@@ -162,7 +161,8 @@ export default function CheckoutScreen() {
                             return;
                         }
                         // Proceed with order confirmation
-                        navigation.navigate('OrderConfirmation');
+                        navigation.navigate('OrderConfirmation', { totalAmount, items: items,selectedDate: selectedDate.toLocaleDateString()
+                    ,selectedPaymentMethod });
                     }}
                 >
                     <Text style={[styles.buttonText, { color: myColors.text }]}>Confirm Order</Text>
