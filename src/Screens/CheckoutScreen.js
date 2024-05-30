@@ -18,22 +18,22 @@ export default function CheckoutScreen() {
     const route = useRoute();
     const { totalAmount, items } = route.params;
     const myColors = color[theme.mode]; // updated to use const
-    const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
+    const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('today');
     const [selectedDate, setSelectedDate] = useState(null);
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Cash');
 
     const handleDeliveryOptionSelect = (option) => {
         setSelectedDeliveryOption(option);
-        setSelectedDate(null); // Reset selectedDate when a new delivery option is selected
+        setSelectedDate(null);
         if (option === 'schedule') {
             setShowDatePicker(true);
-            // Set selectedDate to today when 'schedule' option is selected
             setSelectedDate(new Date());
-            // Scroll down to show the date picker
-            setTimeout(() => {
-                scrollViewRef.current.scrollToEnd({ animated: true });
-            }, ); // Delay to ensure date picker is rendered
+            if(Platform.OS === 'ios') {
+                setTimeout(() => {
+                    scrollViewRef.current.scrollToEnd({animated: true});
+                },);
+            }
         } else {
             setShowDatePicker(false);
         }
