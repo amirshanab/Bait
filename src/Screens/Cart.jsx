@@ -18,7 +18,6 @@ import {AntDesign} from '@expo/vector-icons';
 import {ThemeContext} from "../../contexts/ThemeContext";
 import AwesomeButton from "react-native-really-awesome-button";
 
-
 const Cart = () => {
     const [theme] = React.useContext(ThemeContext);
     let myColors = color[theme.mode];
@@ -63,10 +62,15 @@ const Cart = () => {
             />
             <View style={[styles.footer, {backgroundColor: myColors.background}]}>
                 <Text style={[styles.totalAmount, {color: myColors.text}]}>Total Amount: ₪ {totalAmount}</Text>
-                <AwesomeButton backgroundDarker={myColors.clickable}
-                               borderRadius={14}
-                               springRelease={false} textSize={18} width={windowWidth - 40}
-                               backgroundColor={myColors.clickable} onPress={() => nav.navigate("Checkout")}>
+                <AwesomeButton
+                    backgroundDarker={myColors.clickable}
+                    borderRadius={14}
+                    springRelease={false}
+                    textSize={18}
+                    width={windowWidth - 40}
+                    backgroundColor={myColors.clickable}
+                    onPress={() => nav.navigate("Checkout", { totalAmount, items: storeData.products })}
+                >
                     Go to Checkout
                 </AwesomeButton>
             </View>
@@ -85,10 +89,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginVertical: 10,
         paddingBottom: 15,
-
     },
     productContainer: {
-
         borderBottomWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
@@ -110,7 +112,6 @@ const styles = StyleSheet.create({
     productName: {
         fontSize: 18,
         fontWeight: 'bold',
-
     },
     quantityContainer: {
         flexDirection: 'row',
@@ -121,17 +122,14 @@ const styles = StyleSheet.create({
     quantity: {
         fontSize: 16,
         fontWeight: 'bold',
-
     },
     price: {
         fontSize: 16,
         fontWeight: 'bold',
-
     },
     footer: {
         paddingHorizontal: 20,
         paddingBottom: 20,
-
     },
     totalAmount: {
         fontSize: 18,
@@ -147,7 +145,6 @@ const styles = StyleSheet.create({
     checkoutButtonText: {
         fontSize: 18,
         fontWeight: 'bold',
-
     }
 });
 

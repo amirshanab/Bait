@@ -14,6 +14,7 @@ const CategoryProducts = () => {
     const route = useRoute();
     const navigation = useNavigation();
     const { categoryName } = route.params;
+    console.log(categoryName)
     const [showAnimation, setShowAnimation] = useState(false);
     const [itemNameForAnimation, setItemNameForAnimation] = useState('');
     const dispatch = useDispatch();

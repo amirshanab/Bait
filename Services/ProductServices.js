@@ -4,7 +4,6 @@ import {useProducts} from "../contexts/ProductContext";
 
 const ProductServices =  (CategoryID) => {
     const {products} = useProducts()
-        //console.log('products are :' + products)
     if (!products) {
         return []; // Return empty array or handle the null case as needed
     }

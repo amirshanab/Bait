@@ -75,7 +75,6 @@ const AppNavigator = () => {
                 setIsAuthenticated(true); // User is authenticated
                 fetchUserData(); // Fetch user data when user is authenticated
                 fetchProducts()
-                console.log('User info and products are fetched')
             } else {
                 setIsAuthenticated(false); // User is not authenticated
                 setIsLoading(false); // Set loading to false when user is not authenticated

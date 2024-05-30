@@ -1,35 +1,173 @@
-import React from 'react';
-import {SafeAreaView,  Text, TextInput, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
-import {myColors as color} from '../Utils/MyColors';
-import {ThemeContext} from "../../contexts/ThemeContext";
-import Logo from "../Components/Logo";
+import React, { useState, useContext, useRef } from 'react';
+import { SafeAreaView, Text, TouchableOpacity, StyleSheet, ScrollView, View, Platform } from 'react-native';
+import { TextInput, useTheme } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { myColors as color } from '../Utils/MyColors';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import Logo from '../Components/Logo';
+import { useNavigation, useRoute } from "@react-navigation/native";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function CheckoutScreen({navigation}) {
-    const [theme] = React.useContext(ThemeContext);
-    let myColors = color[theme.mode];
+export default function CheckoutScreen() {
+    const [theme] = useContext(ThemeContext);
+    const { } = useTheme();
+    const navigation = useNavigation();
+    const scrollViewRef = useRef();
+    const addressRef = useRef();
+    const cityRef = useRef();
+    const route = useRoute();
+    const { totalAmount, items } = route.params;
+    const myColors = color[theme.mode]; // updated to use const
+    const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+
+    const handleDeliveryOptionSelect = (option) => {
+        setSelectedDeliveryOption(option);
+        setSelectedDate(null); // Reset selectedDate when a new delivery option is selected
+        if (option === 'schedule') {
+            setShowDatePicker(true);
+            // Set selectedDate to today when 'schedule' option is selected
+            setSelectedDate(new Date());
+            // Scroll down to show the date picker
+            setTimeout(() => {
+                scrollViewRef.current.scrollToEnd({ animated: true });
+            }, ); // Delay to ensure date picker is rendered
+        } else {
+            setShowDatePicker(false);
+        }
+    };
+
+    const handlePayment = (option) => {
+        setSelectedPaymentMethod(option);
+    };
+
+    const handleDateChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShowDatePicker(Platform.OS === 'ios');
+        setSelectedDate(currentDate);
+    };
+
+
+
     return (
-        <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
-            <ScrollView                 showsVerticalScrollIndicator={false}
-                                        contentContainerStyle={styles.container}>
-                <Logo/>
-                <Text style={[styles.header, {color: myColors.text,}]}>Checkout</Text>
+        <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} ref={scrollViewRef}>
+                <Logo />
+                <Text style={[styles.header, { color: myColors.text }]}>Checkout</Text>
                 {/* Shipping Information */}
-                <TextInput style={[styles.input, {backgroundColor: myColors.white, color: myColors.text}]}
-                           placeholder="Name" placeholderTextColor={myColors.placeholder}/>
-                <TextInput style={[styles.input, {backgroundColor: myColors.white, color: myColors.text}]}
-                           placeholder="Address" placeholderTextColor={myColors.placeholder}/>
-                <TextInput style={[styles.input, {backgroundColor: myColors.white, color: myColors.text}]}
-                           placeholder="City" placeholderTextColor={myColors.placeholder}/>
+                <TextInput
+                    mode="outlined"
+                    label="Name"
+                    returnKeyType={"next"}
+                    style={styles.input}
+                    onSubmitEditing={() =>{
+                        addressRef.current.focus()
+                    }}
+                    theme={{ colors: { text: myColors.text, placeholder: myColors.placeholder, background: myColors.white } }}
+                />
+                <TextInput
+                    mode="outlined"
+                    label="Address"
+                    returnKeyType={"next"}
+                    ref={addressRef}
+                    style={styles.input}
+                    onSubmitEditing={() =>{
+                        cityRef.current.focus()
+                    }}
+                    theme={{ colors: { text: myColors.text, placeholder: myColors.placeholder, background: myColors.white } }}
+                />
+                <TextInput
+                    mode="outlined"
+                    label="City"
+                    returnKeyType={"done"}
+                    ref={cityRef}
+                    style={styles.input}
+                    theme={{ colors: { text: myColors.text, placeholder: myColors.placeholder, background: myColors.white } }}
+                />
                 {/* Delivery Options */}
-                <Text style={[styles.subheader, {color: myColors.text,}]}>Delivery Options</Text>
-                {/* Placeholder for delivery options */}
+                <Text style={[styles.subheader, { color: myColors.text }]}>Delivery Options</Text>
+                <View style={styles.deliveryContainer}>
+                    <TouchableOpacity
+                        style={[
+                            styles.highlightButton,
+                            { backgroundColor: selectedDeliveryOption === 'today' ? myColors.highlight : myColors.clickable }
+                        ]}
+                        onPress={() => handleDeliveryOptionSelect('today')}
+                    >
+                        <Icon name="truck" size={24} color={myColors.text} />
+                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Deliver Today</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[
+                            styles.highlightButton,
+                            { backgroundColor: selectedDeliveryOption === 'schedule' ? myColors.highlight : myColors.clickable }
+                        ]}
+                        onPress={() => handleDeliveryOptionSelect('schedule')}
+                    >
+                        <Icon name="calendar" size={24} color={myColors.text} />
+                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Schedule</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* Date Picker */}
+                {showDatePicker && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={selectedDate || new Date()} // Use selectedDate or today's date
+                        mode="date"
+                        is24Hour={true}
+                        display={Platform.OS === 'ios' ? 'inline' : 'default'}
+                        minimumDate={new Date()} // Set minimum date to today
+                        onChange={handleDateChange}
+                    />
+                )}
+                {/* Render selectedDate if exists */}
+                {selectedDate && (
+                    <Text style={[styles.selectedDateText, { color: myColors.text }]}>
+                        Selected Date: {selectedDate.toLocaleDateString()}
+                    </Text>
+                )}
                 {/* Payment Methods */}
-                <Text style={[styles.subheader, {color: myColors.text,}]}>Payment Method</Text>
-                {/* Placeholder for payment methods */}
-                <TouchableOpacity style={[styles.button, {backgroundColor: myColors.clickable,}]}
-                                  onPress={() => navigation.navigate('OrderConfirmation')}>
-                    <Text style={[styles.buttonText, {color: myColors.text,}]}>Confirm Order</Text>
+                <Text style={[styles.subheader, { color: myColors.text }]}>Payment Method</Text>
+                <View style={styles.deliveryContainer}>
+                    <TouchableOpacity
+                        style={[
+                            styles.highlightButton,
+                            { backgroundColor: selectedPaymentMethod === 'Cash' ? myColors.highlight : myColors.clickable }
+                        ]}
+                        onPress={() => handlePayment('Cash')}
+                    >
+                        <Icon name="cash" size={30} color={myColors.text} />
+                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Cash</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[
+                            styles.highlightButton,
+                            { backgroundColor: selectedPaymentMethod === 'Card' ? myColors.highlight : myColors.clickable }
+                        ]}
+                        onPress={() => handlePayment('Card')}
+                    >
+                        <Icon name="credit-card" size={30} color={myColors.text} />
+                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Card</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity
+                    style={[styles.button, { backgroundColor: myColors.clickable }]}
+                    onPress={() => {
+                        if (!selectedDeliveryOption || !selectedPaymentMethod) {
+                            // Alert the user to choose both delivery option and payment method
+                            alert('Please choose both delivery option and payment method.');
+                            return;
+                        }
+                        // Proceed with order confirmation
+                        navigation.navigate('OrderConfirmation');
+                    }}
+                >
+                    <Text style={[styles.buttonText, { color: myColors.text }]}>Confirm Order</Text>
                 </TouchableOpacity>
+
             </ScrollView>
         </SafeAreaView>
     );
@@ -38,46 +176,51 @@ export default function CheckoutScreen({navigation}) {
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-
     },
     container: {
         padding: 20,
     },
-    logoContainer: {
-        alignItems: 'center',
-        marginVertical: 10,
-    },
-    logo: {
-        width: 70,
-        height: 70,
-        resizeMode: 'contain',
-    },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
-
         marginBottom: 20,
     },
     input: {
-        padding: 15,
         marginBottom: 10,
-        borderRadius: 5,
     },
     subheader: {
         fontSize: 20,
-
         marginTop: 20,
         marginBottom: 10,
     },
+    deliveryContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    highlightButton: {
+        flex: 1,
+        height: 100,
+        marginHorizontal: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        flexDirection: 'row',
+    },
+    highlightButtonText: {
+        fontSize: 16,
+        marginLeft: 10,
+    },
     button: {
-
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
         marginTop: 20,
     },
     buttonText: {
-
         fontWeight: 'bold',
+    },
+    selectedDateText: {
+        fontSize: 16,
+        marginTop: 10,
     },
 });

@@ -26,7 +26,7 @@ export default function RegionalDishesScreen({navigation}) {
                 <Text style={[styles.header, {color: myColors.text,}]}>Select a Region</Text>
             </View>
             <FlatList
-                data={regions}
+
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
                     <TouchableOpacity

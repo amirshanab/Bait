@@ -11,7 +11,8 @@ export const myColors = {
         buttombar:'#ffffff',
         placeholder:'#7a7a7a',
         MenuItems : '#000000',
-        logo : 'rgba(0,151,178,0.52)'
+        logo : 'rgba(0,151,178,0.52)',
+        highlight : '#21965b',
     },
     dark: {
         primary: '#000000', // Example dark primary color
@@ -25,7 +26,9 @@ export const myColors = {
         buttombar:'#444444',
         placeholder:'#c9c7c7',
         MenuItems : '#ffffff',
-        logo : 'rgba(0,151,178,0.52)'
+        logo : 'rgba(0,151,178,0.52)',
+        highlight : '#21965b',
+
 
     }
 };
