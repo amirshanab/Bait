@@ -7,7 +7,7 @@ import {
     ScrollView,
     View,
     Platform,
-    Alert,
+    Alert, useColorScheme,
 
 } from 'react-native';
 import { TextInput, useTheme} from 'react-native-paper';
@@ -45,7 +45,8 @@ export default function CheckoutScreen() {
     const [sheetIndex, setSheetIndex] = useState(-1);
     const snapPoints = ['80%'];
     const sheetRef = useRef(null); // Add this line
-
+    const colorScheme = useColorScheme();
+    const isDarkMode = colorScheme === 'dark';
     const route = useRoute();
     const { totalAmount, items } = route.params;
 
@@ -139,7 +140,7 @@ export default function CheckoutScreen() {
                                 Your Location:
                             </Text>
                             <MapView
-                                customMapStyle={theme.mode === 'dark' ? mapStyle : null}
+                                customMapStyle={isDarkMode ? mapStyle : null}
                                 style={styles.map}
                                 provider={PROVIDER_GOOGLE}
                                 initialRegion={{
