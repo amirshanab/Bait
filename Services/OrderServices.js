@@ -1,7 +1,7 @@
 import { db, authentication } from '../Firebaseconfig';
 import { collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
-const OrderServices = async (items, total,selectedDate,selectedPaymentMethod ) => {
+const OrderServices = async (items, total,selectedDate,selectedPaymentMethod,locationUrl ) => {
     try {
         const user = authentication.currentUser;
         if (user) {
@@ -13,7 +13,8 @@ const OrderServices = async (items, total,selectedDate,selectedPaymentMethod ) =
                 orderDate: serverTimestamp(),
                 OrderStatus: "Pending",
                 SchedueledDelivery:selectedDate,
-                PaymentMethod: selectedPaymentMethod
+                PaymentMethod: selectedPaymentMethod,
+                Address:locationUrl
             });
 
             console.log('Order uploaded successfully');

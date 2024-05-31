@@ -13,18 +13,18 @@ export default function OrderConfirmationScreen() {
     const { } = useTheme();
     const navigation = useNavigation();
     const route = useRoute();
-    const { totalAmount, items,selectedDate,selectedPaymentMethod } = route.params;
+    const { totalAmount, items,selectedDate,selectedPaymentMethod,locationUrl } = route.params;
     const myColors = color[theme.mode];
 
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const uploadOrder = async () => {
-            await OrderServices(items, totalAmount, selectedDate,selectedPaymentMethod);
+            await OrderServices(items, totalAmount, selectedDate,selectedPaymentMethod,locationUrl);
             setLoading(false);
         };
         uploadOrder();
-    }, [items, totalAmount,selectedDate,selectedPaymentMethod]);
+    }, [items, totalAmount,selectedDate,selectedPaymentMethod,locationUrl]);
 
     if (loading) {
         return <LoadingScreen />;
