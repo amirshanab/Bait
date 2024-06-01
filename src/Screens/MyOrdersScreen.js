@@ -13,7 +13,7 @@ function CurrentOrderScreen() {
 }
 
 function PreviousOrdersScreen() {
-    // Previous Orders content
+    // Previous OrdersService content
 }
 
 function MyOrdersScreen() {
@@ -49,7 +49,7 @@ function MyOrdersScreen() {
                 <Tab.Screen
                     name="PreviousOrders"
                     component={PreviousOrdersScreen}
-                    options={{ tabBarLabel: 'Previous Orders' }}
+                    options={{ tabBarLabel: 'Previous OrdersService' }}
                 />
             </Tab.Navigator>
         </SafeAreaView>
