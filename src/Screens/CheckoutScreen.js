@@ -11,7 +11,7 @@ import {
 
 } from 'react-native';
 import { TextInput, useTheme} from 'react-native-paper';
-import  { PROVIDER_GOOGLE } from 'react-native-maps'
+import {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps'
 import BottomSheet from '@gorhom/bottom-sheet';
 import Toast from "react-native-toast-message";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -142,7 +142,7 @@ export default function CheckoutScreen() {
                             <MapView
                                 customMapStyle={isDarkMode ? mapStyle : null}
                                 style={styles.map}
-                                provider={PROVIDER_GOOGLE}
+                                provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                                 initialRegion={{
                                     latitude: location.latitude,
                                     longitude: location.longitude,
