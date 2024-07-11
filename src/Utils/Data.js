@@ -1,29 +1,3 @@
-export const fruits = [
-    {
-        name: "apple",
-        pieces: "7pcs",
-        price: 4.99,
-        img: "https://hips.hearstapps.com/hmg-prod/images/apples-royalty-free-image-164084111-1537885595.jpg?crop=0.66667xw:1xh;center,top&resize=640:*",
-    },
-    {
-        name: "banana",
-        pieces: "7pcs",
-        price: 4.99,
-        img: "https://hips.hearstapps.com/hmg-prod/images/apples-royalty-free-image-164084111-1537885595.jpg?crop=0.66667xw:1xh;center,top&resize=640:*",
-    },
-    {
-        name: "orange",
-        pieces: "7pcs",
-        price: 4.99,
-        img: "https://hips.hearstapps.com/hmg-prod/images/apples-royalty-free-image-164084111-1537885595.jpg?crop=0.66667xw:1xh;center,top&resize=640:*",
-    },
-    {
-        name: "pine apple",
-        pieces: "7pcs",
-        price: 4.99,
-        img: "https://hips.hearstapps.com/hmg-prod/images/apples-royalty-free-image-164084111-1537885595.jpg?crop=0.66667xw:1xh;center,top&resize=640:*",
-    },
-];
 export const recipeStepsData = {
     1: [
         { stepNumber: 1, description: 'Chop the tomatoes and onions.' },
@@ -35,7 +9,7 @@ export const recipeStepsData = {
     // Add more dishes as needed
 };
 export const regions = [
-    {id: '1', name: 'Italian', img: 'https://www.destinavo.com/wp-content/uploads/2020/01/Italian-Food.jpg.webp'},
+        {id: '1', name: 'Italian', img: 'https://www.destinavo.com/wp-content/uploads/2020/01/Italian-Food.jpg.webp'},
     {
         id: '2',
         name: 'Middle Eastern\nFood',

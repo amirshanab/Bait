@@ -1,19 +1,17 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { View, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; // Ensure you have @expo/vector-icons installed
 import { myColors as color } from "../Utils/MyColors";
-import {ThemeContext} from "../../contexts/ThemeContext"; // Assuming this path is correct
-
+import {ThemeContext} from "../../contexts/ThemeContext";
+import CurrentOrderScreen from "../Components/currentOrders"
+import Logo from "../Components/Logo";
 const Tab = createMaterialTopTabNavigator();
 
-function CurrentOrderScreen() {
-    // Current Order content
-}
+
 
 function PreviousOrdersScreen() {
-    // Previous Orders content
 }
 
 function MyOrdersScreen() {
@@ -24,27 +22,26 @@ function MyOrdersScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <View style={[styles.headerContainer, {backgroundColor: myColors.primary}]}>
-                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                    <Ionicons name="chevron-back" size={28} color={myColors.text} />
-                </TouchableOpacity>
 
-                <Image style={styles.logo} source={require('../assets/logo.png')} />
+                <View />
+
+                <Logo height={50} width={100} />
 
                 {/* Invisible placeholder to balance the layout */}
-                <View style={styles.placeholder} />
+                <View />
             </View>
             <Tab.Navigator
                 initialRouteName="CurrentOrder"
                 screenOptions={{
                     tabBarActiveTintColor: myColors.text,
-                    tabBarLabelStyle: { fontSize: 12 },
-                    tabBarStyle: { backgroundColor: myColors.tertiary },
+                    tabBarLabelStyle: { fontSize: 13 },
+                    tabBarStyle: {backgroundColor : myColors.primary},
                 }}
             >
                 <Tab.Screen
                     name="CurrentOrder"
                     component={CurrentOrderScreen}
-                    options={{ tabBarLabel: 'Current Order' }}
+                    options={{ tabBarLabel: 'Current Orders' }}
                 />
                 <Tab.Screen
                     name="PreviousOrders"
@@ -60,23 +57,13 @@ const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between', // Adjusts children to space between
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
         paddingTop: 0,
 
     },
 
-    logo: {
-        width: 70,
-        height: 70,
-    },
-    placeholder: {
-        // This should be approximately the same size as the back button to balance the layout
-        width: 28, // Adjust the width to match the back button's visual space
-        height: 28, // Adjust the height as needed
-        opacity: 0, // Make it invisible
-    },
-    // Add other styles here as needed
+
 });
 
 export default MyOrdersScreen;
