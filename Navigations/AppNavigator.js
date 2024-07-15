@@ -9,7 +9,9 @@ import {collection, doc, getDoc, getDocs, query} from "firebase/firestore";
 import { useUser } from "../contexts/UserContext";
 import LoadingScreen from "../src/Components/LoadingScreen";
 import {useProducts} from "../contexts/ProductContext";
+import { enableScreens } from 'react-native-screens';
 
+enableScreens();
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {

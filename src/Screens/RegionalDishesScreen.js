@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
     SafeAreaView,
     View,
@@ -10,32 +10,44 @@ import {
     Platform,
     Image
 } from 'react-native';
-import {regions} from "../Utils/Data";
+import regionsServices from '../../Services/regionsServices';
 import {myColors as color} from "../Utils/MyColors";
 import {ThemeContext} from "../../contexts/ThemeContext";
 import Logo from "../Components/Logo";
 
-
 export default function RegionalDishesScreen({navigation}) {
-    const [theme] = React.useContext(ThemeContext);
+    const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
+
+    const [Regions, setRegions] = useState([]);
+    useEffect(() => {
+        const fetch = async () => {
+            try {
+                const regionsData = await regionsServices();
+                setRegions(regionsData);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetch();
+    }, []);
+
     return (
-        <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
+        <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary}]}>
             <Logo/>
             <View style={styles.ing}>
-                <Text style={[styles.header, {color: myColors.text,}]}>Select a Region</Text>
+                <Text style={[styles.header, {color: myColors.text}]}>Select a Region</Text>
             </View>
             <FlatList
-
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
+                data={Regions}
                 renderItem={({item}) => (
                     <TouchableOpacity
-                        style={[styles.item, {borderColor: myColors.text,}]}
-                        onPress={() => {
-                            navigation.navigate('Dishes', {region: item.name});
-                        }}>
+                        style={[styles.item, {borderColor: myColors.text}]}
+                        onPress={() => navigation.navigate('Dishes', {regionId: item.id})}
+                    >
                         <Image style={styles.regionImage} source={{uri: item.img}}/>
-                        <Text style={[styles.title, {color: myColors.text,}]}>{item.name}</Text>
+                        <Text style={[styles.title, {color: myColors.text}]}>{item.name}</Text>
                     </TouchableOpacity>
                 )}
             />
@@ -43,7 +55,6 @@ export default function RegionalDishesScreen({navigation}) {
     );
 }
 
-// Include styles for regionImage similar to dishImage in DishesScreen
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
@@ -55,14 +66,13 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 150,
-        height: 150, // Adjust based on your Logo's aspect ratio
+        height: 150,
         resizeMode: 'contain',
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
-
         marginVertical: 10,
     },
     item: {
@@ -73,17 +83,15 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderWidth: 1,
         borderRadius: 10,
-
     },
     title: {
         paddingLeft: 40,
         fontSize: 24,
         fontWeight: 'bold',
-
     },
     regionImage: {
         width: 100,
-        height: 100, // Adjust based on the aspect ratio of your images
+        height: 100,
         borderRadius: 10,
         resizeMode: 'cover',
     },

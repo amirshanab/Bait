@@ -7,13 +7,15 @@ import UserProfile from "../src/Screens/UserProfile";
 import MyOrdersScreen from "../src/Screens/MyOrdersScreen";
 import PaymentMethodsScreen from "../src/Screens/PaymentMethodsScreen";
 import IngredientsScreen from "../src/Screens/IngredientsScreen";
-import DishesScreen from "../src/Screens/DishesScreen";
+import Dishes from "../src/Screens/Dishes";
 import RegionalDishesScreen from "../src/Screens/RegionalDishesScreen";
 import CheckoutScreen from "../src/Screens/CheckoutScreen";
 import OrderConfirmationScreen from "../src/Screens/OrderConfirmationScreen";
 import SettingsScreen from "../src/Screens/SettingsScreen";
 import Cart from "../src/Screens/Cart";
+import { enableScreens } from 'react-native-screens';
 
+enableScreens();
 const Stack = createStackNavigator();
 
 export const HomeStack = () => {
@@ -56,11 +58,11 @@ export const DishesStack = () => {
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: true,
-                animationEnabled: true // Disable animations
+                gestureEnabled: false,
+                animationEnabled: false // Disable animations
             }}>
             <Stack.Screen name="RegionalDishes" component={RegionalDishesScreen} />
-            <Stack.Screen name="Dishes" component={DishesScreen} />
+            <Stack.Screen name="Dishes" component={Dishes} />
             <Stack.Screen name="Ingredients" component={IngredientsScreen} />
         </Stack.Navigator>
     );
