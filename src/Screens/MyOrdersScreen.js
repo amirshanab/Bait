@@ -11,8 +11,7 @@ const Tab = createMaterialTopTabNavigator();
 
 
 
-function PreviousOrdersScreen() {
-}
+
 
 function MyOrdersScreen() {
     const [theme] = useContext(ThemeContext);
