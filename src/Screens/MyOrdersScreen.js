@@ -18,7 +18,9 @@ function MyOrdersScreen() {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
     const navigation = useNavigation(); // Use navigation to handle back button press
-
+    const CurrentOrders = () => <CurrentOrderScreen status="Pending" />;
+    // Wrapper function for CurrentOrderScreen with "Done" status
+    const PreviousOrders = () => <CurrentOrderScreen status="Done" />;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             <View style={[styles.headerContainer, {backgroundColor: myColors.primary}]}>
@@ -40,12 +42,12 @@ function MyOrdersScreen() {
             >
                 <Tab.Screen
                     name="CurrentOrder"
-                    component={CurrentOrderScreen}
+                    component={CurrentOrders}
                     options={{ tabBarLabel: 'Current Orders' }}
                 />
                 <Tab.Screen
                     name="PreviousOrders"
-                    component={PreviousOrdersScreen}
+                    component={PreviousOrders}
                     options={{ tabBarLabel: 'Previous Orders' }}
                 />
             </Tab.Navigator>

@@ -1,14 +1,17 @@
-import {authentication, db} from '../Firebaseconfig';
-import {collection, doc, getDocs} from 'firebase/firestore';
+import { authentication, db } from '../Firebaseconfig';
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
 
-const getOrders = async () => {
+const getOrders = async (status) => {
     try {
         const user = authentication.currentUser;
         if (user) {
             const parentDocRef = doc(db, 'Users', user.uid);
             const subCollectionRef = collection(parentDocRef, 'orders');
-            const querySnapshot = await getDocs(subCollectionRef);
-            return querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+
+            // Create a query based on the status parameters
+            const q = query(subCollectionRef, where('OrderStatus', '==', status));
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         } else {
             console.log('No user is currently signed in.');
             return []; // Return an empty array or handle as needed

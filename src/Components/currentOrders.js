@@ -21,7 +21,7 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
     UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const CurrentOrderScreen = () => {
+const CurrentOrderScreen = ({status}) => {
     const [theme] = useContext(ThemeContext);
     const myColors = color[theme.mode];
     const [Orders, setOrders] = useState([]);
@@ -30,7 +30,7 @@ const CurrentOrderScreen = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const fetchedOrders = await GetOrders();
+                const fetchedOrders = await GetOrders(status);
                 // Initialize expandedStates array with false for each order
                 const initialExpandedStates = fetchedOrders.map(() => false);
                 setExpandedStates(initialExpandedStates);
