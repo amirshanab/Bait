@@ -1,5 +1,3 @@
-import {db} from '../Firebaseconfig';
-import {collection, getDocs, query, where} from "firebase/firestore";
 import {useProducts} from "../contexts/ProductContext";
 
 const ProductServices =  (CategoryID) => {

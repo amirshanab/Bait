@@ -27,7 +27,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     const storeData = useSelector((state) => state.cart); // Get the cart data from the store
     // Calculate total amount
-    const totalAmount = storeData.products.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0).toFixed(2);
+    const totalAmount = storeData.products.reduce((acc, curr) => acc + (curr.quantity * curr.Price), 0).toFixed(2);
 
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
@@ -37,9 +37,9 @@ const Cart = () => {
                 bounces={true} // Enable elastic scrolling
                 renderItem={({item}) => (
                     <View style={[styles.productContainer, {borderBlockColor: myColors.text,}]}>
-                        <Image style={styles.image} source={{uri: item.img}}/>
+                        <Image style={styles.image} source={{uri: item.Image}}/>
                         <View style={styles.productInfo}>
-                            <Text style={[styles.productName, {color: myColors.text}]}>{item.name}</Text>
+                            <Text style={[styles.productName, {color: myColors.text}]}>{item.Name}</Text>
                             <View style={styles.quantityContainer}>
                                 <TouchableOpacity onPress={() => dispatch(decrementQuantity(item))}>
                                     <AntDesign name="minus" size={24} color={myColors.text}/>
@@ -50,7 +50,7 @@ const Cart = () => {
                                     <AntDesign name="plus" size={24} color={myColors.text}/>
                                 </TouchableOpacity>
                                 <Text
-                                    style={[styles.price, {color: myColors.text}]}>₪ {(item.quantity * item.price).toFixed(2)}</Text>
+                                    style={[styles.price, {color: myColors.text}]}>₪ {(item.quantity * item.Price).toFixed(2)}</Text>
                                 <TouchableOpacity onPress={() => dispatch(removeFromCart(item))}>
                                     <AntDesign name="delete" size={24} color={myColors.text}/>
                                 </TouchableOpacity>

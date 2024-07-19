@@ -210,7 +210,7 @@ const Signup = () => {
                         {/* Sign Up Button */}
                         <AwesomeButton backgroundDarker={myColors.clickable}
                                        borderRadius={14}
-                                       textSize={18} width={windowWidth - 40} backgroundColor={myColors.clickable}>
+                                       textSize={18} width={windowWidth - 40} backgroundColor={myColors.clickable} onPress={() => userAccount()}>
                             Sign Up
                         </AwesomeButton>
 

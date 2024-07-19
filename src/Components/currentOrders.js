@@ -45,7 +45,6 @@ const CurrentOrderScreen = ({status}) => {
     const toggleExpand = (index) => {
         // Animate the layout change
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        // Create a copy of expandedStates and toggle the state at the given index
         const newExpandedStates = [...expandedStates];
         newExpandedStates[index] = !newExpandedStates[index];
         setExpandedStates(newExpandedStates);

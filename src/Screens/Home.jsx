@@ -8,6 +8,7 @@ import AllCategoriesCarousel from "../Components/AllCategoriesCarousel";
 import IndividualProductCarousel from "../Components/IndividualProductCarousel";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import ProductServices from "../../Services/ProductServices";
+import getRecommendations from "../../Services/getUserPurchasedItems"; // Ensure this path is correct
 
 // Optimized IndividualProductCarousel using React.memo
 const MemoizedIndividualProductCarousel = React.memo(IndividualProductCarousel);
@@ -24,6 +25,8 @@ const MemoizedProductsTitle = React.memo(ProductsTitle);
 const Home = () => {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
+
+    const [recommendedItems, setRecommendedItems] = useState([]);
 
     const scrollY = useRef(new Animated.Value(0)).current; // Use useRef to persist value across re-renders
 
@@ -44,6 +47,15 @@ const Home = () => {
         return ProductServices(category);
     }, []);
 
+    useEffect(() => {
+        const fetchRecommendations = async () => {
+            const recommendations = await getRecommendations();
+            setRecommendedItems(recommendations);
+
+        };
+
+        fetchRecommendations();
+    }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
             {/* Wrap the header with SafeAreaView to avoid content overlapping the status bar */}
@@ -74,27 +86,14 @@ const Home = () => {
             >
                 <View style={styles.contentContainer}>
                     <MemoizedPromotionsCarousel />
+                    <MemoizedProductsTitle title='Categories' />
                     <MemoizedAllCategoriesCarousel />
-                    <MemoizedProductsTitle title='Fruits' />
+                    <MemoizedProductsTitle title='Specials' />
                     <MemoizedIndividualProductCarousel data={fetchProductData('Fruits').slice(0, 5)} />
-                    <MemoizedProductsTitle title='Vegetables' />
+                    <MemoizedProductsTitle title='Daily Needs' />
                     <MemoizedIndividualProductCarousel data={fetchProductData('Vegetables')} />
-                    <MemoizedProductsTitle title='Bakery' />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Bakery')} />
-                    <MemoizedProductsTitle title='Meats and Fish' />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Meats')} />
-                    <MemoizedProductsTitle title="Beauty and baby" />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Beauty and baby')} />
-                    <MemoizedProductsTitle title='Beverages' />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Beverages')} />
-                    <MemoizedProductsTitle title='Cleaning' />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Cleaning')} />
-                    <MemoizedProductsTitle title='Dairy' />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Dairy')} />
-                    <MemoizedProductsTitle title='Pets' />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Pets')} />
-                    <MemoizedProductsTitle title='Sweets and Snacks' />
-                    <MemoizedIndividualProductCarousel data={fetchProductData('Sweets and snacks')} />
+                    <MemoizedProductsTitle title='Based on other users purchases' />
+                    <MemoizedIndividualProductCarousel data={recommendedItems.length === 0 ? fetchProductData('Fruits') : recommendedItems} seeMore = {false} />
                 </View>
             </ScrollView>
         </SafeAreaView>

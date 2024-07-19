@@ -6,12 +6,12 @@ import {myColors as color} from "../Utils/MyColors";
 import {ThemeContext} from "../../contexts/ThemeContext";
 import Icon from 'react-native-vector-icons/FontAwesome'; // Make sure you have this package installed
 
-const IndividualProductCarousel = ({data}) => {
+const IndividualProductCarousel = ({data,seeMore = true}) => {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
     const nav = useNavigation();
 
-    const extendedData = [...data.slice(0, 5), {seeMore: true}]; // Add "See More" card
+    const extendedData = seeMore ? [...data.slice(0, 5), { seeMore: true }] : data.slice(0, 5);
     const navigateToCategoryProducts = (categoryName) => {
         nav.navigate("CategoryProducts", {categoryName});
     };
@@ -55,7 +55,6 @@ const IndividualProductCarousel = ({data}) => {
                         <TouchableOpacity
                             activeOpacity={0.7}
                             style={{
-                                backgroundColor: myColors.white,
                                 height: responsiveHeight(23),
                                 borderWidth: 2,
                                 borderColor: myColors.white,

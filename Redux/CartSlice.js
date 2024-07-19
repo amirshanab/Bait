@@ -10,7 +10,7 @@ const CartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             const { payload } = action;
-            const existingProductIndex = state.products.findIndex(product => product.name === payload.name);
+            const existingProductIndex = state.products.findIndex(product => product.Name === payload.name);
 
             if (existingProductIndex !== -1) {
                 // If product already exists in cart, increment quantity
@@ -22,11 +22,11 @@ const CartSlice = createSlice({
         },
         removeFromCart: (state, action) => {
             const { payload } = action;
-            state.products = state.products.filter(product => product.name !== payload.name);
+            state.products = state.products.filter(product => product.Name !== payload.Name);
         },
         incrementQuantity: (state, action) => {
             const { payload } = action;
-            const product = state.products.find(product => product.name === payload.name);
+            const product = state.products.find(product => product.Name === payload.Name);
 
             if (product) {
                 // If product exists in cart, increment its quantity
@@ -37,7 +37,7 @@ const CartSlice = createSlice({
         },
         decrementQuantity: (state, action) => {
             const { payload } = action;
-            const productIndex = state.products.findIndex(product => product.name === payload.name);
+            const productIndex = state.products.findIndex(product => product.Name === payload.Name);
 
             if (productIndex !== -1) {
                 // If product exists in cart and quantity is greater than 1, decrement its quantity
