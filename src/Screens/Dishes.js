@@ -11,7 +11,7 @@ const Dishes = ({ navigation }) => {
     const myColors = color[theme.mode];
     const styles = createStyles(myColors);
     const route = useRoute();
-    const { regionId,name } = route.params;
+    const { regionId, name,image } = route.params;
 
     const [dishes, setDishes] = useState([]);
 
@@ -35,7 +35,9 @@ const Dishes = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <Logo></Logo>
+            <Logo />
+                <Image source={{ uri: image }} style={styles.regionImage} />
+
             <Text style={styles.headerText}>Dishes in {name} Region</Text>
             <FlatList
                 data={dishes}
@@ -57,7 +59,6 @@ const createStyles = (myColors) => StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: myColors.text,
-        marginTop : 50,
         margin: 10,
     },
     listContainer: {
@@ -95,6 +96,19 @@ const createStyles = (myColors) => StyleSheet.create({
         fontSize: 16,
         color: myColors.text,
     },
+    regionImage: {
+        width: '100%',
+        height: 200,
+        alignSelf : 'center',
+        resizeMode: 'cover',
+        marginBottom: 10,
+        borderRadius: 30,
+    },
 });
+
+Dishes.sharedElements = (route) => {
+    const { regionId } = route.params;
+    return [{ id: regionId }];
+};
 
 export default Dishes;

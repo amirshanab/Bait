@@ -13,10 +13,9 @@ import CheckoutScreen from "../src/Screens/CheckoutScreen";
 import OrderConfirmationScreen from "../src/Screens/OrderConfirmationScreen";
 import SettingsScreen from "../src/Screens/SettingsScreen";
 import Cart from "../src/Screens/Cart";
-import { enableScreens } from 'react-native-screens';
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-enableScreens();
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export const HomeStack = () => {
     return (
@@ -24,7 +23,9 @@ export const HomeStack = () => {
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: false,
-                animationEnabled: false // Disable animations
+                animationEnabled: false ,// Disable animations
+                animation: 'slide_from_right'
+
             }}>
             <Stack.Screen name="HomeMain" component={Home} />
             <Stack.Screen name="CategoryProducts" component={CategoryProducts} />
@@ -42,7 +43,8 @@ export const CartStack = () => {
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: false,
-                animationEnabled: false // Disable animations
+                animationEnabled: false ,// Disable animations,// Disable animations
+                animation: 'slide_from_right'
             }}>
             <Stack.Screen name="Cart" component={Cart} />
 
@@ -59,7 +61,7 @@ export const DishesStack = () => {
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: false,
-                animationEnabled: false // Disable animations
+                animation: 'slide_from_bottom'
             }}>
             <Stack.Screen name="RegionalDishes" component={RegionalDishesScreen} />
             <Stack.Screen name="Dishes" component={Dishes} />
