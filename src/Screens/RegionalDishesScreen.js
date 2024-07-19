@@ -1,21 +1,11 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {
-    SafeAreaView,
-    View,
-    Text,
-    FlatList,
-    TouchableOpacity,
-    StyleSheet,
-    StatusBar,
-    Platform,
-    Image
-} from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, StyleSheet, StatusBar, Platform, Image } from 'react-native';
 import regionsServices from '../../Services/regionsServices';
-import {myColors as color} from "../Utils/MyColors";
-import {ThemeContext} from "../../contexts/ThemeContext";
+import { myColors as color } from "../Utils/MyColors";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import Logo from "../Components/Logo";
 
-export default function RegionalDishesScreen({navigation}) {
+export default function RegionalDishesScreen({ navigation }) {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
 
@@ -33,21 +23,22 @@ export default function RegionalDishesScreen({navigation}) {
     }, []);
 
     return (
-        <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary}]}>
-            <Logo/>
+        <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
+            <Logo />
             <View style={styles.ing}>
-                <Text style={[styles.header, {color: myColors.text}]}>Select a Region</Text>
+                <Text style={[styles.header, { color: myColors.text }]}>Select a Region</Text>
             </View>
             <FlatList
                 keyExtractor={item => item.id.toString()}
                 data={Regions}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                     <TouchableOpacity
-                        style={[styles.item, {borderColor: myColors.text}]}
-                        onPress={() => navigation.navigate('Dishes', {regionId: item.id})}
+                        style={[styles.item, { borderColor: myColors.text }]}
+                        onPress={() => navigation.navigate('Dishes', { regionId: item.id, name: item.name })}
                     >
-                        <Image style={styles.regionImage} source={{uri: item.img}}/>
-                        <Text style={[styles.title, {color: myColors.text}]}>{item.name}</Text>
+                            <Image style={styles.regionImage} source={{ uri: item.image }} />
+
+                        <Text style={[styles.title, { color: myColors.text }]}>{item.name}</Text>
                     </TouchableOpacity>
                 )}
             />

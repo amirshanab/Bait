@@ -14,5 +14,4 @@ async function regionsServices() {
 
     }
 }
-
 export default regionsServices;
