@@ -22,8 +22,8 @@ export const HomeStack = () => {
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: false,
-                animationEnabled: false ,// Disable animations
+                gestureEnabled: true,
+                animationEnabled: false ,
                 animation: 'slide_from_right'
 
             }}>
@@ -43,7 +43,7 @@ export const CartStack = () => {
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: false,
-                animationEnabled: false ,// Disable animations,// Disable animations
+                animationEnabled: false ,
                 animation: 'slide_from_right'
             }}>
             <Stack.Screen name="Cart" component={Cart} />
@@ -60,12 +60,12 @@ export const DishesStack = () => {
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: false,
+                gestureEnabled: true,
                 animation: 'slide_from_bottom'
             }}>
             <Stack.Screen name="RegionalDishes" component={RegionalDishesScreen} />
             <Stack.Screen name="Dishes" component={Dishes} />
-            <Stack.Screen name="Ingredients" component={IngredientsScreen} />
+            <Stack.Screen name="DishDetails" component={IngredientsScreen} />
         </Stack.Navigator>
     );
 };
@@ -76,7 +76,9 @@ export const ProfileStack = () => {
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: true,
-                animationEnabled: false // Disable animations
+                animationEnabled: false, // Disable animations
+                animation: 'slide_from_bottom'
+
             }}>
             <Stack.Screen name="Profile" component={UserProfile} />
             <Stack.Screen name="MyOrders" component={MyOrdersScreen} />

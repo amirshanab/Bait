@@ -28,7 +28,6 @@ const Cart = () => {
     const storeData = useSelector((state) => state.cart); // Get the cart data from the store
     // Calculate total amount
     const totalAmount = storeData.products.reduce((acc, curr) => acc + (curr.quantity * curr.Price), 0).toFixed(2);
-
     return (
         <SafeAreaView style={[styles.safe, {backgroundColor: myColors.primary,}]}>
             <Text style={[styles.title, {color: myColors.text}]}>My Cart</Text>

@@ -31,7 +31,7 @@ const CategoryProducts = () => {
                         <TouchableOpacity
                             style={[styles.addToCartButton,{backgroundColor: myColors.clickable,}]}
                             onPress={() => {
-                                dispatch(addToCart({ Image: item.Image, Name: item.Name, Price: item.Price,Scale: item.Scale,ID: item.ID,Category:item.Category }));
+                                dispatch(addToCart({ Image: item.Image, Name: item.Name, Price: item.Price,Scale: item.Scale,ID: item.ID,Category:item.Category,quantity : item.quantity }));
                                 setItemNameForAnimation(item.Name);
                                 setShowAnimation(true);
                                 setTimeout(() => setShowAnimation(false), 2500); // Adjust timing as needed

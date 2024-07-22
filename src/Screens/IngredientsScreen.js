@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Platform, StatusBar } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { ingredientsData, recipeStepsData } from "../Utils/Data";
-import {myColors, myColors as color} from "../Utils/MyColors";
+import { myColors as color } from "../Utils/MyColors";
 import { addToCart } from "../../Redux/CartSlice";
 import { useDispatch } from "react-redux";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -10,23 +9,26 @@ import Logo from "../Components/Logo";
 import { FontAwesome } from '@expo/vector-icons';
 
 export default function IngredientsScreen({ route }) {
-    const [theme] = React.useContext(ThemeContext);
-    let myColors = color[theme.mode];
-    const { dishId, dishName } = route.params;
-    const ingredients = ingredientsData[dishId] || [];
-    const recipeSteps = recipeStepsData[dishId] || [];
+    const [theme] = useContext(ThemeContext);
+    const myColors = color[theme.mode];
+    const { dish } = route.params;
+
+    // Split the description into steps
+    const recipeSteps = dish.description.split('. ').map((step, index) => ({
+        stepNumber: index + 1,
+        description: step
+    }));
+
     const dispatch = useDispatch();
     const sheetRef = useRef(null);
     const [sheetIndex, setSheetIndex] = useState(0); // Start with the sheet closed
     const snapPoints = ['25%', '50%', '90%'];
 
-    // Function to handle adding an ingredient to the cart
     const handleAddToCart = (item) => {
         dispatch(addToCart({ img: item.img, name: item.ingredient, price: item.price }));
         console.log("Added to cart", item);
     };
 
-    // Render the content of the bottom sheet
     const renderContent = () => (
         <View style={[styles.bottomSheetContent, { backgroundColor: myColors.primary }]}>
             <Text style={[styles.header, { color: myColors.text }]}>Recipe Steps</Text>
@@ -47,16 +49,16 @@ export default function IngredientsScreen({ route }) {
         <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
             <Logo />
             <View style={[styles.ing, { borderColor: myColors.text }]}>
-                <Text style={[styles.header, { color: myColors.text }]}>{dishName} Ingredients</Text>
+                <Text style={[styles.header, { color: myColors.text }]}>{dish.name} Ingredients</Text>
             </View>
             <FlatList
-                data={ingredients}
+                data={dish.ingredients}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                     <View style={[styles.item, { borderColor: myColors.text }]}>
                         <Image style={styles.ingredientImage} source={{ uri: item.img }} />
                         <View style={styles.ingredientDetails}>
-                            <Text style={[styles.title, { color: myColors.text }]}>{item.ingredient}: {item.quantity}</Text>
+                            <Text style={[styles.title, { color: myColors.text }]}>{item.name}: {item.quantity}</Text>
                             <Text style={[styles.price, { color: myColors.text }]}>Price: ₪{item.price}</Text>
                         </View>
                         <TouchableOpacity style={[styles.addToCartButton, { backgroundColor: myColors.clickable }]} onPress={() => handleAddToCart(item)}>

@@ -10,7 +10,8 @@ const CartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             const { payload } = action;
-            const existingProductIndex = state.products.findIndex(product => product.Name === payload.name);
+            console.log(state.products)
+            const existingProductIndex = state.products.findIndex(product => product.ID === payload.ID);
 
             if (existingProductIndex !== -1) {
                 // If product already exists in cart, increment quantity
@@ -26,7 +27,7 @@ const CartSlice = createSlice({
         },
         incrementQuantity: (state, action) => {
             const { payload } = action;
-            const product = state.products.find(product => product.Name === payload.Name);
+            const product = state.products.find(product => product.ID === payload.ID);
 
             if (product) {
                 // If product exists in cart, increment its quantity
@@ -34,6 +35,9 @@ const CartSlice = createSlice({
             } else {
                 console.log("Product not found in cart");
             }
+        },
+        ClearCart: (state, action) => {
+            state.products = [];
         },
         decrementQuantity: (state, action) => {
             const { payload } = action;
@@ -54,7 +58,7 @@ const CartSlice = createSlice({
     },
 });
 
-export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity } = CartSlice.actions;
+export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity,ClearCart } = CartSlice.actions;
 
 // Selector function to calculate the total number of unique products in the cart
 export const selectUniqueProductCount = (state) =>

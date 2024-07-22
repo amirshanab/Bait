@@ -25,7 +25,7 @@ const Dishes = ({ navigation }) => {
     }, [regionId]);
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.dishItem} onPress={() => navigation.navigate('DishDetails', { dishId: item.id })}>
+        <TouchableOpacity style={styles.dishItem} onPress={() => navigation.navigate('DishDetails', { dish: item })}>
             <Image source={{ uri: item.image }} style={styles.dishImage} />
             <View style={styles.dishTextContainer}>
                 <Text style={styles.dishName}>{item.name}</Text>
@@ -106,9 +106,6 @@ const createStyles = (myColors) => StyleSheet.create({
     },
 });
 
-Dishes.sharedElements = (route) => {
-    const { regionId } = route.params;
-    return [{ id: regionId }];
-};
+
 
 export default Dishes;

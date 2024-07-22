@@ -325,7 +325,7 @@ export default function CheckoutScreen() {
                         navigation.navigate('OrderConfirmation', {
                             totalAmount,
                             items,
-                            selectedDate: selectedDate ? selectedDate : null,
+                            selectedDate: selectedDate ? selectedDate.toISOString() : null,
                             selectedPaymentMethod,
                             locationUrl,
                         });

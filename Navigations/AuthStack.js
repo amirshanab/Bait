@@ -14,7 +14,6 @@ const AuthStack = ({ handleLoginSuccess }) => {
                 name="Login"
                 options={{
                     title: 'Login',
-                    // You can customize header styles or options here
                 }}
             >
                 {(props) => <LoginScreen {...props} handleLoginSuccess={handleLoginSuccess} />}
@@ -24,7 +23,6 @@ const AuthStack = ({ handleLoginSuccess }) => {
                 component={SignupScreen}
                 options={{
                     title: 'Sign Up',
-                    // You can customize header styles or options here
                 }}
             />
             <Stack.Screen
@@ -32,7 +30,6 @@ const AuthStack = ({ handleLoginSuccess }) => {
                 component={ForgotPasswordScreen}
                 options={{
                     title: 'Forgot Password',
-                    // You can customize header styles or options here
                 }}
             />
         </Stack.Navigator>

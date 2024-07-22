@@ -10,16 +10,12 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import ProductServices from "../../Services/ProductServices";
 import getRecommendations from "../../Services/getUserPurchasedItems"; // Ensure this path is correct
 
-// Optimized IndividualProductCarousel using React.memo
 const MemoizedIndividualProductCarousel = React.memo(IndividualProductCarousel);
 
-// Optimized PromotionsCarousel using React.memo
 const MemoizedPromotionsCarousel = React.memo(PromotionsCarousel);
 
-// Optimized AllCategoriesCarousel using React.memo
 const MemoizedAllCategoriesCarousel = React.memo(AllCategoriesCarousel);
 
-// Optimized ProductsTitle using React.memo
 const MemoizedProductsTitle = React.memo(ProductsTitle);
 
 const Home = () => {

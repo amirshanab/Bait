@@ -49,10 +49,8 @@ const AppNavigator = () => {
             try {
                 const productRef = collection(db, 'Products');
 
-                // Construct a query to filter products based on the 'Category' field
                 const q = query(productRef);
 
-                // Execute the query and retrieve the documents
                 const querySnapshot = await getDocs(q);
 
 
@@ -62,7 +60,7 @@ const AppNavigator = () => {
                 })))
 
 
-                setIsLoading(false); // Set loading to false when data is fetched
+                setIsLoading(false);
                 }
              catch (error) {
                 console.error("Error fetching user data:", error);
@@ -70,16 +68,15 @@ const AppNavigator = () => {
         };
 
 
-    // Function to check authentication status
     const checkAuthentication = () => {
         onAuthStateChanged(authentication, (user) => {
             if (user) {
-                setIsAuthenticated(true); // User is authenticated
-                fetchUserData(); // Fetch user data when user is authenticated
+                setIsAuthenticated(true);
+                fetchUserData();
                 fetchProducts()
             } else {
-                setIsAuthenticated(false); // User is not authenticated
-                setIsLoading(false); // Set loading to false when user is not authenticated
+                setIsAuthenticated(false);
+                setIsLoading(false);
             }
         });
     };

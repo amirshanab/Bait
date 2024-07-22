@@ -21,7 +21,7 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
     UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const CurrentOrderScreen = ({status}) => {
+const CurrentOrderScreen = ({ status }) => {
     const [theme] = useContext(ThemeContext);
     const myColors = color[theme.mode];
     const [Orders, setOrders] = useState([]);
@@ -40,7 +40,7 @@ const CurrentOrderScreen = ({status}) => {
             }
         };
         fetchOrders();
-    }, []);
+    }, [status]);
 
     const toggleExpand = (index) => {
         // Animate the layout change
@@ -52,7 +52,7 @@ const CurrentOrderScreen = ({status}) => {
 
     const renderOrderItem = ({ item, index }) => {
         // Handle Scheduled Delivery
-        let ScheduledDelivery = item.ScheduledDelivery;
+        let ScheduledDelivery = item.ScheduledDelivery ? item.ScheduledDelivery.substring(0, 10) : "Immediate";
         // Handle Order Date
         let orderDate = "";
         if (item.orderDate) {
@@ -65,6 +65,7 @@ const CurrentOrderScreen = ({status}) => {
         if (ScheduledDelivery == null) {
             ScheduledDelivery = "immediate";
         }
+        console.log("Scheduled Delivery is " + ScheduledDelivery)
         return (
             <TouchableOpacity activeOpacity={.8} style={styles.orderItem} onPress={() => toggleExpand(index)}>
                 <Text style={styles.orderTitle}>Order ID: {item.id}</Text>
@@ -79,15 +80,15 @@ const CurrentOrderScreen = ({status}) => {
                             data={item.items}
                             renderItem={({ item: product }) => (
                                 <View style={[styles.productItem, { width: itemWidth }]}>
-                                    <Image style={styles.productImage} source={{ uri: product.img }} />
+                                    <Image style={styles.productImage} source={{ uri: product.Image }} />
                                     <View style={styles.productDetails}>
-                                        <Text>{product.name}</Text>
-                                        <Text>Price: ₪{parseFloat(product.price).toFixed(2)}</Text>
+                                        <Text>{product.Name}</Text>
+                                        <Text>Price: ₪{parseFloat(product.Price).toFixed(2)}</Text>
                                         <Text>Quantity: {product.quantity}</Text>
                                     </View>
                                 </View>
                             )}
-                            keyExtractor={(product) => product.name} // Ensure each product has a unique key
+                            keyExtractor={(product, idx) => `${product.Name}_${idx}`} // Ensure each product has a unique key
                             numColumns={numColumns}
                             horizontal={false}
                             showsHorizontalScrollIndicator={false}
