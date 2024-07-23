@@ -27,7 +27,7 @@ const OrderServices = async (items, total, selectedDate, selectedPaymentMethod, 
                 PaymentMethod: selectedPaymentMethod,
                 Address: locationUrl
             };
-            console.log("item is " + orderData.items)
+            console.log("item is " + orderData.id)
 
             // Upload order data to Firestore
             await setDoc(orderRef, orderData);
