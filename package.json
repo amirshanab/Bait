@@ -53,6 +53,7 @@
     "react-native-shared-element": "^0.8.9",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "15.2.0-rc.0",
+    "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.0.3",
