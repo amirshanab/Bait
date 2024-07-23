@@ -15,10 +15,10 @@ Smart dishes: in the third button of the bottom bar, you can find our dishes fea
 My orders: you can view all your previous and current orders in profile->previous orders
 
 ## Screenshots
-![Home Page](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM.jpeg)
-![Regions](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM (1).jpeg)
-![Dishes](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM (2).jpeg)
-![Ingredients](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM (3).jpeg)
+![Home Page](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM.jpeg)
+![Regions](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(1).jpeg)
+![Dishes](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(2).jpeg)
+![Ingredients](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(3).jpeg)
 
 
 
@@ -31,9 +31,13 @@ Steps to install the project:
 1. Clone the repository
    ```bash
    git clone https://github.com/mouhammadghosheh/Bait.git
-2. Download Modules
+2. Navigate to Directory
    ```bash
-   npm install   
-3. Start the application
+   cd Bait
+3. Download Modules
+   ```bash
+   npm install
+
+4. Start the App
    ```bash
    npm start
