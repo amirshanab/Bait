@@ -11,11 +11,16 @@ In Bait, our goal is to make online grocery shopping a more convenient and fun e
 
 ## Features
 Smart dishes: in the third button of the bottom bar, you can find our dishes feature, select a region then select a famous dish and you can immediately see it's ingredients and add them to cart with one click and also you can see also the recipe steps
+
 My orders: you can view all your previous and current orders in profile->previous orders
 
 ## Screenshots
-![Screenshot 1](path/to/screenshot1.png)
-![Screenshot 2](path/to/screenshot2.png)
+![Home Page](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM.jpeg)
+![Regions](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM (1).jpeg)
+![Dishes](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM (2).jpeg)
+![Ingredients](Screenshots/WhatsApp Image 2024-07-23 at 11.45.53 PM (3).jpeg)
+
+
 
 ## Prerequisites
 - Node.js
@@ -26,8 +31,9 @@ Steps to install the project:
 1. Clone the repository
    ```bash
    git clone https://github.com/mouhammadghosheh/Bait.git
-2. Start the application
-```bash
-npm start
-# or
-yarn start
+2. Download Modules
+   ```bash
+   npm install   
+3. Start the application
+   ```bash
+   npm start
