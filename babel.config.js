@@ -4,7 +4,11 @@ module.exports = function(api) {
     presets: ['babel-preset-expo'],
     plugins: [
       'react-native-paper/babel',
-      'react-native-reanimated/plugin', // Add this line to include Reanimated plugin
+      'react-native-reanimated/plugin',
+      ['module:react-native-dotenv', {
+        moduleName: '@env',
+        path: 'e.env',
+      }]
     ],
   };
 };
