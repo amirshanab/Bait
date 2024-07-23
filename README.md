@@ -15,11 +15,26 @@ Smart dishes: in the third button of the bottom bar, you can find our dishes fea
 My orders: you can view all your previous and current orders in profile->previous orders
 
 ## Screenshots
-![Home Page](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM.jpeg)
-![Regions](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(1).jpeg)
-![Dishes](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(2).jpeg)
-![Ingredients](https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(3).jpeg)
-
+<div align="center">
+  <table>
+    <tr>
+      <td align="center"><b>Home Page</b></td>
+      <td align="center"><b>Regions</b></td>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM.jpeg" alt="Home Page" width="200"/></td>
+      <td><img src="https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(1).jpeg" alt="Regions" width="200"/></td>
+    </tr>
+    <tr>
+      <td align="center"><b>Dishes</b></td>
+      <td align="center"><b>Ingredients</b></td>
+    </tr>
+    <tr>
+      <td><img src="https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(2).jpeg" alt="Dishes" width="200"/></td>
+      <td><img src="https://github.com/mouhammadghosheh/Bait/blob/master/Screenshots/WhatsApp%20Image%202024-07-23%20at%2011.45.53%20PM%20(3).jpeg" alt="Ingredients" width="200"/></td>
+    </tr>
+  </table>
+</div>
 
 
 ## Prerequisites
