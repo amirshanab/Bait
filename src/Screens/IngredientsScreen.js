@@ -12,6 +12,7 @@ export default function IngredientsScreen({ route }) {
     const [theme] = useContext(ThemeContext);
     const myColors = color[theme.mode];
     const { dish } = route.params;
+    console.log(dish)
 
     // Split the description into steps
     const recipeSteps = dish.description.split('. ').map((step, index) => ({
@@ -49,17 +50,17 @@ export default function IngredientsScreen({ route }) {
         <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
             <Logo />
             <View style={[styles.ing, { borderColor: myColors.text }]}>
-                <Text style={[styles.header, { color: myColors.text }]}>{dish.name} Ingredients</Text>
+                <Text style={[styles.header, { color: myColors.text }]}>{dish.Name} Ingredients</Text>
             </View>
             <FlatList
                 data={dish.ingredients}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                     <View style={[styles.item, { borderColor: myColors.text }]}>
-                        <Image style={styles.ingredientImage} source={{ uri: item.img }} />
+                        <Image style={styles.ingredientImage} source={{ uri: item.Image }} />
                         <View style={styles.ingredientDetails}>
-                            <Text style={[styles.title, { color: myColors.text }]}>{item.name}: {item.quantity}</Text>
-                            <Text style={[styles.price, { color: myColors.text }]}>Price: ₪{item.price}</Text>
+                            <Text style={[styles.title, { color: myColors.text }]}>{item.Name}: {item.quantity}</Text>
+                            <Text style={[styles.price, { color: myColors.text }]}>Price: ₪{item.Price}</Text>
                         </View>
                         <TouchableOpacity style={[styles.addToCartButton, { backgroundColor: myColors.clickable }]} onPress={() => handleAddToCart(item)}>
                             <Text style={styles.addToCartButtonText}>Add to Cart</Text>
