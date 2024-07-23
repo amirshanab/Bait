@@ -18,7 +18,7 @@ const CartSlice = createSlice({
                 state.products[existingProductIndex].quantity += 1;
             } else {
                 // If product doesn't exist in cart, add it with quantity 1
-                state.products.push({ ...payload, quantity: 1 });
+                state.products.push({ ...payload });
             }
         },
         removeFromCart: (state, action) => {

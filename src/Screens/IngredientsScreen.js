@@ -26,7 +26,7 @@ export default function IngredientsScreen({ route }) {
     const snapPoints = ['25%', '50%', '90%'];
 
     const handleAddToCart = (item) => {
-        dispatch(addToCart({ img: item.img, name: item.ingredient, price: item.price }));
+        dispatch(addToCart({ Image: item.Image, Name: item.Name, Price: item.Price,ID: item.ID,quantity: item.quantity }));
         console.log("Added to cart", item);
     };
 
@@ -34,12 +34,10 @@ export default function IngredientsScreen({ route }) {
         <View style={[styles.bottomSheetContent, { backgroundColor: myColors.primary }]}>
             <Text style={[styles.header, { color: myColors.text }]}>Recipe Steps</Text>
             <FlatList
-                data={recipeSteps}
-                keyExtractor={item => item.stepNumber.toString()}
+                data={dish.description}
                 renderItem={({ item }) => (
                     <View style={styles.step}>
-                        <Text style={[styles.stepNumber, { color: myColors.text }]}>Step {item.stepNumber}</Text>
-                        <Text style={[styles.stepDescription, { color: myColors.text }]}>{item.description}</Text>
+                        <Text style={[styles.stepDescription, { color: myColors.text }]}>{dish.description}</Text>
                     </View>
                 )}
             />
@@ -50,11 +48,11 @@ export default function IngredientsScreen({ route }) {
         <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
             <Logo />
             <View style={[styles.ing, { borderColor: myColors.text }]}>
-                <Text style={[styles.header, { color: myColors.text }]}>{dish.Name} Ingredients</Text>
+                <Text style={[styles.header, { color: myColors.text }]}>{dish.name} Ingredients</Text>
             </View>
             <FlatList
                 data={dish.ingredients}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.ID}
                 renderItem={({ item }) => (
                     <View style={[styles.item, { borderColor: myColors.text }]}>
                         <Image style={styles.ingredientImage} source={{ uri: item.Image }} />

@@ -26,9 +26,9 @@ const Dishes = ({ navigation }) => {
 
     const renderItem = ({ item }) => (
         <TouchableOpacity style={styles.dishItem} onPress={() => navigation.navigate('DishDetails', { dish: item })}>
-            <Image source={{ uri: item.image }} style={styles.dishImage} />
+            <Image source={{ uri: item.Image }} style={styles.dishImage} />
             <View style={styles.dishTextContainer}>
-                <Text style={styles.dishName}>{item.name}</Text>
+                <Text style={styles.dishName}>{item.Name}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -42,7 +42,7 @@ const Dishes = ({ navigation }) => {
             <FlatList
                 data={dishes}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.ID}
                 contentContainerStyle={styles.listContainer}
                 ListEmptyComponent={<Text style={styles.emptyText}>No dishes found.</Text>}
             />

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import { myColors as color } from "../Utils/MyColors";
 import Logo from "../Components/Logo";
@@ -7,6 +7,7 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 import OrderServices from "../../Services/OrderServices";
 import { useSelector, useDispatch } from "react-redux";
 import { ClearCart } from "../../Redux/CartSlice";
+import LoadingScreen from '../Components/LoadingScreen';
 
 export default function OrderConfirmationScreen() {
     const [theme] = useContext(ThemeContext);
@@ -14,14 +15,25 @@ export default function OrderConfirmationScreen() {
     const { totalAmount, items, selectedDate, selectedPaymentMethod, locationUrl } = route.params;
     const myColors = color[theme.mode];
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const uploadOrder = async () => {
-            await OrderServices(items, totalAmount, selectedDate, selectedPaymentMethod, locationUrl);
-            dispatch(ClearCart());
+            try {
+                await OrderServices(items, totalAmount, selectedDate, selectedPaymentMethod, locationUrl);
+                dispatch(ClearCart());
+            } catch (error) {
+                console.error("Error uploading order:", error);
+            } finally {
+                setIsLoading(false);
+            }
         };
         uploadOrder();
     }, [items, totalAmount, selectedDate, selectedPaymentMethod, locationUrl, dispatch]);
+
+    if (isLoading) {
+        return <LoadingScreen />;
+    }
 
     return (
         <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
