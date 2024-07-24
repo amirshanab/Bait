@@ -8,8 +8,9 @@ import AllCategoriesCarousel from "../Components/AllCategoriesCarousel";
 import IndividualProductCarousel from "../Components/IndividualProductCarousel";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import ProductServices from "../../Services/ProductServices";
-import getRecommendations from "../../Services/getUserPurchasedItems"; // Ensure this path is correct
+import getRecommendations from "../../Services/getUserPurchasedItems";
 
+//memo for better performance
 const MemoizedIndividualProductCarousel = React.memo(IndividualProductCarousel);
 
 const MemoizedPromotionsCarousel = React.memo(PromotionsCarousel);
@@ -24,21 +25,20 @@ const Home = () => {
 
     const [recommendedItems, setRecommendedItems] = useState([]);
 
-    const scrollY = useRef(new Animated.Value(0)).current; // Use useRef to persist value across re-renders
-
+    const scrollY = useRef(new Animated.Value(0)).current;
+    //header animation
     const headerHeight = scrollY.interpolate({
         inputRange: [0, 100],
-        outputRange: [130, 80], // Original height to minimized height
+        outputRange: [130, 80],
         extrapolate: 'clamp',
     });
 
     const backgroundColor = scrollY.interpolate({
         inputRange: [0, 100],
-        outputRange: [myColors.primary, myColors.primary], // Color transition
+        outputRange: [myColors.primary, myColors.primary],
         extrapolate: 'clamp',
     });
-
-    // Memoized callback to fetch product data
+    //fetch the products
     const fetchProductData = useCallback((category) => {
         return ProductServices(category);
     }, []);
@@ -54,13 +54,12 @@ const Home = () => {
     }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
-            {/* Wrap the header with SafeAreaView to avoid content overlapping the status bar */}
             <StatusBar style={theme} />
             <SafeAreaView style={{ zIndex: 1 }}>
                 <Animated.View style={{
                     height: headerHeight,
                     backgroundColor,
-                    borderBottomWidth: 0.5, // might want to remove
+                    borderBottomWidth: 0.5,
                     borderColor: myColors.text,
                     justifyContent: 'center',
                     position: 'absolute',
@@ -73,10 +72,10 @@ const Home = () => {
             </SafeAreaView>
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                style={{ marginTop: 50, paddingTop: 0 }} // Adjust based on initial header height to avoid overlapping content
+                style={{ marginTop: 50, paddingTop: 0 }}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                    { useNativeDriver: false } // Use native driver for better performance where possible
+                    { useNativeDriver: false }
                 )}
                 scrollEventThrottle={10}
             >
@@ -88,7 +87,7 @@ const Home = () => {
                     <MemoizedIndividualProductCarousel data={fetchProductData('Fruits').slice(0, 5)} />
                     <MemoizedProductsTitle title='Daily Needs' />
                     <MemoizedIndividualProductCarousel data={fetchProductData('Vegetables')} />
-                    <MemoizedProductsTitle title='Based on other users purchases' />
+                    <MemoizedProductsTitle title='Based on previous purchases' />
                     <MemoizedIndividualProductCarousel data={recommendedItems.length === 0 ? fetchProductData('Fruits') : recommendedItems} seeMore = {false} />
                 </View>
             </ScrollView>

@@ -1,6 +1,6 @@
 import { authentication, db } from '../Firebaseconfig';
 import { collection, doc, getDocs, query, where } from 'firebase/firestore';
-
+//fetch my orders
 const getOrders = async (status) => {
     try {
         const user = authentication.currentUser;

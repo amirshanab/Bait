@@ -1,6 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../Firebaseconfig";
-
+//fetch dishes
 const DishesServices = async (regionID) => {
     try {
         const ref = collection(db, `Regions/${regionID}/Dishes`);

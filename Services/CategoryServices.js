@@ -1,7 +1,7 @@
 import {db} from "../Firebaseconfig"
 import {collection, getDocs} from "firebase/firestore";
 
-
+//fetch categories
 const Categories = async() => {
     try {
         const categoriesRef = collection(db, "Categories");

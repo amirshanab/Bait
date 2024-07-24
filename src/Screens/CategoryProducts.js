@@ -1,57 +1,64 @@
-import React, {useState} from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../Redux/CartSlice';
 import AddToCartAnimation from '../Components/AddToCartAnimation';
-import {myColors as color} from '../Utils/MyColors';
-import {ThemeContext} from "../../contexts/ThemeContext";
+import { myColors as color } from '../Utils/MyColors';
+import { ThemeContext } from "../../contexts/ThemeContext";
 import ProductServices from "../../Services/ProductServices";
+
 const CategoryProducts = () => {
-    const [theme] = React.useContext(ThemeContext);
-    let myColors = color[theme.mode];
+    const [theme] = useContext(ThemeContext);
+    const myColors = color[theme.mode];
+    const styles = getStyles(myColors);
+
     const route = useRoute();
     const navigation = useNavigation();
     const { categoryName } = route.params;
-    console.log(categoryName)
     const [showAnimation, setShowAnimation] = useState(false);
     const [itemNameForAnimation, setItemNameForAnimation] = useState('');
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); //dispatch from redux
     const filteredProducts = ProductServices(categoryName);
 
     const renderProductItem = ({ item }) => (
-        <TouchableOpacity onPress={() => console.log('Product clicked:', item)}>
-            <View style={[styles.productItem, {borderBottomColor: myColors.text,}]}>
-                <Image source={{ uri: item.Image }} style={styles.image} />
+        <TouchableOpacity onPress={() => console.log('Product clicked:', item)} disabled={!item.Stock}>
+            <View style={styles.productItem}>
+                <Image source={{ uri: item.Image }} style={item.Stock ? styles.image : styles.outOfStockImage} />
                 <View style={styles.productDetails}>
-                    <Text style={[styles.productName, {color: myColors.text,}]}>{item.Name}</Text>
+                    <Text style={styles.productName}>{item.Name}</Text>
                     <View style={styles.quantityContainer}>
-                        <Text style={[styles.price,{color: myColors.text,}]}>{`₪ ${item.Price}`}</Text>
-                        <TouchableOpacity
-                            style={[styles.addToCartButton,{backgroundColor: myColors.clickable,}]}
-                            onPress={() => {
-                                dispatch(addToCart({ Image: item.Image, Name: item.Name, Price: item.Price,Scale: item.Scale,ID: item.ID,Category:item.Category,quantity : item.quantity }));
-                                setItemNameForAnimation(item.Name);
-                                setShowAnimation(true);
-                                setTimeout(() => setShowAnimation(false), 2500); // Adjust timing as needed
-                            }}>
-                            <Text style={[styles.addToCartText,{color: myColors.white,}]}>Add to Cart</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.price}>{`₪ ${item.Price}`}</Text>
+                        {item.Stock ? (
+                            <TouchableOpacity
+                                style={styles.addToCartButton}
+                                onPress={() => {
+                                    //send the payload to the cart
+                                    dispatch(addToCart({ Image: item.Image, Name: item.Name, Price: item.Price, Scale: item.Scale, ID: item.ID, Category: item.Category, quantity: 1 }));
+                                    setItemNameForAnimation(item.Name);
+                                    setShowAnimation(true);
+                                    setTimeout(() => setShowAnimation(false), 2500);
+                                }}>
+                                <Text style={styles.addToCartText}>Add to Cart</Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <Text style={styles.outOfStockText}>Out of Stock</Text>
+                        )}
                     </View>
                 </View>
             </View>
         </TouchableOpacity>
     );
-
+    //back button
     return (
-        <SafeAreaView style={[styles.container, {backgroundColor: myColors.primary,}]}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.contentContainer}>
                 <View style={styles.headerContainer}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={28} color={myColors.text} />
                     </TouchableOpacity>
-                    <Text style={[styles.header,{color: myColors.text,}]}>{categoryName}</Text>
+                    <Text style={styles.header}>{categoryName}</Text>
                     <View style={styles.invisibleView} />
                 </View>
                 <FlatList
@@ -67,11 +74,10 @@ const CategoryProducts = () => {
     );
 };
 
-
-const styles = StyleSheet.create({
+const getStyles = (myColors) => StyleSheet.create({
     container: {
         flex: 1,
-
+        backgroundColor: myColors.primary,
     },
     contentContainer: {
         flex: 1,
@@ -81,26 +87,25 @@ const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between', // Updated for balancing
+        justifyContent: 'space-between',
         marginBottom: 40,
     },
     header: {
         fontSize: 20,
         fontWeight: "bold",
-
-        textAlign: 'center', // Ensure the text aligns center
-        flex: 1, // Take available space to enforce centering
+        textAlign: 'center',
+        flex: 1,
+        color: myColors.text,
     },
     invisibleView: {
-        width: 28, // Match the back button's width
-        height: 28, // Match the back button's height
+        width: 28,
+        height: 28,
     },
-
     productItem: {
         flexDirection: "row",
         alignItems: "center",
         borderBottomWidth: 1,
-
+        borderBottomColor: myColors.text,
         paddingVertical: 10,
     },
     image: {
@@ -108,6 +113,13 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 10,
         marginRight: 10,
+    },
+    outOfStockImage: {
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        marginRight: 10,
+        opacity: 0.4,
     },
     productDetails: {
         flex: 1,
@@ -118,7 +130,7 @@ const styles = StyleSheet.create({
     productName: {
         fontSize: 16,
         fontWeight: "bold",
-
+        color: myColors.text,
     },
     quantityContainer: {
         flexDirection: "row",
@@ -127,22 +139,27 @@ const styles = StyleSheet.create({
     price: {
         fontSize: 14,
         fontWeight: "bold",
-
         marginRight: 10,
+        color: myColors.text,
     },
     addToCartButton: {
-
         paddingVertical: 14,
         paddingHorizontal: 10,
         borderRadius: 10,
+        backgroundColor: myColors.clickable,
     },
     addToCartText: {
         fontSize: 12,
-
         fontWeight: "bold",
+        color: myColors.white,
     },
     flatListContent: {
         paddingBottom: 20,
+    },
+    outOfStockText: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: 'red',
     },
 });
 

@@ -26,7 +26,7 @@ const SettingsScreen = () => {
     const [selectedTheme, setSelectedTheme] = useState('automatic');
     const [selectedLanguage, setSelectedLanguage] = useState(i18next.language); // Use i18next's current language
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
-
+    const styles = getStyles(myColors)
     const handleThemeChange = (value) => {
         setSelectedTheme(value);
         setTheme({ mode: value });
@@ -38,13 +38,13 @@ const SettingsScreen = () => {
     };
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: myColors.primary }]}>
+        <SafeAreaView style={styles.container }>
 
             <Logo/>
             <ScrollView                 showsVerticalScrollIndicator={false}
                                         style={styles.container}>
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle , {color: myColors.text}]}>{t('theme')}</Text>
+                    <Text style={styles.sectionTitle }>{t('theme')}</Text>
                     <View style={styles.buttonsContainer}>
                         {ThemeOptions.map(option => (
                             <TouchableOpacity
@@ -52,7 +52,7 @@ const SettingsScreen = () => {
                                 style={[styles.button, { backgroundColor: selectedTheme === option.value ? myColors.clickable : myColors.primary }]}
                                 onPress={() => handleThemeChange(option.value)}
                             >
-                                <Text style={[styles.buttonText, {color: myColors.text}]}>{t(option.label)}</Text>
+                                <Text style={styles.buttonText }>{t(option.label)}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -63,7 +63,7 @@ const SettingsScreen = () => {
                         style={styles.languageHeader}
                         onPress={() => setShowLanguageMenu(!showLanguageMenu)}
                     >
-                        <Text style={[styles.sectionTitle, {color:myColors.text}]}>{t('language')}</Text>
+                        <Text style={styles.sectionTitle }>{t('language')}</Text>
                         <AntDesign name={showLanguageMenu ? "caretup" : "caretdown"} size={20} color={myColors.text} />
                     </TouchableOpacity>
                     {showLanguageMenu && (
@@ -74,7 +74,7 @@ const SettingsScreen = () => {
                                     style={[styles.button, { backgroundColor: selectedLanguage === option.value ? myColors.clickable : myColors.primary }]}
                                     onPress={() => handleLanguageChange(option.value)}
                                 >
-                                    <Text style={[styles.buttonText,{color: myColors.text}]}>{t(option.label)}</Text>
+                                    <Text style={styles.buttonText}>{t(option.label)}</Text>
                                 </TouchableOpacity>
                             ))}
                         </View>
@@ -85,10 +85,10 @@ const SettingsScreen = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (myColors) => StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 20,
+        paddingHorizontal: 20,backgroundColor: myColors.primary
     },
 
     section: {
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: myColors.text
     },
     buttonsContainer: {
         flexDirection: 'row',
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 16,
+        color: myColors.text
     },
     languageHeader: {
         flexDirection: 'row',

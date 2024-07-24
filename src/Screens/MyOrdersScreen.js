@@ -1,8 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import { View, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native';
+import React, {useContext} from 'react';
+import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons'; // Ensure you have @expo/vector-icons installed
 import { myColors as color } from "../Utils/MyColors";
 import {ThemeContext} from "../../contexts/ThemeContext";
 import CurrentOrderScreen from "../Components/currentOrders"
@@ -16,13 +14,12 @@ const Tab = createMaterialTopTabNavigator();
 function MyOrdersScreen() {
     const [theme] = useContext(ThemeContext);
     let myColors = color[theme.mode];
-    const navigation = useNavigation(); // Use navigation to handle back button press
+    const styles = getStyles(myColors)
     const CurrentOrders = () => <CurrentOrderScreen status="Pending" />;
-    // Wrapper function for CurrentOrderScreen with "Done" status
     const PreviousOrders = () => <CurrentOrderScreen status="Done" />;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: myColors.primary }}>
-            <View style={[styles.headerContainer, {backgroundColor: myColors.primary}]}>
+            <View style={styles.headerContainer }>
 
                 <View />
 
@@ -54,13 +51,14 @@ function MyOrdersScreen() {
     );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (myColors) => StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
         paddingTop: 0,
+        backgroundColor: myColors.primary
 
     },
 

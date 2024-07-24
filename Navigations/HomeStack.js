@@ -1,5 +1,4 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../src/Screens/Home';
 import CategoryProducts from "../src/Screens/CategoryProducts";
 import ProductDetailsPopup from "../src/Screens/ProductDetailsPopup";
@@ -9,7 +8,7 @@ import PaymentMethodsScreen from "../src/Screens/PaymentMethodsScreen";
 import IngredientsScreen from "../src/Screens/IngredientsScreen";
 import Dishes from "../src/Screens/Dishes";
 import RegionalDishesScreen from "../src/Screens/RegionalDishesScreen";
-import CheckoutScreen from "../src/Screens/CheckoutScreen";
+import CheckoutScreen from "../src/Screens/CheckoutScreen/CheckoutScreen";
 import OrderConfirmationScreen from "../src/Screens/OrderConfirmationScreen";
 import SettingsScreen from "../src/Screens/SettingsScreen";
 import Cart from "../src/Screens/Cart";
@@ -42,7 +41,7 @@ export const CartStack = () => {
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: false,
+                gestureEnabled: true,
                 animationEnabled: false ,
                 animation: 'slide_from_right'
             }}>
@@ -76,7 +75,7 @@ export const ProfileStack = () => {
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: true,
-                animationEnabled: false, // Disable animations
+                animationEnabled: false,
                 animation: 'slide_from_bottom'
 
             }}>

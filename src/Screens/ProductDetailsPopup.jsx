@@ -14,13 +14,12 @@ const ProductDetailsPopup = ({route}) => {
     const dispatch = useDispatch();
     const productData = route.params.main;
     console.log(productData)
-    const {name, price, img} = productData // Get the product details from the route params
+    const {name, price, img} = productData
 
-    const nav = useNavigation(); // Access the navigation object
-    // Function to handle adding the product to the cart
-
+    const nav = useNavigation();
+    const styles = getStyles(myColors)
     return (
-        <SafeAreaView style={[styles.Main,{ backgroundColor: myColors.primary}]}>
+        <SafeAreaView style={styles.Main }>
             {/* Product image */}
             <View>
                 <Image
@@ -102,10 +101,11 @@ const ProductDetailsPopup = ({route}) => {
     );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (myColors) => StyleSheet.create({
     Main : {
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-        flex: 1, gap: 20
+        flex: 1, gap: 20,
+        backgroundColor: myColors.primary
     }
 })
 

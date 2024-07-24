@@ -12,13 +12,11 @@ export default function IngredientsScreen({ route }) {
     const [theme] = useContext(ThemeContext);
     const myColors = color[theme.mode];
     const { dish } = route.params;
+    const styles = getStyles(myColors);
+
     console.log(dish)
 
-    // Split the description into steps
-    const recipeSteps = dish.description.split('. ').map((step, index) => ({
-        stepNumber: index + 1,
-        description: step
-    }));
+
 
     const dispatch = useDispatch();
     const sheetRef = useRef(null);
@@ -31,13 +29,13 @@ export default function IngredientsScreen({ route }) {
     };
 
     const renderContent = () => (
-        <View style={[styles.bottomSheetContent, { backgroundColor: myColors.primary }]}>
-            <Text style={[styles.header, { color: myColors.text }]}>Recipe Steps</Text>
+        <View style={styles.bottomSheetContent }>
+            <Text style={styles.header   }>Recipe Steps</Text>
             <FlatList
                 data={dish.description}
                 renderItem={({ item }) => (
                     <View style={styles.step}>
-                        <Text style={[styles.stepDescription, { color: myColors.text }]}>{dish.description}</Text>
+                        <Text style={styles.stepDescription }>{dish.description}</Text>
                     </View>
                 )}
             />
@@ -45,22 +43,22 @@ export default function IngredientsScreen({ route }) {
     );
 
     return (
-        <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
+        <SafeAreaView style={styles.safe  }>
             <Logo />
-            <View style={[styles.ing, { borderColor: myColors.text }]}>
-                <Text style={[styles.header, { color: myColors.text }]}>{dish.name} Ingredients</Text>
+            <View style={styles.ing}>
+                <Text style={styles.header}>{dish.name} Ingredients</Text>
             </View>
             <FlatList
                 data={dish.ingredients}
                 keyExtractor={item => item.ID}
                 renderItem={({ item }) => (
-                    <View style={[styles.item, { borderColor: myColors.text }]}>
+                    <View style={styles.item }>
                         <Image style={styles.ingredientImage} source={{ uri: item.Image }} />
                         <View style={styles.ingredientDetails}>
-                            <Text style={[styles.title, { color: myColors.text }]}>{item.Name}: {item.quantity}</Text>
-                            <Text style={[styles.price, { color: myColors.text }]}>Price: ₪{item.Price}</Text>
+                            <Text style={styles.title}>{item.Name}: {item.quantity}</Text>
+                            <Text style={styles.price }>Price: ₪{item.Price}</Text>
                         </View>
-                        <TouchableOpacity style={[styles.addToCartButton, { backgroundColor: myColors.clickable }]} onPress={() => handleAddToCart(item)}>
+                        <TouchableOpacity style={styles.addToCartButton } onPress={() => handleAddToCart(item)}>
                             <Text style={styles.addToCartButtonText}>Add to Cart</Text>
                         </TouchableOpacity>
                     </View>
@@ -85,10 +83,11 @@ export default function IngredientsScreen({ route }) {
     );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (myColors) => StyleSheet.create({
     safe: {
         flex: 1,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        backgroundColor: myColors.primary
     },
     logoContainer: {
         alignItems: 'center',
@@ -104,6 +103,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: 20,
+        color: myColors.text
     },
     ing: {
         marginVertical: 8,
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         borderWidth: 0.5,
+        borderColor: myColors.text
     },
     item: {
         flexDirection: 'row',
@@ -120,10 +121,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderRadius: 10,
         borderBottomWidth: 1,
+        borderColor: myColors.text
     },
     title: {
         fontSize: 16,
         fontWeight: '600',
+        color: myColors.text
     },
     ingredientImage: {
         width: 70,
@@ -139,12 +142,14 @@ const styles = StyleSheet.create({
     price: {
         fontSize: 16,
         fontWeight: '600',
+        color: myColors.text
     },
     addToCartButton: {
         paddingVertical: 15,
         paddingHorizontal: 15,
         borderRadius: 10,
         alignSelf: 'center',
+        backgroundColor: myColors.clickable
     },
     addToCartButtonText: {
         color: 'white',
@@ -154,6 +159,7 @@ const styles = StyleSheet.create({
     bottomSheetContent: {
         flex: 1,
         padding: 20,
+        backgroundColor: myColors.primary
     },
     step: {
         marginBottom: 15,
@@ -164,6 +170,7 @@ const styles = StyleSheet.create({
     },
     stepDescription: {
         fontSize: 16,
+        color: myColors.text
     },
     arrowButton: {
         position: 'absolute',

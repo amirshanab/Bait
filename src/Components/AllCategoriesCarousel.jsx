@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Animated } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Categories from "../../Services/CategoryServices";
 import { useNavigation } from "@react-navigation/native";
 import { myColors as color } from "../Utils/MyColors";
@@ -11,7 +11,7 @@ const AllCategoriesCarousel = () => {
 
     const [categories, setCategories] = useState([]);
     const navigation = useNavigation();
-
+    const styles = getStyles(myColors);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,7 +33,7 @@ const AllCategoriesCarousel = () => {
         <TouchableOpacity onPress={() => navigateToCategoryProducts(item.Name)}>
             <View style={styles.productItem}>
                 <Image source={{ uri: item.Image }} style={styles.image} />
-                <Text style={[styles.productTitle, { color: myColors.text }]}>{item.Name}</Text>
+                <Text style={styles.productTitle  }>{item.Name}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -54,7 +54,7 @@ const AllCategoriesCarousel = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (myColors) => StyleSheet.create({
     container: {
         padding: 15,
         borderRadius: 23,
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     },
     productTitle: {
         fontSize: 18,
+        color: myColors.text,
         fontFamily : 'System',
       //  textAlign: 'center',
     },

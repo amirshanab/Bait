@@ -3,7 +3,6 @@ import {
     SafeAreaView,
     Text,
     TouchableOpacity,
-    StyleSheet,
     ScrollView,
     View,
     Platform,
@@ -15,15 +14,16 @@ import {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps'
 import BottomSheet from '@gorhom/bottom-sheet';
 import Toast from "react-native-toast-message";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { myColors as color} from '../Utils/MyColors';
-import { ThemeContext } from '../../contexts/ThemeContext';
-import Logo from '../Components/Logo';
+import { myColors as color} from '../../Utils/MyColors';
+import { ThemeContext } from '../../../contexts/ThemeContext';
+import Logo from '../../Components/Logo';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import AwesomeButton from "react-native-really-awesome-button";
-import MapStyle from "../Utils/MapStyle.json"
+import MapStyle from "../../Utils/MapStyle.json"
+import getStyles from "./CheckoutScreen"
 export default function CheckoutScreen() {
     const mapStyle = MapStyle
     const [inputValues, setInputValues] = useState({
@@ -44,19 +44,22 @@ export default function CheckoutScreen() {
     const scrollViewRef = useRef();
     const [sheetIndex, setSheetIndex] = useState(-1);
     const snapPoints = ['80%'];
-    const sheetRef = useRef(null); // Add this line
+    const sheetRef = useRef(null);
     const colorScheme = useColorScheme();
     const isDarkMode = colorScheme === 'dark';
     const route = useRoute();
     const { totalAmount, items } = route.params;
 
     const myColors = color[theme.mode]; // updated to use const
+    const styles = getStyles(myColors);
+
     const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('today');
     const [selectedDate, setSelectedDate] = useState(null);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Cash');
     const [location, setLocation] = useState(null);
-        const [loadingLocation, setLoadingLocation] = useState(false);
+    const [loadingLocation, setLoadingLocation] = useState(false);
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -136,7 +139,7 @@ export default function CheckoutScreen() {
                 <View style={{ backgroundColor: myColors.primary, padding: 10 }}>
                     {location && (
                         <View>
-                            <Text style={[styles.locationText, { color: myColors.text }]}>
+                            <Text style={styles.locationText}>
                                 Your Location:
                             </Text>
                             <MapView
@@ -160,9 +163,9 @@ export default function CheckoutScreen() {
                                 />
                             </MapView>
                             <View>
-                                <Text style={[styles.label, { color: myColors.text }]}>City Name</Text>
+                                <Text style={styles.label}>City Name</Text>
                                 <TextInput
-                                    style={[styles.input, { color: myColors.text }]}
+                                    style={styles.input }
                                     mode="outlined"
                                     placeholderTextColor={myColors.placeholder}
                                     onChangeText={(text) => handleInputChange('cityName', text)}
@@ -172,10 +175,10 @@ export default function CheckoutScreen() {
                             </View>
                             <View style={styles.horiz}>
                                 <View style={styles.inputContainer}>
-                                    <Text style={[styles.label, { color: myColors.text }]}>Street Name</Text>
+                                    <Text style={styles.label}>Street Name</Text>
                                     <TextInput
                                         ref={inputRefs.streetName}
-                                        style={[styles.input, { color: myColors.text }]}
+                                        style={styles.input}
                                         mode="outlined"
                                         placeholderTextColor={myColors.placeholder}
                                         onChangeText={(text) => handleInputChange('streetName', text)}
@@ -184,10 +187,10 @@ export default function CheckoutScreen() {
                                     />
                                 </View>
                                 <View style={styles.inputContainer}>
-                                    <Text style={[styles.label, { color: myColors.text }]}>Building Number</Text>
+                                    <Text style={styles.label}>Building Number</Text>
                                     <TextInput
                                         ref={inputRefs.buildingNumber}
-                                        style={[styles.input, { color: myColors.text }]}
+                                        style={styles.input}
                                         mode="outlined"
                                         keyboardType="numeric"
                                         placeholderTextColor={myColors.placeholder}
@@ -198,10 +201,10 @@ export default function CheckoutScreen() {
                                 </View>
                             </View>
 
-                            <Text style={[styles.label, { color: myColors.text }]}>Notes to driver</Text>
+                            <Text style={styles.label}>Notes to driver</Text>
                             <TextInput
                                 ref={inputRefs.notesToDriver}
-                                style={[styles.input, { color: myColors.text, marginBottom: 40, height: 100 }]}
+                                style={[styles.input, { marginBottom: 40, height: 100 }]}
                                 mode="outlined"
                                 multiline
                                 numberOfLines={3}
@@ -230,23 +233,23 @@ export default function CheckoutScreen() {
     }
 
     return (
-        <SafeAreaView style={[styles.safe, { backgroundColor: myColors.primary }]}>
+        <SafeAreaView style={styles.safe} >
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container} ref={scrollViewRef}>
                 <Logo />
-                <Text style={[styles.header, { color: myColors.text }]}>Checkout</Text>
+                <Text style={styles.header }>Checkout</Text>
                 {/* Shipping Information */}
 
                 <TouchableOpacity
-                    style={[styles.button, { backgroundColor: myColors.clickable }]}
+                    style={styles.button }
                     onPress={shareLoc} // Toggle bottom sheet
                 >
-                    <Text style={[styles.buttonText, { color: myColors.text }]}>
+                    <Text style={styles.buttonText}>
                         {loadingLocation ? 'Getting Address...' : 'Share Address'}
                     </Text>
                 </TouchableOpacity>
 
                 {/* Delivery Options */}
-                <Text style={[styles.subheader, { color: myColors.text }]}>Delivery Options</Text>
+                <Text style={styles.subheader }>Delivery Options</Text>
                 <View style={styles.deliveryContainer}>
                     <TouchableOpacity
                         style={[
@@ -256,7 +259,7 @@ export default function CheckoutScreen() {
                         onPress={() => handleDeliveryOptionSelect('today')}
                     >
                         <Icon name="truck" size={24} color={myColors.text} />
-                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Deliver Today</Text>
+                        <Text style={styles.highlightButtonText }>Deliver Today</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[
@@ -266,7 +269,7 @@ export default function CheckoutScreen() {
                         onPress={() => handleDeliveryOptionSelect('schedule')}
                     >
                         <Icon name="calendar" size={24} color={myColors.text} />
-                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Schedule</Text>
+                        <Text style={styles.highlightButtonText}>Schedule</Text>
                     </TouchableOpacity>
                 </View>
                 {/* Date Picker */}
@@ -283,12 +286,12 @@ export default function CheckoutScreen() {
                 )}
                 {/* Render selectedDate if exists */}
                 {selectedDate && (
-                    <Text style={[styles.selectedDateText, { color: myColors.text }]}>
+                    <Text style={styles.selectedDateText}>
                         Selected Date: {selectedDate.toLocaleDateString()}
                     </Text>
                 )}
                 {/* Payment Methods */}
-                <Text style={[styles.subheader, { color: myColors.text }]}>Payment Method</Text>
+                <Text style={styles.subheader}>Payment Method</Text>
                 <View style={styles.deliveryContainer}>
                     <TouchableOpacity
                         style={[
@@ -298,7 +301,7 @@ export default function CheckoutScreen() {
                         onPress={() => handlePayment('Cash')}
                     >
                         <Icon name="cash" size={30} color={myColors.text} />
-                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Cash</Text>
+                        <Text style={styles.highlightButtonText}>Cash</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[
@@ -308,19 +311,13 @@ export default function CheckoutScreen() {
                         onPress={() => handlePayment('Card')}
                     >
                         <Icon name="credit-card" size={30} color={myColors.text} />
-                        <Text style={[styles.highlightButtonText, { color: myColors.text }]}>Card</Text>
+                        <Text style={styles.highlightButtonText}>Card</Text>
                     </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity
-                    style={[styles.button, { backgroundColor: myColors.clickable }]}
+                    style={styles.button }
                     onPress={() => {
-                        if (!selectedDeliveryOption || !selectedPaymentMethod) {
-                            // Alert the user to choose both delivery option and payment method
-                            Alert.alert('Please choose both delivery option and payment method.');
-                            return;
-                        }
-                        // Proceed with order confirmation
                         const locationUrl = location ? getGoogleMapsUrl(location) : null;
                         navigation.navigate('OrderConfirmation', {
                             totalAmount,
@@ -331,7 +328,7 @@ export default function CheckoutScreen() {
                         });
                     }}
                 >
-                    <Text style={[styles.buttonText, { color: myColors.text }]}>Confirm Order</Text>
+                    <Text style={styles.buttonText }>Confirm Order</Text>
                 </TouchableOpacity>
             </ScrollView>
             <BottomSheet ref={sheetRef}
@@ -345,87 +342,4 @@ export default function CheckoutScreen() {
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    safe: {
-        flex: 1,
-    },
-    BottomSheet: {
-        flex: 1,
-        padding : 10,
-    },
-    container: {
-        padding: 20,
-    },
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-    },
-    input: {
-        marginBottom: 10,
-    },
-    subheader: {
-        fontSize: 20,
-        marginTop: 20,
-        marginBottom: 10,
-    },
-    deliveryContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    highlightButton: {
-        flex: 1,
-        height: 100,
-        marginHorizontal: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        flexDirection: 'column',
-    },
-    highlightButtonText: {
-        marginTop: 10,
-        fontSize: 16,
-    },
-    button: {
-        marginTop: 20,
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    buttonText: {
-        fontSize: 18,
-    },
-    locationText: {
-        marginTop: 10,
-        marginBottom: 20,
-        fontSize: 20,
-    },
-    selectedDateText: {
-        marginTop: 10,
-        fontSize: 16,
-    },
-    map: {
-        width: '100%',
-        height: 200,
-        marginTop: 10,
-        marginBottom: 30,
-        padding:150,
-
-    },
-    label: {
-        marginBottom : 10
-    },
-    horiz: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-    inputContainer: {
-        flex: 1,
-        marginHorizontal: 5,
-    },
-
-});
-
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-
+//fetch promotion images
 const useImagesInFolder = (folderPath) => {
     const [imageURLs, setImageURLs] = useState([]);
     const storage = getStorage();

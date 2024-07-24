@@ -1,6 +1,7 @@
 import React from 'react';
 import {db} from '../Firebaseconfig'
 import {collection, getDocs} from "firebase/firestore";
+//fetch regions
 async function regionsServices() {
     try {
         const ref = collection(db, "Regions")

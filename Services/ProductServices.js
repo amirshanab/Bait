@@ -1,5 +1,5 @@
 import {useProducts} from "../contexts/ProductContext";
-
+//fetch products from db
 const ProductServices =  (CategoryID) => {
     const {products} = useProducts()
     if (!products) {
