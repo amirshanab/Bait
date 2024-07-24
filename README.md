@@ -56,3 +56,8 @@ Steps to install the project:
 4. Start the App
    ```bash
    npm start
+
+
+## Done and developed By
+- [Mohammad Ghosheh](https://github.com/mouhammadghosheh)
+- [Amir Abu Shanab](https://github.com/amirshanab)
