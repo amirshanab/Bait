@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, Alert } from 'react-native';
 import { myColors as color } from "../Utils/MyColors";
 import Logo from "../Components/Logo";
 import { useRoute } from "@react-navigation/native";
 import { ThemeContext } from '../../contexts/ThemeContext';
 import OrderServices from "../../Services/OrderServices";
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ClearCart } from "../../Redux/CartSlice";
 import LoadingScreen from '../Components/LoadingScreen';
 
@@ -16,14 +16,22 @@ export default function OrderConfirmationScreen() {
     const myColors = color[theme.mode];
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
-    const styles = getStyles(myColors)
+    const [orderSuccess, setOrderSuccess] = useState(false);
+    const styles = getStyles(myColors);
+
     useEffect(() => {
         const uploadOrder = async () => {
             try {
-                await OrderServices(items, totalAmount, selectedDate, selectedPaymentMethod, locationUrl);
-                dispatch(ClearCart());
+                const response = await OrderServices(items, totalAmount, selectedDate, selectedPaymentMethod, locationUrl);
+                if (response.status === 'success') {
+                    dispatch(ClearCart());
+                    setOrderSuccess(true);
+                } else {
+                    Alert.alert('Order Error', response.message);
+                }
             } catch (error) {
                 console.error("Error uploading order:", error);
+                Alert.alert('Order Error', 'An error occurred while processing your order. Please try again later.');
             } finally {
                 setIsLoading(false);
             }
@@ -35,11 +43,23 @@ export default function OrderConfirmationScreen() {
         return <LoadingScreen />;
     }
 
+    if (!orderSuccess) {
+        return (
+            <SafeAreaView style={styles.safe}>
+                <Logo />
+                <Text style={styles.header}>Order Failed</Text>
+                <Text style={styles.text}>
+                    We encountered an issue processing your order. Please try again or contact customer support.
+                </Text>
+            </SafeAreaView>
+        );
+    }
+
     return (
-        <SafeAreaView style={styles.safe }>
+        <SafeAreaView style={styles.safe}>
             <Logo />
-            <Text style={styles.header }>Order Confirmed!</Text>
-            <Text style={styles.text }>
+            <Text style={styles.header}>Order Confirmed!</Text>
+            <Text style={styles.text}>
                 Thank you for your purchase. Your order is being processed, and you will receive an email with your order details and tracking information shortly.
             </Text>
         </SafeAreaView>

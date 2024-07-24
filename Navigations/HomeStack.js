@@ -8,7 +8,7 @@ import PaymentMethodsScreen from "../src/Screens/PaymentMethodsScreen";
 import IngredientsScreen from "../src/Screens/IngredientsScreen";
 import Dishes from "../src/Screens/Dishes";
 import RegionalDishesScreen from "../src/Screens/RegionalDishesScreen";
-import CheckoutScreen from "../src/Screens/CheckoutScreen/CheckoutScreen";
+import CheckoutScreen from "../src/Screens/CheckoutScreen";
 import OrderConfirmationScreen from "../src/Screens/OrderConfirmationScreen";
 import SettingsScreen from "../src/Screens/SettingsScreen";
 import Cart from "../src/Screens/Cart";

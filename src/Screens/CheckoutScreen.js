@@ -6,7 +6,7 @@ import {
     ScrollView,
     View,
     Platform,
-    Alert, useColorScheme,
+    Alert, useColorScheme, StyleSheet,
 
 } from 'react-native';
 import { TextInput, useTheme} from 'react-native-paper';
@@ -14,16 +14,15 @@ import {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps'
 import BottomSheet from '@gorhom/bottom-sheet';
 import Toast from "react-native-toast-message";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { myColors as color} from '../../Utils/MyColors';
-import { ThemeContext } from '../../../contexts/ThemeContext';
-import Logo from '../../Components/Logo';
+import { myColors as color} from '../Utils/MyColors';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import Logo from '../Components/Logo';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import AwesomeButton from "react-native-really-awesome-button";
-import MapStyle from "../../Utils/MapStyle.json"
-import getStyles from "./CheckoutScreen"
+import MapStyle from "../Utils/MapStyle.json"
 export default function CheckoutScreen() {
     const mapStyle = MapStyle
     const [inputValues, setInputValues] = useState({
@@ -51,7 +50,7 @@ export default function CheckoutScreen() {
     const { totalAmount, items } = route.params;
 
     const myColors = color[theme.mode]; // updated to use const
-    const styles = getStyles(myColors);
+    const styles = GetStyles(myColors);
 
     const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('today');
     const [selectedDate, setSelectedDate] = useState(null);
@@ -342,4 +341,94 @@ export default function CheckoutScreen() {
         </SafeAreaView>
     );
 }
+const GetStyles = (myColors) => StyleSheet.create({
+    safe: {
+        flex: 1,
+        backgroundColor: myColors.primary
+    },
+    BottomSheet: {
+        flex: 1,
+        padding: 10,
+    },
+    container: {
+        padding: 20,
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: myColors.text
+    },
+    input: {
+        marginBottom: 10,
+        color: myColors.text
+    },
+    subheader: {
+        fontSize: 20,
+        marginTop: 20,
+        marginBottom: 10,
+        color: myColors.text
+    },
+    deliveryContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    highlightButton: {
+        flex: 1,
+        height: 100,
+        marginHorizontal: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        flexDirection: 'column',
+    },
+    highlightButtonText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: myColors.text
+    },
+    button: {
+        marginTop: 20,
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        backgroundColor: myColors.clickable
+    },
+    buttonText: {
+        fontSize: 18,
+        color: myColors.text
+    },
+    locationText: {
+        marginTop: 10,
+        marginBottom: 20,
+        fontSize: 20,
+        color: myColors.text
+    },
+    selectedDateText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: myColors.text
+    },
+    map: {
+        width: '100%',
+        height: 200,
+        marginTop: 10,
+        marginBottom: 30,
+        padding: 150,
+    },
+    label: {
+        marginBottom: 10,
+        color: myColors.text
+    },
+    horiz: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+    inputContainer: {
+        flex: 1,
+        marginHorizontal: 5,
+    },
+});
+
 
